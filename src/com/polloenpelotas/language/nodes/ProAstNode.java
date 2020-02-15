@@ -1,0 +1,27 @@
+package com.polloenpelotas.language.nodes;
+
+import com.polloenpelotas.language.FileLocation;
+import com.polloenpelotas.language.LocatedSemanticException;
+import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.types.ZProtoObject;
+import org.jetbrains.annotations.NotNull;
+
+public abstract class ProAstNode implements AstNode {
+
+    private final @NotNull FileLocation fileLocation;
+
+    public ProAstNode(@NotNull FileLocation fileLocation) {
+        this.fileLocation = fileLocation;
+    }
+
+    @Override
+    public final ZProtoObject execute(@NotNull ZProtoObject ambit) throws LocatedSemanticException {
+        try {
+            return safeExecute(ambit);
+        } catch (SemanticException  semanticException) {
+            throw new LocatedSemanticException(this.fileLocation, semanticException);
+        }
+    }
+
+    public abstract ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException;
+}
