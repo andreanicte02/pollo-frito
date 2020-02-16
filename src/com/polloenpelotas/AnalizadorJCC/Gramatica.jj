@@ -1,0 +1,227 @@
+options {
+  IGNORE_CASE = true;
+  STATIC = false;
+}
+
+PARSER_BEGIN(Gramatica)
+/** Analizador de expresiones aritmeticas sencillas. */
+
+package com.polloenpelotas.AnalizadorJCC;;
+
+public class Gramatica {
+}
+
+PARSER_END(Gramatica)
+
+
+/**********************************************************
+                            Lexico
+***********************************************************/
+SKIP : {
+      " "
+    | "\t"
+    | "\r"
+    | "\n"
+    | <"#" (~["\n", "\r"])*>
+    | <"#*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "#">
+}
+
+TOKEN : {
+    <NUMERO: (["0"-"9"])+>
+    | <DECIMAL: (["0"-"9"])+"."(["0"-"9"])+>
+    | <PCOMA: ";">
+    | <PARENI: "(">
+    | <PAREND: ")">
+    | <CORI: "[">
+    | <CORD: "]">
+    | <LLAVEI: "{">
+    | <LLAVED: "}">
+    | <MAS: "+">
+    | <MENOS: "-">
+    | <POR: "*">
+    | <DIV: "/">
+    | <IGUAL: "=">
+    | <MENORQUE: "<">
+    | <MAYORQUE: ">">
+    | <MENORIGUAL: "<=">
+    | <MAYORIGUAL: ">=">
+    | <IGUALACION: "==">
+    | <DIFERENCIACION: "!=">
+    | <AND: "&&">
+    | <OR: "||">
+    | <NOT: "!" >
+
+    | <IDENTIFICADOR: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) ( ["a"-"z","A"-"Z", "_"] | ["0"-"9"] )* >
+
+}
+
+/**********************************************************
+*Faltaria agregar los caracteres de escape de las cadenas *
+***********************************************************/
+
+MORE :{
+     "\"" :STRING_STATE
+}
+
+<STRING_STATE> MORE:
+{
+    <~["\""]>
+}
+
+
+<STRING_STATE> TOKEN:
+{
+   <STRING:"\""> : DEFAULT
+}
+
+/**********************************************************
+                        Fin lexico
+***********************************************************/
+
+
+/**********************************************************
+            Producción inicial
+            Analizar -> (Instruccion)+ EOF
+**********************************************************/
+
+void Analizar() :
+{}
+{
+  (Instruccion())+ <EOF>
+}
+
+
+/**********************************************************
+            Instruccion -> Asignacion
+                        |Imprimir;
+***********************************************************/
+
+void Instruccion() :
+{}
+{
+    Asignacion()
+}
+/**********************************************************
+           Asignacion = EXP = EXP
+***********************************************************/
+void Asignacion():
+{}
+{
+    Primitivos() <IGUAL> Exp() (<PCOMA>)?
+}
+
+/**********************************************************
+            Exp -> exp or exp
+***********************************************************/
+void Exp():
+{}
+{
+    ExpAnd()(
+        <OR> ExpAnd()
+    )*
+}
+
+
+/**********************************************************
+            ExpAnd -> exp and exp
+***********************************************************/
+void ExpAnd():
+{}
+{
+    ExpIgualdad()(
+        <AND> ExpIgualdad()
+    )*
+}
+
+
+/**********************************************************
+            ExpIgualdad -> exp == exp
+                        |exp !=exp;
+***********************************************************/
+
+void ExpIgualdad():
+{}
+{
+    ExpRelacional()(
+        <IGUALACION> ExpRelacional()
+        <DIFERENCIACION> ExpRelacional()
+    )*
+}
+
+
+/**********************************************************
+            ExpRelacional -> exp > exp
+                        |exp < exp;
+***********************************************************/
+void ExpRelacional():
+{}
+{
+    ExpSumaResta()(
+        <MAYORQUE> ExpSumaResta()
+        |<MENORQUE> ExpSumaResta()
+        |<MAYORIGUAL> ExpSumaResta()
+        |<MENORIGUAL> ExpSumaResta()
+
+    )*
+}
+
+
+
+/**********************************************************
+            ExpSumaResta -> exp-exp
+                        |exp+exp;
+***********************************************************/
+void ExpSumaResta():
+{}
+{
+    ExpMultDiv()(
+        <MAS> ExpMultDiv()
+        | <MENOS> ExpMultDiv()
+    )*
+}
+
+
+/**********************************************************
+            ExpMultDiv -> exp*exp
+                        exp / exp
+***********************************************************/
+void ExpMultDiv():
+{}
+{
+    ExpUnaria() (
+        <POR> ExpUnaria()
+        | <DIV> ExpUnaria()
+    )*
+}
+
+/**********************************************************
+            ExpUnaria -> -exp
+                        |!exp;
+***********************************************************/
+
+void ExpUnaria():
+{}
+{
+    <MENOS> ExpUnaria()
+    |<NOT> ExpUnaria()
+    | Primitivos()
+}
+
+
+
+
+/**********************************************************
+            Primitivos -> num
+                        |Imprimir;
+***********************************************************/
+
+void Primitivos():
+{}
+{
+    <NUMERO>
+    |<DECIMAL>
+    |<STRING>
+    |<IDENTIFICADOR>
+    |<PARENI> Exp() <PAREND>
+
+}

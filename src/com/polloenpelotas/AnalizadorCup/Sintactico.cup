@@ -71,7 +71,7 @@ terminal String numero,decimal, identifier, igual;
 
 //-------------------> Declaración de No Terminales
 non terminal String inicio;
-non terminal String exp, assignVar, sentenciasPrueba, sentenciaPrueba;
+non terminal String exp, asignacion, sentenciasPrueba, sentenciaPrueba;
 
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
@@ -92,20 +92,20 @@ start with inicio;
 inicio::= sentenciasPrueba;
 
 
-assignVar::= exp igual exp pComa
+asignacion::= exp igual exp pComa
             |exp igual exp ;
 
 sentenciasPrueba::= sentenciasPrueba sentenciaPrueba
             |sentenciaPrueba;
 
-sentenciaPrueba::= assignVar;
+sentenciaPrueba::= asignacion;
 
 exp::= exp mas exp
     | exp menos exp
     | exp por exp
+    | exp dividir exp
     | exp potenciar exp
-    | exp aumento
-    | exp decremento
+
     | apar exp cpar
 
     | decimal

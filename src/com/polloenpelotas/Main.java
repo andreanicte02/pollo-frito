@@ -6,6 +6,8 @@ public class Main {
 	// write your code here
         System.out.println("xD");
 
+
         Utils.probarCup("src/com/polloenpelotas/ArchivosPrueba/A1.txt");
+        Utils.pruebaJCC("src/com/polloenpelotas/ArchivosPrueba/A1.txt");
     }
 }

@@ -29,7 +29,7 @@ import java_cup.runtime.*;
 
 //-------> Expresiones Regulares
 numero          = [0-9]+
-decimal         = ([0-9]+"."[0-9]+|"-"[0-9]+"."[0-9]+)
+decimal         = [0-9]+"."[0-9]+
 
 
 letter          = [a-zA-Z]
