@@ -1,0 +1,115 @@
+/*----------------------------------------------------------------------------
+--------------------- 1ra. Area: Codigo de Usuario
+----------------------------------------------------------------------------*/
+
+//-------------------> Importaciones
+//-------------------> Paquetes
+package com.polloenpelotas.AnalizadorCup;
+
+import java_cup.runtime.Symbol;
+import java.util.ArrayList;
+
+//-------------------> Codigo para el parser, variables, metodos
+parser code
+{:
+    public String salida="";
+
+    //-------------------> Metodo al que se llama automaticamente ante algun error sintactico.
+    public void syntax_error(Symbol s)
+    {
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+
+        System.out.println("!!!!!!! Error Sintactico Recuperado !!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+    }
+
+
+    //-------------------> Metodo al que se llama en el momento en que ya no es posible una recuperacion de errores.
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+        String lexema = s.value.toString();
+        int fila = s.right;
+        int columna = s.left;
+
+        System.out.println("!!!!!!! Error Sintactico, Panic Mode!!!!!!!");
+        System.out.println("\t\tLexema: "+lexema);
+        System.out.println("\t\tFila: "+fila);
+        System.out.println("\t\tColumna: "+columna);
+    }
+
+
+    public void semantic(Symbol cur_token, String n)
+    {
+        System.out.println("error semantico ");
+    }
+
+
+    public void semantic(String msg, Object obj) {}
+
+:}
+
+
+//-------------------> Codigo para las acciones gramaticales
+action code
+{:
+:}
+
+
+/*----------------------------------------------------------------------------
+--------------------- 2da. Area: Declaraciones
+----------------------------------------------------------------------------*/
+
+//-------------------> Declaración de Terminales
+terminal mas, menos, por, dividir, potenciar, aumento, decremento;
+terminal apar, cpar, pComa;
+terminal String numero,decimal, identifier, igual;
+
+
+//-------------------> Declaración de No Terminales
+non terminal String inicio;
+non terminal String exp, assignVar, sentenciasPrueba, sentenciaPrueba;
+
+
+//-------------------> Indicar precedencia(de menor a mayor) y asociatividad
+precedence left mas, menos;
+precedence left por, dividir;
+precedence left potenciar;
+precedence left aumento, decremento;    //mientras mas abajo se declare, mayor precedencia
+
+
+//-------------------> No Terminal inicial
+start with inicio;
+
+
+/*-------------------------------------------------------------------
+--------------------- 3ra. y ultima area: Reglas Sintacticas
+-------------------------------------------------------------------*/
+
+inicio::= sentenciasPrueba;
+
+
+assignVar::= exp igual exp pComa
+            |exp igual exp ;
+
+sentenciasPrueba::= sentenciasPrueba sentenciaPrueba
+            |sentenciaPrueba;
+
+sentenciaPrueba::= assignVar;
+
+exp::= exp mas exp
+    | exp menos exp
+    | exp por exp
+    | exp potenciar exp
+    | exp aumento
+    | exp decremento
+    | apar exp cpar
+
+    | decimal
+    | numero
+    | identifier
+
+    ;
