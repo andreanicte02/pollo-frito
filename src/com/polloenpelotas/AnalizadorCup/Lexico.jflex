@@ -62,16 +62,37 @@ identifier      = {more} ({letterDigit}|"_"|".")*
 
 //-------> Simbolos
 <YYINITIAL> ";"         {   return new Symbol(Simbolos.pComa, yycolumn, yyline, yytext());}
+<YYINITIAL> "="         {   return new Symbol(Simbolos.igual, yycolumn, yyline, yytext());}
+<YYINITIAL> "("         {   return new Symbol(Simbolos.apar, yycolumn, yyline, yytext());}
+<YYINITIAL> ")"         {   return new Symbol(Simbolos.cpar, yycolumn, yyline, yytext());}
+
+
 <YYINITIAL> "+"         {   return new Symbol(Simbolos.mas, yycolumn, yyline, yytext());}
 <YYINITIAL> "-"         {   return new Symbol(Simbolos.menos, yycolumn, yyline, yytext());}
 <YYINITIAL> "*"         {   return new Symbol(Simbolos.por, yycolumn, yyline, yytext());}
 <YYINITIAL> "/"         {   return new Symbol(Simbolos.dividir, yycolumn, yyline, yytext());}
 <YYINITIAL> "^"         {   return new Symbol(Simbolos.potenciar, yycolumn, yyline, yytext());}
-<YYINITIAL> "++"        {   return new Symbol(Simbolos.aumento, yycolumn, yyline, yytext());}
-<YYINITIAL> "--"        {   return new Symbol(Simbolos.decremento, yycolumn, yyline, yytext());}
-<YYINITIAL> "("         {   return new Symbol(Simbolos.apar, yycolumn, yyline, yytext());}
-<YYINITIAL> ")"         {   return new Symbol(Simbolos.cpar, yycolumn, yyline, yytext());}
-<YYINITIAL> "="         {   return new Symbol(Simbolos.igual, yycolumn, yyline, yytext());}
+<YYINITIAL> "%%"        {   return new Symbol(Simbolos.modulo, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "=="        {   return new Symbol(Simbolos.igualQue, yycolumn, yyline, yytext());}
+<YYINITIAL> "!="        {   return new Symbol(Simbolos.difQue, yycolumn, yyline, yytext());}
+
+
+<YYINITIAL> ">"         {   return new Symbol(Simbolos.mayorQue, yycolumn, yyline, yytext());}
+<YYINITIAL> ">="        {   return new Symbol(Simbolos.mayorIgualQue, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "<"         {   return new Symbol(Simbolos.menorQue, yycolumn, yyline, yytext());}
+<YYINITIAL> "<="        {   return new Symbol(Simbolos.menorIgualQue, yycolumn, yyline, yytext());}
+
+<YYINITIAL> "&"         {   return new Symbol(Simbolos.and, yycolumn, yyline, yytext());}
+<YYINITIAL> "|"         {   return new Symbol(Simbolos.or, yycolumn, yyline, yytext());}
+<YYINITIAL> "!"         {   return new Symbol(Simbolos.not, yycolumn, yyline, yytext());}
+<YYINITIAL> "?"         {   return new Symbol(Simbolos.tern, yycolumn, yyline, yytext());}
+<YYINITIAL> ":"         {   return new Symbol(Simbolos.dosp, yycolumn, yyline, yytext());}
+
+
+
+
 
 
 //-------> Dato

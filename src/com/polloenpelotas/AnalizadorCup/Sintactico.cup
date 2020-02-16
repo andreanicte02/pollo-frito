@@ -64,10 +64,13 @@ action code
 ----------------------------------------------------------------------------*/
 
 //-------------------> Declaración de Terminales
-terminal mas, menos, por, dividir, potenciar, aumento, decremento;
-terminal apar, cpar, pComa;
-terminal String numero,decimal, identifier, igual;
-
+terminal mas, menos, por, dividir, potenciar, modulo;
+terminal igualQue, difQue, mayorQue, mayorIgualQue,menorQue, menorIgualQue;
+terminal and, or, not;
+terminal tern, dosp;
+terminal apar, cpar, pComa, igual;
+terminal String numero,decimal, identifier;
+terminal umenos;
 
 //-------------------> Declaración de No Terminales
 non terminal String inicio;
@@ -75,10 +78,19 @@ non terminal String exp, asignacion, sentenciasPrueba, sentenciaPrueba;
 
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
+precedence right igual;
+precedence right tern, dosp;
+precedence left or;
+precedence left and;
+precedence left igualQue, difQue;
+precedence left mayorQue,menorQue, mayorIgualQue,menorIgualQue;
+
 precedence left mas, menos;
-precedence left por, dividir;
+precedence left por, dividir, modulo;
+precedence right not;
+precedence right umenos;
 precedence left potenciar;
-precedence left aumento, decremento;    //mientras mas abajo se declare, mayor precedencia
+
 
 
 //-------------------> No Terminal inicial
@@ -102,14 +114,32 @@ sentenciaPrueba::= asignacion;
 
 exp::= exp mas exp
     | exp menos exp
+
+    | exp modulo exp
     | exp por exp
     | exp dividir exp
+
     | exp potenciar exp
 
-    | apar exp cpar
+    | exp igualQue exp
+    | exp difQue exp
+
+    | exp menorIgualQue exp
+    | exp mayorIgualQue exp
+    | exp mayorQue exp
+    | exp menorQue exp
+
+    | exp and exp
+    | exp or exp
+
+    | not exp
+    | menos exp  %prec umenos
 
     | decimal
     | numero
     | identifier
+
+    | apar exp cpar
+
 
     ;
