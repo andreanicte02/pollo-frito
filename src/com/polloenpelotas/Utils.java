@@ -18,6 +18,7 @@ public class Utils {
         try {
             Gramatica parser = new Gramatica(new BufferedReader(new FileReader(path)));
             parser.Analizar();
+            System.out.println("c");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (ParseException e) {

@@ -4,3 +4,4 @@ id=3
 id=3
 id=3234*d+i
 .id=asdf
+print(-1);

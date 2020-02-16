@@ -27,31 +27,34 @@ SKIP : {
 }
 
 TOKEN : {
-    <NUMERO: (["0"-"9"])+>
-    | <DECIMAL: (["0"-"9"])+"."(["0"-"9"])+>
-    | <PCOMA: ";">
-    | <PARENI: "(">
-    | <PAREND: ")">
-    | <CORI: "[">
-    | <CORD: "]">
-    | <LLAVEI: "{">
-    | <LLAVED: "}">
-    | <MAS: "+">
-    | <MENOS: "-">
-    | <POR: "*">
-    | <DIV: "/">
-    | <IGUAL: "=">
-    | <MENORQUE: "<">
-    | <MAYORQUE: ">">
-    | <MENORIGUAL: "<=">
-    | <MAYORIGUAL: ">=">
-    | <IGUALACION: "==">
-    | <DIFERENCIACION: "!=">
-    | <AND: "&&">
-    | <OR: "||">
-    | <NOT: "!" >
+    <numero: (["0"-"9"])+>
+    | <decimal: (["0"-"9"])+"."(["0"-"9"])+>
+    | <pcoma: ";">
+    | <apar: "(">
+    | <cpar: ")">
+    | <acor: "[">
+    | <ccor: "]">
+    | <alla: "{">
+    | <clla: "}">
+    | <mas: "+">
+    | <menos: "-">
+    | <por: "*">
+    | <div: "/">
+    | <modular: "%%">
+    | <pot: "^">
+    | <igual: "=">
+    | <menorQue: "<">
+    | <mayorQue: ">">
+    | <menorIgualQue: "<=">
+    | <mayorIgualQue: ">=">
+    | <igualQue: "==">
+    | <difQue: "!=">
+    | <and: "&">
+    | <or: "|">
+    | <not: "!" >
 
-    | <IDENTIFICADOR: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) ( ["a"-"z","A"-"Z", "_"] | ["0"-"9"] )* >
+    | <print: "print">
+    | <identifier: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) ( ["a"-"z","A"-"Z", "_"] | ["0"-"9"] )* >
 
 }
 
@@ -100,14 +103,22 @@ void Instruccion() :
 {}
 {
     Asignacion()
+    |Imprimir()
 }
 /**********************************************************
            Asignacion = EXP = EXP
+           Imprimir = print (Exp)
 ***********************************************************/
 void Asignacion():
 {}
 {
-    Primitivos() <IGUAL> Exp() (<PCOMA>)?
+    Primitivos() <igual> Exp() (<pcoma>)?
+}
+
+void Imprimir():
+{}
+{
+    <print> <apar> Exp() <cpar> (<pcoma>)?
 }
 
 /**********************************************************
@@ -117,7 +128,7 @@ void Exp():
 {}
 {
     ExpAnd()(
-        <OR> ExpAnd()
+        <or> ExpAnd()
     )*
 }
 
@@ -129,7 +140,7 @@ void ExpAnd():
 {}
 {
     ExpIgualdad()(
-        <AND> ExpIgualdad()
+        <and> ExpIgualdad()
     )*
 }
 
@@ -143,8 +154,8 @@ void ExpIgualdad():
 {}
 {
     ExpRelacional()(
-        <IGUALACION> ExpRelacional()
-        <DIFERENCIACION> ExpRelacional()
+        <igualQue> ExpRelacional()
+        <difQue> ExpRelacional()
     )*
 }
 
@@ -157,10 +168,10 @@ void ExpRelacional():
 {}
 {
     ExpSumaResta()(
-        <MAYORQUE> ExpSumaResta()
-        |<MENORQUE> ExpSumaResta()
-        |<MAYORIGUAL> ExpSumaResta()
-        |<MENORIGUAL> ExpSumaResta()
+        <mayorQue> ExpSumaResta()
+        |<menorQue> ExpSumaResta()
+        |<mayorIgualQue> ExpSumaResta()
+        |<menorIgualQue> ExpSumaResta()
 
     )*
 }
@@ -175,8 +186,8 @@ void ExpSumaResta():
 {}
 {
     ExpMultDiv()(
-        <MAS> ExpMultDiv()
-        | <MENOS> ExpMultDiv()
+        <mas> ExpMultDiv()
+        | <menos> ExpMultDiv()
     )*
 }
 
@@ -184,14 +195,30 @@ void ExpSumaResta():
 /**********************************************************
             ExpMultDiv -> exp*exp
                         exp / exp
+                        epx %% exp
 ***********************************************************/
 void ExpMultDiv():
 {}
 {
-    ExpUnaria() (
-        <POR> ExpUnaria()
-        | <DIV> ExpUnaria()
+    ExpPot() (
+        <por> ExpPot()
+        | <div> ExpPot()
+        | <modular> ExpPot()
     )*
+}
+
+
+/**********************************************************
+            ExpPot -> -exp^exp
+***********************************************************/
+
+void ExpPot():
+{}
+{
+    ExpUnaria()(
+        <pot> ExpUnaria()
+    )*
+
 }
 
 /**********************************************************
@@ -202,26 +229,23 @@ void ExpMultDiv():
 void ExpUnaria():
 {}
 {
-    <MENOS> ExpUnaria()
-    |<NOT> ExpUnaria()
+    <menos> ExpUnaria()
+    |<not> ExpUnaria()
     | Primitivos()
 }
 
-
-
-
 /**********************************************************
             Primitivos -> num
-                        |Imprimir;
+                        |id;
 ***********************************************************/
 
 void Primitivos():
 {}
 {
-    <NUMERO>
-    |<DECIMAL>
+    <numero>
+    |<decimal>
     |<STRING>
-    |<IDENTIFICADOR>
-    |<PARENI> Exp() <PAREND>
+    |<identifier>
+    |<apar> Exp() <cpar>
 
 }

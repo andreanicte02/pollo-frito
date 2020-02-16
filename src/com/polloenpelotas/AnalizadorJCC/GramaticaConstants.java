@@ -13,55 +13,61 @@ public interface GramaticaConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int NUMERO = 7;
+  int numero = 7;
   /** RegularExpression Id. */
-  int DECIMAL = 8;
+  int decimal = 8;
   /** RegularExpression Id. */
-  int PCOMA = 9;
+  int pcoma = 9;
   /** RegularExpression Id. */
-  int PARENI = 10;
+  int apar = 10;
   /** RegularExpression Id. */
-  int PAREND = 11;
+  int cpar = 11;
   /** RegularExpression Id. */
-  int CORI = 12;
+  int acor = 12;
   /** RegularExpression Id. */
-  int CORD = 13;
+  int ccor = 13;
   /** RegularExpression Id. */
-  int LLAVEI = 14;
+  int alla = 14;
   /** RegularExpression Id. */
-  int LLAVED = 15;
+  int clla = 15;
   /** RegularExpression Id. */
-  int MAS = 16;
+  int mas = 16;
   /** RegularExpression Id. */
-  int MENOS = 17;
+  int menos = 17;
   /** RegularExpression Id. */
-  int POR = 18;
+  int por = 18;
   /** RegularExpression Id. */
-  int DIV = 19;
+  int div = 19;
   /** RegularExpression Id. */
-  int IGUAL = 20;
+  int modular = 20;
   /** RegularExpression Id. */
-  int MENORQUE = 21;
+  int pot = 21;
   /** RegularExpression Id. */
-  int MAYORQUE = 22;
+  int igual = 22;
   /** RegularExpression Id. */
-  int MENORIGUAL = 23;
+  int menorQue = 23;
   /** RegularExpression Id. */
-  int MAYORIGUAL = 24;
+  int mayorQue = 24;
   /** RegularExpression Id. */
-  int IGUALACION = 25;
+  int menorIgualQue = 25;
   /** RegularExpression Id. */
-  int DIFERENCIACION = 26;
+  int mayorIgualQue = 26;
   /** RegularExpression Id. */
-  int AND = 27;
+  int igualQue = 27;
   /** RegularExpression Id. */
-  int OR = 28;
+  int difQue = 28;
   /** RegularExpression Id. */
-  int NOT = 29;
+  int and = 29;
   /** RegularExpression Id. */
-  int IDENTIFICADOR = 30;
+  int or = 30;
   /** RegularExpression Id. */
-  int STRING = 33;
+  int not = 31;
+  /** RegularExpression Id. */
+  int print = 32;
+  /** RegularExpression Id. */
+  int identifier = 33;
+  /** RegularExpression Id. */
+  int STRING = 36;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -77,8 +83,8 @@ public interface GramaticaConstants {
     "\"\\n\"",
     "<token of kind 5>",
     "<token of kind 6>",
-    "<NUMERO>",
-    "<DECIMAL>",
+    "<numero>",
+    "<decimal>",
     "\";\"",
     "\"(\"",
     "\")\"",
@@ -90,6 +96,8 @@ public interface GramaticaConstants {
     "\"-\"",
     "\"*\"",
     "\"/\"",
+    "\"%%\"",
+    "\"^\"",
     "\"=\"",
     "\"<\"",
     "\">\"",
@@ -97,12 +105,13 @@ public interface GramaticaConstants {
     "\">=\"",
     "\"==\"",
     "\"!=\"",
-    "\"&&\"",
-    "\"||\"",
+    "\"&\"",
+    "\"|\"",
     "\"!\"",
-    "<IDENTIFICADOR>",
+    "\"print\"",
+    "<identifier>",
     "\"\\\"\"",
-    "<token of kind 32>",
+    "<token of kind 35>",
     "\"\\\"\"",
   };
 

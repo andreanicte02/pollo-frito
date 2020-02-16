@@ -89,9 +89,10 @@ precedence left mayorQue,menorQue, mayorIgualQue,menorIgualQue;
 
 precedence left mas, menos;
 precedence left por, dividir, modulo;
-precedence right not;
-precedence right umenos;
 precedence left potenciar;
+precedence right not, umenos;
+
+
 
 
 
