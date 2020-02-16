@@ -72,10 +72,12 @@ terminal apar, cpar, pComa, igual;
 terminal String numero,decimal, identifier;
 terminal umenos;
 
+terminal print;
+
 //-------------------> Declaración de No Terminales
 non terminal String inicio;
 non terminal String exp, asignacion, sentenciasPrueba, sentenciaPrueba;
-
+non terminal endSent, imprimir;
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
 precedence right igual;
@@ -104,13 +106,19 @@ start with inicio;
 inicio::= sentenciasPrueba;
 
 
-asignacion::= exp igual exp pComa
-            |exp igual exp ;
-
 sentenciasPrueba::= sentenciasPrueba sentenciaPrueba
             |sentenciaPrueba;
 
-sentenciaPrueba::= asignacion;
+sentenciaPrueba::= asignacion
+               |imprimir;
+
+asignacion::= exp igual exp endSent;
+
+imprimir ::= print apar exp cpar endSent;
+
+endSent::= pComa
+        |
+        ;
 
 exp::= exp mas exp
     | exp menos exp

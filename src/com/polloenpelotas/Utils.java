@@ -14,7 +14,7 @@ import java.io.FileReader;
 
 public class Utils {
 
-    public static  void pruebaJCC(String path){
+    public static void pruebaJCC(String path){
         try {
             Gramatica parser = new Gramatica(new BufferedReader(new FileReader(path)));
             parser.Analizar();

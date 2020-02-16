@@ -37,7 +37,8 @@ letterDigit     = [a-zA-Z0-9]
 more            = ({letter}| "."{letter})
 identifier      = {more} ({letterDigit}|"_"|".")*
 
-
+//-------> Palabras Reservadas
+print = "print"
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -93,17 +94,18 @@ identifier      = {more} ({letterDigit}|"_"|".")*
 
 
 
+//-------> PR
 
 
-//-------> Dato
+<YYINITIAL> {print}         {  return new Symbol(Simbolos.print, yyline, yycolumn, yytext()); }
 
+//-------> ER
 
+<YYINITIAL> {identifier}    {   return new Symbol(Simbolos.identifier, yycolumn, yyline, yytext());}
 
-<YYINITIAL> {identifier}        {   return new Symbol(Simbolos.identifier, yycolumn, yyline, yytext());}
+<YYINITIAL> {decimal}       {   return new Symbol(Simbolos.decimal, yycolumn, yyline, yytext());}
 
-<YYINITIAL> {decimal}           {   return new Symbol(Simbolos.decimal, yycolumn, yyline, yytext());}
-
-<YYINITIAL> {numero}            {   return new Symbol(Simbolos.numero, yycolumn, yyline, yytext());}
+<YYINITIAL> {numero}        {   return new Symbol(Simbolos.numero, yycolumn, yyline, yytext());}
 
 
 //-------> Espacios
