@@ -2,7 +2,7 @@ package com.polloenpelotas.language.types;
 
 public class ZInteger extends ZProtoObject {
     private final int value;
-    ZInteger(int value) {
+    public ZInteger(int value) {
         this.value = value;
     }
 
@@ -15,5 +15,10 @@ public class ZInteger extends ZProtoObject {
 
     public int getValue() {
         return value;
+    }
+
+    @Override
+    public String toChickenString() {
+        return String.valueOf(value);
     }
 }

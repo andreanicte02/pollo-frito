@@ -7,4 +7,10 @@ public class ZBoolean extends ZProtoObject {
     public ZBoolean(boolean value) {
         this.value = value;
     }
+
+
+    @Override
+    public String toChickenString() {
+        return String.valueOf(value);
+    }
 }

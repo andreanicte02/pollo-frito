@@ -7,4 +7,9 @@ public class ZNumeric extends ZProtoObject {
     public ZNumeric(double value) {
         this.value = value;
     }
+
+    @Override
+    public String toChickenString() {
+        return String.valueOf(value);
+    }
 }
