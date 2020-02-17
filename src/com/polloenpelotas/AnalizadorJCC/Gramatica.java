@@ -328,6 +328,7 @@ public class Gramatica implements GramaticaConstants {
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case numero:
       jj_consume_token(numero);
+              System.out.println("--"+token.image);
       break;
     case decimal:
       jj_consume_token(decimal);

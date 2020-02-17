@@ -242,7 +242,7 @@ void ExpUnaria():
 void Primitivos():
 {}
 {
-    <numero>
+    <numero> {System.out.println("--"+token.image);}
     |<decimal>
     |<STRING>
     |<identifier>
