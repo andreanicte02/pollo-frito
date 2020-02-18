@@ -20,6 +20,9 @@ public class ZInteger extends ZProtoObject {
         return  new ZInteger(value * e.getValue());
     }
 
+    public  ZInteger mult(ZInteger e){
+        return new ZInteger(value * e.getValue());
+    }
     public int getValue() {
         return value;
     }

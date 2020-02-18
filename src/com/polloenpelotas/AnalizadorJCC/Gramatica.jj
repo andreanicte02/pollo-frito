@@ -24,148 +24,87 @@ PARSER_END(Gramatica)
 /**********************************************************
                             Lexico
 ***********************************************************/
+
+/** Lexico */
 SKIP : {
       " "
     | "\t"
     | "\r"
     | "\n"
-    | <"#" (~["\n", "\r"])*>
-    | <"#*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "#">
 }
 
 TOKEN : {
-    <numero: (["0"-"9"])+>
-    | <decimal: (["0"-"9"])+"."(["0"-"9"])+>
-    | <pcoma: ";">
-    | <apar: "(">
-    | <cpar: ")">
-    | <acor: "[">
-    | <ccor: "]">
-    | <alla: "{">
-    | <clla: "}">
-    | <mas: "+">
-    | <menos: "-">
-    | <por: "*">
-    | <div: "/">
-    | <modular: "%%">
-    | <pot: "^">
-    | <igual: "=">
-    | <menorQue: "<">
-    | <mayorQue: ">">
-    | <menorIgualQue: "<=">
-    | <mayorIgualQue: ">=">
-    | <igualQue: "==">
-    | <difQue: "!=">
-    | <and: "&">
-    | <or: "|">
-    | <not: "!" >
-
-    | <print: "print">
-    | <identifier: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) ( ["a"-"z","A"-"Z", "_"] | ["0"-"9"] )* >
-
+      <NUMERO: (["0"-"9"])+>
+    | <DECIMAL: (["0"-"9"])+"."(["0"-"9"])+>
+    | <PRINT: "print">
+    | <PCOMA: ";">
+    | <PARENI: "(">
+    | <PAREND: ")">
+    | <CORI: "[">
+    | <CORD: "]">
+    | <MAS: "+">
+    | <MENOS: "-">
+    | <POR: "*">
+    | <DIV: "/">
 }
+/** Fin Lexico */
 
-/**********************************************************
-*Faltaria agregar los caracteres de escape de las cadenas *
-***********************************************************/
-
-MORE :{
-     "\"" :STRING_STATE
-}
-
-<STRING_STATE> MORE:
+/** Producción inicial
+    Analizar -> (Instruccion)+ EOF
+*/
+List<AstNode>  Analizar() :
+{AstNode e; List<AstNode> l = new ArrayList<AstNode>(); }
 {
-    <~["\""]>
+  (e=Instruccion() {l.add(e);})+ <EOF> {return l;}
 }
 
-
-<STRING_STATE> TOKEN:
-{
-   <STRING:"\""> : DEFAULT
-}
-
-/**********************************************************
-                        Fin lexico
-***********************************************************/
-
-
-/**********************************************************
-            Producción inicial
-            Analizar -> (Instruccion)+ EOF
-**********************************************************/
-
- List<AstNode> Analizar() :
-{ List<AstNode> l = new ArrayList<AstNode>(); AstNode e; }
-{
-  (e = Instruccion() { l.add(e); } ) + <EOF>
-  { return l; }
-}
-
-
-/**********************************************************
-            Instruccion -> Asignacion
-                        |Imprimir;
-***********************************************************/
 
 AstNode Instruccion() :
 {AstNode e;}
 {
-      e = Imprimir()     { return e; }
+  <PRINT> <PARENI> e=Expresion() <PAREND> (<PCOMA>)?  { return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
 }
-/**********************************************************
-           Asignacion = EXP = EXP
-           Imprimir = print (Exp)
-***********************************************************/
 
 
-AstNode Imprimir():
+AstNode Expresion() :
+{AstNode e, e1;}
+{
+    e=ExpresionMultiplicativa()
+    (
+        <MAS> e1=ExpresionMultiplicativa() { e = new AddAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+
+    )*
+    {return e;}
+}
+
+
+AstNode ExpresionMultiplicativa() :
+{AstNode e, e1;}
+{
+    e=ExpresionUnaria()
+    (
+        <POR> e1=ExpresionUnaria() { e = new MultAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+
+
+    )*
+    {return e;}
+}
+
+
+
+AstNode ExpresionUnaria() :
 {AstNode e;}
 {
-    <print> <apar> e=ExpSumaResta() <cpar> (<pcoma>)?    { return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
+    <MENOS> e=ExpresionUnaria() { return new UnaryMinusNode(new FileLocation(token.beginColumn, token.beginLine), e); }
+    |
+    e=Primitivo() {return e;}
 }
 
 
-
-
-/**********************************************************
-            ExpSumaResta -> exp-exp
-                        |exp+exp;
-***********************************************************/
-AstNode ExpSumaResta():
-{AstNode a,b;}
+AstNode Primitivo() :
+{AstNode e;}
 {
-    a=ExpUnaria()(
-          <mas> b = ExpSumaResta()      { return new AddAstNode(new FileLocation(token.beginColumn, token.beginLine),a,b);  }
-
-    )* { return a; }
-
-
-}
-
-
-
-/**********************************************************
-            ExpUnaria -> -exp
-                        |!exp;
-***********************************************************/
-
-AstNode ExpUnaria():
-{AstNode e; }
-{
-    <menos> e=ExpUnaria() { return new UnaryMinusNode(new FileLocation(token.beginColumn, token.beginLine), e);  }
-    | e = Primitivos()    { return e; }
-}
-
-
-/**********************************************************
-            Primitivos -> num
-                        |id;
-***********************************************************/
-
-AstNode Primitivos():
-{AstNode e; Token t;}
-{
-    <numero>        { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
+    <NUMERO> { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
 
 
 }

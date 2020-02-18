@@ -12,23 +12,19 @@ import com.polloenpelotas.language.nodes.Instructions.*;
 
 public class Gramatica implements GramaticaConstants {
 
-/**********************************************************
-                        Fin lexico
-***********************************************************/
+/** Fin Lexico */
 
-
-/**********************************************************
-            Producción inicial
-            Analizar -> (Instruccion)+ EOF
-**********************************************************/
+/** Producción inicial
+    Analizar -> (Instruccion)+ EOF
+*/
   final public List<AstNode> Analizar() throws ParseException {
-  List<AstNode> l = new ArrayList<AstNode>(); AstNode e;
+ AstNode e; List<AstNode> l = new ArrayList<AstNode>();
     label_1:
     while (true) {
       e = Instruccion();
-                       l.add(e);
+                    l.add(e);
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case print:
+      case PRINT:
         ;
         break;
       default:
@@ -37,100 +33,94 @@ public class Gramatica implements GramaticaConstants {
       }
     }
     jj_consume_token(0);
-    {if (true) return l;}
+                                        {if (true) return l;}
     throw new Error("Missing return statement in function");
   }
 
-/**********************************************************
-            Instruccion -> Asignacion
-                        |Imprimir;
-***********************************************************/
   final public AstNode Instruccion() throws ParseException {
  AstNode e;
-    e = Imprimir();
-                           {if (true) return e;}
-    throw new Error("Missing return statement in function");
-  }
-
-/**********************************************************
-           Asignacion = EXP = EXP
-           Imprimir = print (Exp)
-***********************************************************/
-  final public AstNode Imprimir() throws ParseException {
- AstNode e;
-    jj_consume_token(print);
-    jj_consume_token(apar);
-    e = ExpSumaResta();
-    jj_consume_token(cpar);
+    jj_consume_token(PRINT);
+    jj_consume_token(PARENI);
+    e = Expresion();
+    jj_consume_token(PAREND);
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case pcoma:
-      jj_consume_token(pcoma);
+    case PCOMA:
+      jj_consume_token(PCOMA);
       break;
     default:
       jj_la1[1] = jj_gen;
       ;
     }
-                                                           {if (true) return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e);}
+                                                        {if (true) return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e);}
     throw new Error("Missing return statement in function");
   }
 
-/**********************************************************
-            ExpSumaResta -> exp-exp
-                        |exp+exp;
-***********************************************************/
-  final public AstNode ExpSumaResta() throws ParseException {
- AstNode a,b;
-    a = ExpUnaria();
+  final public AstNode Expresion() throws ParseException {
+ AstNode e, e1;
+    e = ExpresionMultiplicativa();
     label_2:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case mas:
+      case MAS:
         ;
         break;
       default:
         jj_la1[2] = jj_gen;
         break label_2;
       }
-      jj_consume_token(mas);
-      b = ExpSumaResta();
-                                          {if (true) return new AddAstNode(new FileLocation(token.beginColumn, token.beginLine),a,b);}
+      jj_consume_token(MAS);
+      e1 = ExpresionMultiplicativa();
+                                             e = new AddAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1);
     }
-         {if (true) return a;}
+     {if (true) return e;}
     throw new Error("Missing return statement in function");
   }
 
-/**********************************************************
-            ExpUnaria -> -exp
-                        |!exp;
-***********************************************************/
-  final public AstNode ExpUnaria() throws ParseException {
+  final public AstNode ExpresionMultiplicativa() throws ParseException {
+ AstNode e, e1;
+    e = ExpresionUnaria();
+    label_3:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case POR:
+        ;
+        break;
+      default:
+        jj_la1[3] = jj_gen;
+        break label_3;
+      }
+      jj_consume_token(POR);
+      e1 = ExpresionUnaria();
+                                     e = new MultAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1);
+    }
+     {if (true) return e;}
+    throw new Error("Missing return statement in function");
+  }
+
+  final public AstNode ExpresionUnaria() throws ParseException {
  AstNode e;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-    case menos:
-      jj_consume_token(menos);
-      e = ExpUnaria();
-                            {if (true) return new UnaryMinusNode(new FileLocation(token.beginColumn, token.beginLine), e);}
+    case MENOS:
+      jj_consume_token(MENOS);
+      e = ExpresionUnaria();
+                                  {if (true) return new UnaryMinusNode(new FileLocation(token.beginColumn, token.beginLine), e);}
       break;
-    case numero:
-      e = Primitivos();
-                            {if (true) return e;}
+    case NUMERO:
+      e = Primitivo();
+                   {if (true) return e;}
       break;
     default:
-      jj_la1[3] = jj_gen;
+      jj_la1[4] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
     throw new Error("Missing return statement in function");
   }
 
-/**********************************************************
-            Primitivos -> num
-                        |id;
-***********************************************************/
-  final public AstNode Primitivos() throws ParseException {
- AstNode e; Token t;
-    jj_consume_token(numero);
-                      {if (true) return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image ));}
+  final public AstNode Primitivo() throws ParseException {
+ AstNode e;
+    jj_consume_token(NUMERO);
+               {if (true) return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image ));}
     throw new Error("Missing return statement in function");
   }
 
@@ -143,18 +133,13 @@ public class Gramatica implements GramaticaConstants {
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[4];
+  final private int[] jj_la1 = new int[5];
   static private int[] jj_la1_0;
-  static private int[] jj_la1_1;
   static {
       jj_la1_init_0();
-      jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x0,0x200,0x10000,0x20080,};
-   }
-   private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x1,0x0,0x0,0x0,};
+      jj_la1_0 = new int[] {0x80,0x100,0x2000,0x8000,0x4020,};
    }
 
   /** Constructor with InputStream. */
@@ -168,7 +153,7 @@ public class Gramatica implements GramaticaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -182,7 +167,7 @@ public class Gramatica implements GramaticaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -192,7 +177,7 @@ public class Gramatica implements GramaticaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -202,7 +187,7 @@ public class Gramatica implements GramaticaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -211,7 +196,7 @@ public class Gramatica implements GramaticaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -220,7 +205,7 @@ public class Gramatica implements GramaticaConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 4; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 5; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -271,24 +256,21 @@ public class Gramatica implements GramaticaConstants {
   /** Generate ParseException. */
   public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[37];
+    boolean[] la1tokens = new boolean[17];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
             la1tokens[j] = true;
           }
-          if ((jj_la1_1[i] & (1<<j)) != 0) {
-            la1tokens[32+j] = true;
-          }
         }
       }
     }
-    for (int i = 0; i < 37; i++) {
+    for (int i = 0; i < 17; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

@@ -13,66 +13,32 @@ public interface GramaticaConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int numero = 7;
+  int NUMERO = 5;
   /** RegularExpression Id. */
-  int decimal = 8;
+  int DECIMAL = 6;
   /** RegularExpression Id. */
-  int pcoma = 9;
+  int PRINT = 7;
   /** RegularExpression Id. */
-  int apar = 10;
+  int PCOMA = 8;
   /** RegularExpression Id. */
-  int cpar = 11;
+  int PARENI = 9;
   /** RegularExpression Id. */
-  int acor = 12;
+  int PAREND = 10;
   /** RegularExpression Id. */
-  int ccor = 13;
+  int CORI = 11;
   /** RegularExpression Id. */
-  int alla = 14;
+  int CORD = 12;
   /** RegularExpression Id. */
-  int clla = 15;
+  int MAS = 13;
   /** RegularExpression Id. */
-  int mas = 16;
+  int MENOS = 14;
   /** RegularExpression Id. */
-  int menos = 17;
+  int POR = 15;
   /** RegularExpression Id. */
-  int por = 18;
-  /** RegularExpression Id. */
-  int div = 19;
-  /** RegularExpression Id. */
-  int modular = 20;
-  /** RegularExpression Id. */
-  int pot = 21;
-  /** RegularExpression Id. */
-  int igual = 22;
-  /** RegularExpression Id. */
-  int menorQue = 23;
-  /** RegularExpression Id. */
-  int mayorQue = 24;
-  /** RegularExpression Id. */
-  int menorIgualQue = 25;
-  /** RegularExpression Id. */
-  int mayorIgualQue = 26;
-  /** RegularExpression Id. */
-  int igualQue = 27;
-  /** RegularExpression Id. */
-  int difQue = 28;
-  /** RegularExpression Id. */
-  int and = 29;
-  /** RegularExpression Id. */
-  int or = 30;
-  /** RegularExpression Id. */
-  int not = 31;
-  /** RegularExpression Id. */
-  int print = 32;
-  /** RegularExpression Id. */
-  int identifier = 33;
-  /** RegularExpression Id. */
-  int STRING = 36;
+  int DIV = 16;
 
   /** Lexical state. */
   int DEFAULT = 0;
-  /** Lexical state. */
-  int STRING_STATE = 1;
 
   /** Literal token values. */
   String[] tokenImage = {
@@ -81,38 +47,18 @@ public interface GramaticaConstants {
     "\"\\t\"",
     "\"\\r\"",
     "\"\\n\"",
-    "<token of kind 5>",
-    "<token of kind 6>",
-    "<numero>",
-    "<decimal>",
+    "<NUMERO>",
+    "<DECIMAL>",
+    "\"print\"",
     "\";\"",
     "\"(\"",
     "\")\"",
     "\"[\"",
     "\"]\"",
-    "\"{\"",
-    "\"}\"",
     "\"+\"",
     "\"-\"",
     "\"*\"",
     "\"/\"",
-    "\"%%\"",
-    "\"^\"",
-    "\"=\"",
-    "\"<\"",
-    "\">\"",
-    "\"<=\"",
-    "\">=\"",
-    "\"==\"",
-    "\"!=\"",
-    "\"&\"",
-    "\"|\"",
-    "\"!\"",
-    "\"print\"",
-    "<identifier>",
-    "\"\\\"\"",
-    "<token of kind 35>",
-    "\"\\\"\"",
   };
 
 }
