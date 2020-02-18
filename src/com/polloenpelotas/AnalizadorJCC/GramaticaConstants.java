@@ -38,6 +38,26 @@ public interface GramaticaConstants {
   int DIV = 16;
   /** RegularExpression Id. */
   int POT = 17;
+  /** RegularExpression Id. */
+  int MENORQUE = 18;
+  /** RegularExpression Id. */
+  int MAYORQUE = 19;
+  /** RegularExpression Id. */
+  int MENORIGUAL = 20;
+  /** RegularExpression Id. */
+  int MAYORIGUAL = 21;
+  /** RegularExpression Id. */
+  int IGUALACION = 22;
+  /** RegularExpression Id. */
+  int DIFERENCIACION = 23;
+  /** RegularExpression Id. */
+  int AND = 24;
+  /** RegularExpression Id. */
+  int OR = 25;
+  /** RegularExpression Id. */
+  int TRUE = 26;
+  /** RegularExpression Id. */
+  int FALSE = 27;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -62,6 +82,16 @@ public interface GramaticaConstants {
     "\"*\"",
     "\"/\"",
     "\"^\"",
+    "\"<\"",
+    "\">\"",
+    "\"<=\"",
+    "\">=\"",
+    "\"==\"",
+    "\"!=\"",
+    "\"&\"",
+    "\"|\"",
+    "\"true\"",
+    "\"false\"",
   };
 
 }

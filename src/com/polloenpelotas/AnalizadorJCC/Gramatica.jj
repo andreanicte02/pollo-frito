@@ -48,6 +48,17 @@ TOKEN : {
     | <POR: "*">
     | <DIV: "/">
     | <POT: "^">
+    | <MENORQUE: "<">
+    | <MAYORQUE: ">">
+    | <MENORIGUAL: "<=">
+    | <MAYORIGUAL: ">=">
+    | <IGUALACION: "==">
+    | <DIFERENCIACION: "!=">
+    | <AND: "&">
+    | <OR: "|">
+    | <TRUE: "true">
+    | <FALSE: "false">
+
 }
 /** Fin Lexico */
 
@@ -64,11 +75,65 @@ List<AstNode>  Analizar() :
 AstNode Instruccion() :
 {AstNode e;}
 {
-  <PRINT> <PARENI> e=Expresion() <PAREND> (<PCOMA>)?  { return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
+  <PRINT> <PARENI> e=ExpresionOr() <PAREND> (<PCOMA>)?  { return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
 }
 
 
-AstNode Expresion() :
+AstNode ExpresionOr():
+{AstNode e, e1;}
+{
+
+    e=ExpresionAnd()
+    (
+        <OR> e1=ExpresionAnd() { e = new OrAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+
+    )*
+    {return e;}
+
+}
+
+
+AstNode ExpresionAnd():
+{AstNode e, e1;}
+{
+
+    e=ExpresionIgualdad()
+    (
+        <AND> e1=ExpresionIgualdad() { e = new AndAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+
+    )*
+    {return e;}
+
+}
+
+
+AstNode ExpresionIgualdad():
+{AstNode e, e1;}
+{
+
+    e=ExpresionRelacional()
+    (
+        <IGUALACION> e1=ExpresionRelacional() { e = new EqualToAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+
+    )*
+    {return e;}
+
+}
+
+AstNode ExpresionRelacional():
+{AstNode e, e1;}
+{
+
+    e=ExpresionSuma()
+    (
+        <MAYORQUE> e1=ExpresionSuma() { e = new MayorAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+
+    )*
+    {return e;}
+
+}
+
+AstNode ExpresionSuma() :
 {AstNode e, e1;}
 {
     e=ExpresionMultiplicativa()
@@ -115,7 +180,12 @@ AstNode ExpresionUnaria() :
 AstNode Primitivo() :
 {AstNode e;}
 {
-    <NUMERO> { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
-    |<PARENI> e = Expresion() <PAREND>   { return e; }
+    <NUMERO>  { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
+
+    | <TRUE>  { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),true); }
+    | <FALSE> { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),false); }
+
+    | <PARENI> e = ExpresionOr() <PAREND>   { return e; }
+
 
 }

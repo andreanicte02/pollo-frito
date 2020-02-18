@@ -26,6 +26,30 @@ public class ZNumeric extends ZProtoObject {
         return new ZString(value+  e.getValue());
     }
 
+    public ZBoolean mayor(ZInteger e){
+
+        return new ZBoolean(this.value > e.getValue());
+    }
+
+    public ZBoolean mayor (ZNumeric e){
+
+        return new ZBoolean(this.value > e.getValue());
+    }
+
+
+    public ZBoolean equalTo(ZInteger e){
+
+        return new ZBoolean(this.value == e.getValue());
+    }
+
+    public ZBoolean equalTo (ZNumeric e){
+
+        return new ZBoolean(this.value == e.getValue());
+    }
+
+
+
+
     @Override
     public String toChickenString() {
         return String.valueOf(value);
