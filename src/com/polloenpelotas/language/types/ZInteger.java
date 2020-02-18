@@ -9,6 +9,10 @@ public class ZInteger extends ZProtoObject {
         this.value = value;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     public ZInteger add(ZInteger e) {
         return new ZInteger(value + e.value);
     }
@@ -16,16 +20,27 @@ public class ZInteger extends ZProtoObject {
         return new ZString(value + e.getValue());
     }
 
+    public ZNumeric add (ZNumeric e){
+
+        return new ZNumeric(value+ e.getValue());
+    }
+
     public ZInteger unaryMinus (ZInteger e) {
         return  new ZInteger(value * e.getValue());
     }
 
-    public  ZInteger mult(ZInteger e){
+    public ZInteger mult(ZInteger e){
         return new ZInteger(value * e.getValue());
     }
-    public int getValue() {
-        return value;
+
+
+
+    public ZNumeric pot(@NotNull ZInteger e){
+        return new ZNumeric( Math.pow(value, e.value));
     }
+
+
+
 
     @Override
     public String toChickenString() {

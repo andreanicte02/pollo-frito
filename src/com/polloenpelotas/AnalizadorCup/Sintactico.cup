@@ -13,6 +13,7 @@ import java.util.List;
 import com.polloenpelotas.language.nodes.*;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.nodes.Instructions.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.*;
 
 //-------------------> Codigo para el parser, variables, metodos
 parser code
@@ -74,7 +75,7 @@ terminal igualQue, difQue, mayorQue, mayorIgualQue,menorQue, menorIgualQue;
 terminal and, or, not;
 terminal tern, dosp;
 terminal apar, cpar, pComa, igual;
-terminal String numero,decimal, identifier;
+terminal String numero,decimal, identifier,truee, falsee;
 terminal umenos;
 
 terminal print;
@@ -133,10 +134,10 @@ exp::= exp:a mas:o exp:b                     {: RESULT=new AddAstNode(new FileLo
     | exp menos exp
 
     | exp modulo exp
-    | exp por exp
+    | exp:a por exp:b             {: RESULT = new MultAstNode(new FileLocation(aleft, aright), a,b); :}
     | exp dividir exp
 
-    | exp potenciar exp
+    | exp:a potenciar exp:b       {: RESULT = new PotAstNode(new FileLocation(aleft, aright), a,b); :}
 
     | exp igualQue exp
     | exp difQue exp
@@ -156,7 +157,7 @@ exp::= exp:a mas:o exp:b                     {: RESULT=new AddAstNode(new FileLo
     | numero:a                      {: RESULT = new CreateZIntegerNode(new FileLocation(aleft, aright),Integer.parseInt(a)); :}
     | identifier
 
-    | apar exp cpar
+    | apar exp:e cpar               {: RESULT =  e; :}
 
 
     ;

@@ -27,7 +27,6 @@ public class Utils {
             for (AstNode intruccion: ins){
                 intruccion.execute(aux);
             }
-            System.out.println("c");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -60,7 +59,6 @@ public class Utils {
                 intruccion.execute(aux);
             }
 
-            System.out.println("--------- sin error");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

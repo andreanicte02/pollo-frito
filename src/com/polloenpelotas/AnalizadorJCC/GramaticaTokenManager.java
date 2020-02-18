@@ -7,6 +7,7 @@ import java.util.List;
 import com.polloenpelotas.language.nodes.*;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.nodes.Instructions.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.*;
 
 /** Token Manager. */
 public class GramaticaTokenManager implements GramaticaConstants
@@ -56,6 +57,8 @@ private int jjMoveStringLiteralDfa0_0()
          return jjStopAtPos(0, 11);
       case 93:
          return jjStopAtPos(0, 12);
+      case 94:
+         return jjStopAtPos(0, 17);
       case 80:
       case 112:
          return jjMoveStringLiteralDfa1_0(0x80L);
@@ -233,14 +236,14 @@ static final int[] jjnextStates = {
 /** Token literal values. */
 public static final String[] jjstrLiteralImages = {
 "", null, null, null, null, null, null, null, "\73", "\50", "\51", "\133", 
-"\135", "\53", "\55", "\52", "\57", };
+"\135", "\53", "\55", "\52", "\57", "\136", };
 
 /** Lexer state names. */
 public static final String[] lexStateNames = {
    "DEFAULT",
 };
 static final long[] jjtoToken = {
-   0x1ffe1L, 
+   0x3ffe1L, 
 };
 static final long[] jjtoSkip = {
    0x1eL, 

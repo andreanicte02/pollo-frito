@@ -7,8 +7,10 @@ public class Main {
         System.out.println("xD");
 
 
-        //Utils.probarCup("src/com/polloenpelotas/ArchivosPrueba/A1.txt");
+        System.out.println("--cup");
+        Utils.probarCup("src/com/polloenpelotas/ArchivosPrueba/A1.txt");
 
+        System.out.println("--jcc");
         Utils.pruebaJCC("src/com/polloenpelotas/ArchivosPrueba/A1.txt");
         String print;
     }

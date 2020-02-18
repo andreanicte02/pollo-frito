@@ -39,6 +39,8 @@ identifier      = {more} ({letterDigit}|"_"|".")*
 
 //-------> Palabras Reservadas
 print = "print"
+truee = "true"
+falsee = "false"
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -98,6 +100,9 @@ print = "print"
 
 
 <YYINITIAL> {print}         {  return new Symbol(Simbolos.print, yyline, yycolumn, yytext()); }
+<YYINITIAL> {truee}         {  return new Symbol(Simbolos.truee, yyline, yycolumn, yytext()); }
+<YYINITIAL> {falsee}        {  return new Symbol(Simbolos.falsee, yyline, yycolumn, yytext()); }
+
 
 //-------> ER
 

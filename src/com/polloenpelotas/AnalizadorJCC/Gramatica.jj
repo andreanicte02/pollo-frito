@@ -13,6 +13,7 @@ import java.util.List;
 import com.polloenpelotas.language.nodes.*;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.nodes.Instructions.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.*;
 
 
 public class Gramatica {
@@ -46,6 +47,7 @@ TOKEN : {
     | <MENOS: "-">
     | <POR: "*">
     | <DIV: "/">
+    | <POT: "^">
 }
 /** Fin Lexico */
 
@@ -81,16 +83,25 @@ AstNode Expresion() :
 AstNode ExpresionMultiplicativa() :
 {AstNode e, e1;}
 {
-    e=ExpresionUnaria()
+    e=ExpPotencia()
     (
-        <POR> e1=ExpresionUnaria() { e = new MultAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        <POR> e1=ExpPotencia() { e = new MultAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
 
 
     )*
     {return e;}
 }
 
+AstNode ExpPotencia():
+{AstNode e, e1;}{
 
+    e=ExpresionUnaria()
+    (
+        <POT> e1= ExpresionUnaria() { e = new PotAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+    )*
+
+    {return e;}
+}
 
 AstNode ExpresionUnaria() :
 {AstNode e;}
@@ -105,6 +116,6 @@ AstNode Primitivo() :
 {AstNode e;}
 {
     <NUMERO> { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
-
+    |<PARENI> e = Expresion() <PAREND>   { return e; }
 
 }

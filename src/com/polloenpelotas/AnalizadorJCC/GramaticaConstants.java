@@ -36,6 +36,8 @@ public interface GramaticaConstants {
   int POR = 15;
   /** RegularExpression Id. */
   int DIV = 16;
+  /** RegularExpression Id. */
+  int POT = 17;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -59,6 +61,7 @@ public interface GramaticaConstants {
     "\"-\"",
     "\"*\"",
     "\"/\"",
+    "\"^\"",
   };
 
 }
