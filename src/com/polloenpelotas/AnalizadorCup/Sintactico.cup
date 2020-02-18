@@ -6,8 +6,13 @@
 //-------------------> Paquetes
 package com.polloenpelotas.AnalizadorCup;
 
+
 import java_cup.runtime.Symbol;
 import java.util.ArrayList;
+import java.util.List;
+import com.polloenpelotas.language.nodes.*;
+import com.polloenpelotas.language.FileLocation;
+import com.polloenpelotas.language.nodes.Instructions.*;
 
 //-------------------> Codigo para el parser, variables, metodos
 parser code
@@ -75,9 +80,14 @@ terminal umenos;
 terminal print;
 
 //-------------------> Declaración de No Terminales
-non terminal String inicio;
-non terminal String exp, asignacion, sentenciasPrueba, sentenciaPrueba;
-non terminal endSent, imprimir;
+non terminal List<AstNode> inicio;
+non terminal List<AstNode> sentenciasPrueba;
+
+non terminal AstNode exp, asignacion;
+non terminal AstNode sentenciaPrueba;
+non terminal AstNode imprimir;
+non terminal endSent;
+
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
 precedence right igual;
@@ -93,9 +103,6 @@ precedence left potenciar;
 precedence right not, umenos;
 
 
-
-
-
 //-------------------> No Terminal inicial
 start with inicio;
 
@@ -104,24 +111,25 @@ start with inicio;
 --------------------- 3ra. y ultima area: Reglas Sintacticas
 -------------------------------------------------------------------*/
 
-inicio::= sentenciasPrueba;
+inicio::= sentenciasPrueba:a  {: RESULT = a; :};
 
 
-sentenciasPrueba::= sentenciasPrueba sentenciaPrueba
-            |sentenciaPrueba;
+sentenciasPrueba::= sentenciasPrueba:a sentenciaPrueba:b    {: RESULT= a; RESULT.add(b); :}
+            |sentenciaPrueba:a              {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
 sentenciaPrueba::= asignacion
-               |imprimir;
+               |imprimir:a                  {: RESULT = a; :};
 
 asignacion::= exp igual exp endSent;
 
-imprimir ::= print apar exp cpar endSent;
+imprimir ::= print apar exp:e cpar endSent    {: RESULT = new PrintAstNode(new FileLocation(eleft, eright),e); :};
 
 endSent::= pComa
         |
         ;
 
-exp::= exp mas exp
+exp::= exp:a mas:o exp:b                     {: RESULT=new AddAstNode(new FileLocation(oleft, oright),a,b); :}
+
     | exp menos exp
 
     | exp modulo exp
@@ -142,10 +150,10 @@ exp::= exp mas exp
     | exp or exp
 
     | not exp
-    | menos exp  %prec umenos
+    | menos exp:a                   {: RESULT = new UnaryMinusNode(new FileLocation(aleft, aright), a); :} %prec umenos
 
     | decimal
-    | numero
+    | numero:a                      {: RESULT = new CreateZIntegerNode(new FileLocation(aleft, aright),Integer.parseInt(a)); :}
     | identifier
 
     | apar exp cpar

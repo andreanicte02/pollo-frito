@@ -37,6 +37,7 @@ public class ZVar extends ZProtoObject {
     public String toChickenString() {
         return value.toChickenString();
     }
+
     @Override
     public String toString() {
         return "ZVar{" +

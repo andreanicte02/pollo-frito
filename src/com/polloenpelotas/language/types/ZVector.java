@@ -14,6 +14,7 @@ public class ZVector extends ZProtoObject {
 
     @Override
     public String toChickenString() {
+
         var strings = this.list.stream()
                 .map(ZProtoObject::toChickenString) // sugar
                 .collect(Collectors.toList());

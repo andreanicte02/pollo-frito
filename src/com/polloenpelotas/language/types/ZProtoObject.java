@@ -14,7 +14,8 @@ public abstract class ZProtoObject {
 
     public abstract String toChickenString();
 
-    public ZProtoObject executeOperation(String name, String symbol, ZProtoObject o) throws SemanticException {
+    //
+    public final ZProtoObject  executeOperation(String name, String symbol, ZProtoObject o) throws SemanticException {
         try {
             final var method = this.getClass().getDeclaredMethod(name, o.getClass());
             return (ZProtoObject) method.invoke(this, o);

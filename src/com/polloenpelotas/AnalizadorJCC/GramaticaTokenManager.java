@@ -2,6 +2,11 @@
 /** Analizador de expresiones aritmeticas sencillas. */
 
 package com.polloenpelotas.AnalizadorJCC;
+import java.util.ArrayList;
+import java.util.List;
+import com.polloenpelotas.language.nodes.*;
+import com.polloenpelotas.language.FileLocation;
+import com.polloenpelotas.language.nodes.Instructions.*;
 
 /** Token Manager. */
 public class GramaticaTokenManager implements GramaticaConstants

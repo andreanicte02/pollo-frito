@@ -12,7 +12,7 @@ public class BinaryOperationNode extends ProAstNode {
     private final String operationName;
     private final String operationSymbol;
     private final AstNode e1;
-    private final boolean unwrapLeft;
+    private final boolean unwrapLeft; //suma y eso verdaero
     private final AstNode e2;
 
     public BinaryOperationNode(FileLocation fl, String operationName, String operationSymbol, AstNode e1, boolean unwrapLeft, AstNode e2) {
