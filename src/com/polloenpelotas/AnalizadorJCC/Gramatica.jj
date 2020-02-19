@@ -56,12 +56,29 @@ TOKEN : {
     | <DIFERENCIACION: "!=">
     | <AND: "&">
     | <OR: "|">
+    | <NOT: "!" >
+    | <MODULAR: "%%">
     | <TRUE: "true">
     | <FALSE: "false">
+
 
 }
 /** Fin Lexico */
 
+MORE :
+{
+    "\"" :STRING_STATE
+}
+
+<STRING_STATE> MORE:
+{
+    <~["\""]>
+}
+
+<STRING_STATE> TOKEN:
+{
+   <STRING:"\""> : DEFAULT
+}
 /** Producción inicial
     Analizar -> (Instruccion)+ EOF
 */
@@ -127,6 +144,8 @@ AstNode ExpresionRelacional():
     e=ExpresionSuma()
     (
         <MAYORQUE> e1=ExpresionSuma() { e = new MayorAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        |
+        <MENORQUE> e1=ExpresionSuma() { e = new MenorAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
 
     )*
     {return e;}
@@ -139,6 +158,8 @@ AstNode ExpresionSuma() :
     e=ExpresionMultiplicativa()
     (
         <MAS> e1=ExpresionMultiplicativa() { e = new AddAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        |
+        <MENOS> e1=ExpresionMultiplicativa() { e = new RestAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
 
     )*
     {return e;}
@@ -151,6 +172,10 @@ AstNode ExpresionMultiplicativa() :
     e=ExpPotencia()
     (
         <POR> e1=ExpPotencia() { e = new MultAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        |
+        <DIV> e1=ExpPotencia() { e = new DivAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        |
+        <MODULAR> e1=ExpPotencia() { e = new ModAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
 
 
     )*
@@ -163,6 +188,7 @@ AstNode ExpPotencia():
     e=ExpresionUnaria()
     (
         <POT> e1= ExpresionUnaria() { e = new PotAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+
     )*
 
     {return e;}
@@ -173,18 +199,20 @@ AstNode ExpresionUnaria() :
 {
     <MENOS> e=ExpresionUnaria() { return new UnaryMinusNode(new FileLocation(token.beginColumn, token.beginLine), e); }
     |
+    <NOT> e=ExpresionUnaria()   { return new NotAstNode(new FileLocation(token.beginColumn, token.beginLine), e); }
+    |
     e=Primitivo() {return e;}
 }
 
 
 AstNode Primitivo() :
-{AstNode e;}
+{AstNode e; Token t;}
 {
     <NUMERO>  { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
 
     | <TRUE>  { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),true); }
     | <FALSE> { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),false); }
-
+    | t=<STRING> { return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) ); }
     | <PARENI> e = ExpresionOr() <PAREND>   { return e; }
 
 

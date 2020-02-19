@@ -1,5 +1,7 @@
 package com.polloenpelotas.language.types;
 
+import org.jetbrains.annotations.NotNull;
+
 public class ZNumeric extends ZProtoObject {
 
     public double getValue() {
@@ -26,6 +28,67 @@ public class ZNumeric extends ZProtoObject {
         return new ZString(value+  e.getValue());
     }
 
+
+    public ZNumeric rest (ZInteger e){
+
+        return new ZNumeric(this.value -e.getValue());
+    }
+
+    public ZNumeric rest (ZNumeric e){
+
+        return new ZNumeric(this.value -e.getValue());
+    }
+
+
+    public ZNumeric mult(ZInteger e){
+
+        return new ZNumeric(this.value * e.getValue());
+    }
+
+    public ZNumeric mult(ZNumeric e){
+
+        return new ZNumeric(this.value * e.getValue());
+    }
+
+
+    public ZNumeric div(ZInteger e){
+
+        return new ZNumeric(this.value / e.getValue());
+    }
+
+    public ZNumeric div(ZNumeric e){
+
+        return new ZNumeric(this.value / e.getValue());
+    }
+
+    public ZNumeric pot(@NotNull ZInteger e){
+
+        return new ZNumeric( Math.pow(this.value, e.getValue()));
+    }
+
+    public ZNumeric pot(@NotNull ZNumeric e){
+
+        return new ZNumeric( Math.pow(this.value, e.getValue()));
+    }
+
+
+    public ZNumeric mod(@NotNull ZInteger e){
+
+        return new ZNumeric( this.value % e.getValue());
+    }
+
+    public ZNumeric mod(@NotNull ZNumeric e){
+
+        return new ZNumeric( this.value % e.getValue());
+    }
+
+
+    public ZNumeric unaryMinus (ZInteger e) {
+
+        return  new ZNumeric(value * -1);
+
+    }
+
     public ZBoolean mayor(ZInteger e){
 
         return new ZBoolean(this.value > e.getValue());
@@ -34,6 +97,16 @@ public class ZNumeric extends ZProtoObject {
     public ZBoolean mayor (ZNumeric e){
 
         return new ZBoolean(this.value > e.getValue());
+    }
+
+    public ZBoolean menor(ZInteger e){
+
+        return new ZBoolean(this.value < e.getValue());
+    }
+
+    public ZBoolean menor (ZNumeric e){
+
+        return new ZBoolean(this.value < e.getValue());
     }
 
 
@@ -46,6 +119,7 @@ public class ZNumeric extends ZProtoObject {
 
         return new ZBoolean(this.value == e.getValue());
     }
+
 
 
 

@@ -2,6 +2,8 @@ print(-1+1+1+1+2+2*3*4*5);
 print(-1);
 print(-2+1^(2*2+1));
 print((-2>3+3+5+2*2)==false| false & false);
-
+print(true+"hola mundo");
+print(!!!!!true);
+print("hola"=="hola"| false);
 
 

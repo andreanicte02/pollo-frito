@@ -38,6 +38,47 @@ public class ZInteger extends ZProtoObject {
         return new ZNumeric(this.value -e.getValue());
     }
 
+    public ZInteger mult(ZInteger e){
+
+        return new ZInteger(this.value * e.getValue());
+    }
+
+    public ZNumeric mult(ZNumeric e){
+
+        return new ZNumeric(this.value * e.getValue());
+    }
+
+    public ZInteger div(ZInteger e){
+
+        return new ZInteger(this.value / e.getValue());
+    }
+
+    public ZNumeric div(ZNumeric e){
+
+        return new ZNumeric(this.value /e.getValue());
+    }
+
+    public ZNumeric pot(@NotNull ZInteger e){
+
+        return new ZNumeric( Math.pow(this.value, e.getValue()));
+    }
+
+    public ZNumeric pot(@NotNull ZNumeric e){
+
+        return new ZNumeric( Math.pow(this.value, e.getValue()));
+    }
+
+    public ZInteger mod(@NotNull ZInteger e){
+
+        return new ZInteger( this.value % e.getValue());
+    }
+
+    public ZNumeric mod(@NotNull ZNumeric e){
+
+        return new ZNumeric( this.value % e.getValue());
+    }
+
+
     public ZBoolean mayor(ZInteger e){
 
         return new ZBoolean(this.value > e.getValue());
@@ -47,6 +88,17 @@ public class ZInteger extends ZProtoObject {
 
         return new ZBoolean(this.value > e.getValue());
     }
+
+    public ZBoolean menor(ZInteger e){
+
+        return new ZBoolean(this.value < e.getValue());
+    }
+
+    public ZBoolean menor (ZNumeric e){
+
+        return new ZBoolean(this.value < e.getValue());
+    }
+
 
     public ZBoolean equalTo(ZInteger e){
 
@@ -60,18 +112,12 @@ public class ZInteger extends ZProtoObject {
 
     public ZInteger unaryMinus (ZInteger e) {
 
-        return  new ZInteger(value * e.getValue());
+        return  new ZInteger(value * -1);
     }
 
-    public ZInteger mult(ZInteger e){
 
-        return new ZInteger(value * e.getValue());
-    }
 
-    public ZNumeric pot(@NotNull ZInteger e){
 
-        return new ZNumeric( Math.pow(value, e.value));
-    }
 
 
 

@@ -28,6 +28,18 @@ public class ZBoolean extends ZProtoObject {
         return new ZBoolean(this.value || e.getValue());
     }
 
+    public ZString add(ZString e){
+
+        return new ZString(this.value + e.getValue());
+    }
+
+    public ZBoolean not(ZBoolean e){
+
+        return new ZBoolean(!this.value);
+
+    }
+
+
 
 
 

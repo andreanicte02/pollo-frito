@@ -55,12 +55,20 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int OR = 25;
   /** RegularExpression Id. */
-  int TRUE = 26;
+  int NOT = 26;
   /** RegularExpression Id. */
-  int FALSE = 27;
+  int MODULAR = 27;
+  /** RegularExpression Id. */
+  int TRUE = 28;
+  /** RegularExpression Id. */
+  int FALSE = 29;
+  /** RegularExpression Id. */
+  int STRING = 32;
 
   /** Lexical state. */
   int DEFAULT = 0;
+  /** Lexical state. */
+  int STRING_STATE = 1;
 
   /** Literal token values. */
   String[] tokenImage = {
@@ -90,8 +98,13 @@ public interface GramaticaConstants {
     "\"!=\"",
     "\"&\"",
     "\"|\"",
+    "\"!\"",
+    "\"%%\"",
     "\"true\"",
     "\"false\"",
+    "\"\\\"\"",
+    "<token of kind 31>",
+    "\"\\\"\"",
   };
 
 }
