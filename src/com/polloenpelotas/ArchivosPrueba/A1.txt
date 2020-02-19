@@ -5,5 +5,7 @@ print((-2>3+3+5+2*2)==false| false & false);
 print(true+"hola mundo");
 print(!!!!!true);
 print("hola"=="hola"| false);
+print(("hola">="hola") + " "+ ((5*23+2)>(1+1*2)) ) ;
+print(("hola"<="hola") + " "+ ((5*23+2)<(1+1*2)) ) ;
 
 

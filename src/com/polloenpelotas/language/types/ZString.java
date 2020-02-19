@@ -38,9 +38,25 @@ public class ZString extends ZProtoObject {
 
         int res = this.value.compareTo(e.getValue());
 
-        return !(res==-1)? new ZBoolean(true): new ZBoolean(false);
+        return res==1? new ZBoolean(true): new ZBoolean(false);
 
     }
+    public ZBoolean mayorIgual(ZString e){
+
+        int res = this.value.compareTo(e.getValue());
+        return res >= 0? new ZBoolean(true): new ZBoolean(false);
+
+    }
+
+    public ZBoolean menorIgual (ZString e){
+
+
+        int res = this.value.compareTo(e.getValue());
+        return res <= 0? new ZBoolean(true): new ZBoolean(false);
+
+    }
+
+
 
     public ZBoolean equalTo (ZString e){
 

@@ -146,6 +146,11 @@ AstNode ExpresionRelacional():
         <MAYORQUE> e1=ExpresionSuma() { e = new MayorAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
         |
         <MENORQUE> e1=ExpresionSuma() { e = new MenorAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        |
+        <MAYORIGUAL> e1=ExpresionSuma() { e = new MayorIgualAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        |
+        <MENORIGUAL> e1=ExpresionSuma() { e = new MenorIgualAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+
 
     )*
     {return e;}

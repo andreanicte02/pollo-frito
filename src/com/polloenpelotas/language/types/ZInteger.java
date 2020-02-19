@@ -48,6 +48,7 @@ public class ZInteger extends ZProtoObject {
         return new ZNumeric(this.value * e.getValue());
     }
 
+    // TODO: validar que el numero no sea div entre 0
     public ZInteger div(ZInteger e){
 
         return new ZInteger(this.value / e.getValue());
@@ -98,6 +99,27 @@ public class ZInteger extends ZProtoObject {
 
         return new ZBoolean(this.value < e.getValue());
     }
+
+    public ZBoolean mayorIgual(ZInteger e){
+
+        return new ZBoolean(this.value >= e.getValue());
+    }
+
+    public ZBoolean mayorIgual (ZNumeric e){
+
+        return new ZBoolean(this.value >= e.getValue());
+    }
+
+    public ZBoolean menorIgual(ZInteger e){
+
+        return new ZBoolean(this.value <= e.getValue());
+    }
+
+    public ZBoolean menorIgual (ZNumeric e){
+
+        return new ZBoolean(this.value <= e.getValue());
+    }
+
 
 
     public ZBoolean equalTo(ZInteger e){

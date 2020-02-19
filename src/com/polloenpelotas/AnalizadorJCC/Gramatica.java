@@ -125,6 +125,8 @@ public class Gramatica implements GramaticaConstants {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case MENORQUE:
       case MAYORQUE:
+      case MENORIGUAL:
+      case MAYORIGUAL:
         ;
         break;
       default:
@@ -141,6 +143,16 @@ public class Gramatica implements GramaticaConstants {
         jj_consume_token(MENORQUE);
         e1 = ExpresionSuma();
                                         e = new MenorAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1);
+        break;
+      case MAYORIGUAL:
+        jj_consume_token(MAYORIGUAL);
+        e1 = ExpresionSuma();
+                                          e = new MayorIgualAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1);
+        break;
+      case MENORIGUAL:
+        jj_consume_token(MENORIGUAL);
+        e1 = ExpresionSuma();
+                                          e = new MenorIgualAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1);
         break;
       default:
         jj_la1[6] = jj_gen;
@@ -328,7 +340,7 @@ public class Gramatica implements GramaticaConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x80,0x100,0x2000000,0x1000000,0x400000,0xc0000,0xc0000,0x6000,0x6000,0x8018000,0x8018000,0x20000,0x34004220,0x30000220,};
+      jj_la1_0 = new int[] {0x80,0x100,0x2000000,0x1000000,0x400000,0x3c0000,0x3c0000,0x6000,0x6000,0x8018000,0x8018000,0x20000,0x34004220,0x30000220,};
    }
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1,0x1,};

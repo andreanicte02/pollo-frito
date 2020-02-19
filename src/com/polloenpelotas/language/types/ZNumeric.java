@@ -50,6 +50,7 @@ public class ZNumeric extends ZProtoObject {
         return new ZNumeric(this.value * e.getValue());
     }
 
+    // TODO: validar que el numero no sea div entre 0
 
     public ZNumeric div(ZInteger e){
 
@@ -107,6 +108,27 @@ public class ZNumeric extends ZProtoObject {
     public ZBoolean menor (ZNumeric e){
 
         return new ZBoolean(this.value < e.getValue());
+    }
+
+    public ZBoolean mayorIgual(ZInteger e){
+
+        return new ZBoolean(this.value >= e.getValue());
+    }
+
+    public ZBoolean mayorIgual (ZNumeric e){
+
+        return new ZBoolean(this.value >= e.getValue());
+    }
+
+
+    public ZBoolean menorIgual(ZInteger e){
+
+        return new ZBoolean(this.value <= e.getValue());
+    }
+
+    public ZBoolean menorIgual (ZNumeric e){
+
+        return new ZBoolean(this.value <= e.getValue());
     }
 
 
