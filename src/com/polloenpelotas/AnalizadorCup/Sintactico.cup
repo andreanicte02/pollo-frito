@@ -75,7 +75,7 @@ terminal igualQue, difQue, mayorQue, mayorIgualQue,menorQue, menorIgualQue;
 terminal and, or, not;
 terminal tern, dosp;
 terminal apar, cpar, pComa, igual;
-terminal String numero,decimal, identifier,truee, falsee;
+terminal String numero,decimal, identifier,truee, falsee, cadena;
 terminal umenos;
 
 terminal print;
@@ -129,32 +129,37 @@ endSent::= pComa
         |
         ;
 
-exp::= exp:a mas:o exp:b                     {: RESULT=new AddAstNode(new FileLocation(oleft, oright),a,b); :}
+exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(oleft, oright),a,b); :}
 
-    | exp menos exp
+    | exp:a menos exp:b             {: RESULT = new RestAstNode(new FileLocation(aleft, aright), a,b); :}
 
-    | exp modulo exp
-    | exp:a por exp:b             {: RESULT = new MultAstNode(new FileLocation(aleft, aright), a,b); :}
-    | exp dividir exp
+    | exp:a modulo exp:b            {: RESULT = new ModAstNode(new FileLocation(aleft, aright), a,b); :}
+    | exp:a por exp:b               {: RESULT = new MultAstNode(new FileLocation(aleft, aright), a,b); :}
+    | exp:a dividir exp:b           {: RESULT = new DivAstNode(new FileLocation(aleft, aright), a,b); :}
 
-    | exp:a potenciar exp:b       {: RESULT = new PotAstNode(new FileLocation(aleft, aright), a,b); :}
+    | exp:a potenciar exp:b         {: RESULT = new PotAstNode(new FileLocation(aleft, aright), a,b); :}
 
-    | exp igualQue exp
-    | exp difQue exp
+    | exp:a igualQue exp:b          {: RESULT = new EqualToAstNode(new FileLocation(aleft, aright), a,b); :}
+    | exp:a difQue exp:b            {: RESULT = new NotEqualToAstNode(new FileLocation(aleft, aright), a,b); :}
 
-    | exp menorIgualQue exp
-    | exp mayorIgualQue exp
-    | exp mayorQue exp
-    | exp menorQue exp
+    | exp:a menorIgualQue exp:b     {: RESULT = new MenorIgualAstNode (new FileLocation(aleft, aright), a,b); :}
+    | exp:a mayorIgualQue exp:b     {: RESULT = new MayorIgualAstNode (new FileLocation(aleft, aright), a,b); :}
+    | exp:a mayorQue exp:b          {: RESULT = new MayorAstNode(new FileLocation(aleft, aright), a,b); :}
+    | exp:a menorQue exp:b          {: RESULT = new MenorAstNode(new FileLocation(aleft, aright), a,b); :}
 
-    | exp and exp
-    | exp or exp
+    | exp:a and exp:b               {: RESULT = new AndAstNode(new FileLocation(aleft, aright), a,b); :}
+    | exp:a or exp:b                {: RESULT = new OrAstNode (new FileLocation(aleft, aright), a,b);  :}
 
-    | not exp
+    | not exp:a                     {: RESULT = new NotAstNode(new FileLocation(aleft, aright),a); :}
     | menos exp:a                   {: RESULT = new UnaryMinusNode(new FileLocation(aleft, aright), a); :} %prec umenos
 
-    | decimal
+    | cadena:a                      {: RESULT = new CreateZStringNode(new FileLocation(aleft, aright),a ); :}
+    | decimal:a                     {: RESULT = new CreateZNumericNode (new FileLocation(aleft, aright), Double.parseDouble(a )); :}
     | numero:a                      {: RESULT = new CreateZIntegerNode(new FileLocation(aleft, aright),Integer.parseInt(a)); :}
+
+    | truee:a                       {: RESULT = new CreateZBooleanNode (new FileLocation(aleft, aright), true);  :}
+    | falsee:a                      {: RESULT = new CreateZBooleanNode (new FileLocation(aleft, aright), false); :}
+
     | identifier
 
     | apar exp:e cpar               {: RESULT =  e; :}

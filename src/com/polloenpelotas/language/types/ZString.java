@@ -66,6 +66,11 @@ public class ZString extends ZProtoObject {
 
     }
 
+    public ZBoolean notEqualTo (ZString e){
+
+        return new ZBoolean( !equalTo(e).getValue() );
+    }
+
 
     @Override
     public String toChickenString() {

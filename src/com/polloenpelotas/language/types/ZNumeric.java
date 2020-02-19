@@ -142,6 +142,16 @@ public class ZNumeric extends ZProtoObject {
         return new ZBoolean(this.value == e.getValue());
     }
 
+    public ZBoolean notEqualTo (ZNumeric e){
+
+        return new ZBoolean( !equalTo(e).getValue() );
+    }
+
+    public ZBoolean notEqualTo (ZInteger e){
+
+        return new ZBoolean( !equalTo(e).getValue() );
+    }
+
 
 
 

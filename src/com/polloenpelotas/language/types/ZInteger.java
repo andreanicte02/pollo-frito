@@ -80,6 +80,12 @@ public class ZInteger extends ZProtoObject {
     }
 
 
+    public ZInteger unaryMinus (ZInteger e) {
+
+        return  new ZInteger(value * -1);
+    }
+
+
     public ZBoolean mayor(ZInteger e){
 
         return new ZBoolean(this.value > e.getValue());
@@ -132,9 +138,14 @@ public class ZInteger extends ZProtoObject {
         return new ZBoolean(this.value == e.getValue());
     }
 
-    public ZInteger unaryMinus (ZInteger e) {
+    public ZBoolean notEqualTo (ZNumeric e){
 
-        return  new ZInteger(value * -1);
+        return new ZBoolean( !equalTo(e).getValue() );
+    }
+
+    public ZBoolean notEqualTo (ZInteger e){
+
+        return new ZBoolean( !equalTo(e).getValue() );
     }
 
 
