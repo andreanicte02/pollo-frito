@@ -9,6 +9,20 @@ import java.util.Map;
 
 
 public abstract class ZProtoObject {
+    public ZProtoObject getAnterior() {
+        return anterior;
+    }
+
+    public void setAnterior(ZProtoObject anterior) {
+        this.anterior = anterior;
+    }
+
+    private ZProtoObject anterior=null;
+
+    public Map<String, ZProtoObject> getMembers() {
+        return members;
+    }
+
     private final Map<String, ZProtoObject> members = new HashMap<>();
 
 
@@ -48,5 +62,10 @@ public abstract class ZProtoObject {
         }
         * */
     }
+
+
+
+
+
 }
 

@@ -118,10 +118,10 @@ inicio::= sentenciasPrueba:a  {: RESULT = a; :};
 sentenciasPrueba::= sentenciasPrueba:a sentenciaPrueba:b    {: RESULT= a; RESULT.add(b); :}
             |sentenciaPrueba:a              {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
-sentenciaPrueba::= asignacion
+sentenciaPrueba::= asignacion:a             {: RESULT = a; :}
                |imprimir:a                  {: RESULT = a; :};
 
-asignacion::= exp igual exp endSent;
+asignacion::= exp:a igual:o exp:b endSent     {: RESULT = new AssignAstNode(new FileLocation(oleft, oright),a,b); :};
 
 imprimir ::= print apar exp:e cpar endSent    {: RESULT = new PrintAstNode(new FileLocation(eleft, eright),e); :};
 
@@ -160,7 +160,7 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
     | truee:a                       {: RESULT = new CreateZBooleanNode (new FileLocation(aleft, aright), true);  :}
     | falsee:a                      {: RESULT = new CreateZBooleanNode (new FileLocation(aleft, aright), false); :}
 
-    | identifier
+    | identifier:a                  {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a); :}
 
     | apar exp:e cpar               {: RESULT =  e; :}
 

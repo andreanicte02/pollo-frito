@@ -7,6 +7,7 @@ import com.polloenpelotas.AnalizadorJCC.ParseException;
 import com.polloenpelotas.AnalizadorJCC.TokenMgrError;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
+import com.polloenpelotas.language.types.ZAmbit;
 import com.polloenpelotas.language.types.ZNumeric;
 import java_cup.runtime.Symbol;
 
@@ -23,7 +24,7 @@ public class Utils {
             Gramatica parser = new Gramatica(new BufferedReader(new FileReader(path)));
             List<AstNode> ins = parser.Analizar();
 
-            ZNumeric aux = new ZNumeric(2);
+            ZAmbit aux = new ZAmbit(null);
             for (AstNode intruccion: ins){
                 intruccion.execute(aux);
             }
@@ -54,7 +55,7 @@ public class Utils {
             symbol = parse.parse();
 
             List<AstNode> ins = (List<AstNode>)symbol.value;
-            ZNumeric aux = new ZNumeric(2);
+            ZAmbit aux = new ZAmbit(null);
             for (AstNode intruccion: ins){
                 intruccion.execute(aux);
             }
