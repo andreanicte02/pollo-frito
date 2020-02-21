@@ -19,6 +19,7 @@ public abstract class ProAstNode implements AstNode {
         try {
             return safeExecute(ambit);
         } catch (SemanticException  semanticException) {
+            System.out.println("Error:" + semanticException+" [fila: " + fileLocation.getY()+", columna: "+ fileLocation.getX()+"]");
             throw new LocatedSemanticException(this.fileLocation, semanticException);
         }
     }

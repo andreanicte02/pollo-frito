@@ -52,6 +52,7 @@ TOKEN : {
     | <MAYORQUE: ">">
     | <MENORIGUAL: "<=">
     | <MAYORIGUAL: ">=">
+    | <IGUAL: "=">
     | <IGUALACION: "==">
     | <DIFERENCIACION: "!=">
     | <AND: "&">
@@ -60,6 +61,7 @@ TOKEN : {
     | <MODULAR: "%%">
     | <TRUE: "true">
     | <FALSE: "false">
+    | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
 }
@@ -90,9 +92,13 @@ List<AstNode>  Analizar() :
 
 
 AstNode Instruccion() :
-{AstNode e;}
+{AstNode e, e1;}
 {
   <PRINT> <PARENI> e=ExpresionOr() <PAREND> (<PCOMA>)?  { return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
+  |
+  e=Primitivo() <IGUAL> e1=ExpresionOr() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
+
+
 }
 
 
@@ -216,11 +222,18 @@ AstNode Primitivo() :
 {AstNode e; Token t;}
 {
     <NUMERO>  { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
-    | <DECIMAL> { return new CreateZNumericNode (new FileLocation(token.beginColumn, token.beginLine), Double.parseDouble(token.image )); }
-    | <TRUE>  { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),true); }
-    | <FALSE> { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),false); }
-    | t=<STRING> { return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) ); }
-    | <PARENI> e = ExpresionOr() <PAREND>   { return e; }
+    |
+    <DECIMAL> { return new CreateZNumericNode (new FileLocation(token.beginColumn, token.beginLine), Double.parseDouble(token.image )); }
+    |
+    <TRUE>  { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),true); }
+    |
+    <FALSE> { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),false); }
+    |
+    t=<STRING> { return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) ); }
+    |
+    t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
+    |
+    <PARENI> e = ExpresionOr() <PAREND>   { return e; }
 
 
 }

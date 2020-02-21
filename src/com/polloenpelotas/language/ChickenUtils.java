@@ -53,7 +53,7 @@ public final class ChickenUtils {
             }
         }
 
-        throw new SemanticException("La variable con el nombre id: "+name+",no existe");
+        throw new SemanticException("La variable con el nombre id: "+name+", no existe");
     }
 
 
