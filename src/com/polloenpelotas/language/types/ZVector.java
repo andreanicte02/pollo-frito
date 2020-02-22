@@ -1,5 +1,7 @@
 package com.polloenpelotas.language.types;
 
+import com.polloenpelotas.Utils;
+import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.SemanticException;
 
 import java.util.ArrayList;
@@ -22,6 +24,8 @@ public class ZVector extends ZProtoObject {
 
     public ZVector access(ZInteger index){
 
+        ChickenUtils.aumentarZVector(list,index.getValue());
+
         return new ZVector(list.get(index.getValue()-1));
 
     }
@@ -29,8 +33,33 @@ public class ZVector extends ZProtoObject {
     public ZProtoObject assign(ZInteger zInteger ) throws SemanticException {
 
         ZProtoObject aux = list.get(0);
-        aux.executeOperation("assign"," [=] ",new ZInteger(zInteger.getValue()));
+        aux.executeOperation("assignV"," [=] ",new ZInteger(zInteger.getValue()));
         return ZNothing.getInstance();
+    }
+
+    public ZProtoObject assign(ZVector zVector) throws SemanticException {
+
+        ZProtoObject aux = list.get(0);
+        aux.executeOperation("assign"," [=] ",new ZVector(zVector.list));
+
+
+        return ZNothing.getInstance();
+    }
+
+
+    public ZVector add(ZInteger zInteger) throws SemanticException {
+
+        List<ZProtoObject> lAux = new ArrayList<>();
+
+        for (ZProtoObject v: this.list) {
+
+            ZProtoObject r1 = ChickenUtils.unwrap(v);
+
+            lAux.add( new ZVar(r1.executeOperation("add","+", zInteger)));
+
+        }
+
+        return new ZVector(lAux);
     }
 
     @Override

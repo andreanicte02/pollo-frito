@@ -29,7 +29,16 @@ public class ZVar extends ZProtoObject {
         return ZNothing.getInstance();
     }
 
+    public ZProtoObject assignV(ZInteger zInteger){
 
+        value = zInteger;
+        return ZNothing.getInstance();
+    }
+
+
+
+
+    //-> un
 
 
 

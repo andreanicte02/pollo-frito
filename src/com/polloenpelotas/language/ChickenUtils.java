@@ -6,6 +6,8 @@ import com.polloenpelotas.language.types.ZVar;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
+
 public final class ChickenUtils {
 
     public static @NotNull ZProtoObject unwrap(@NotNull ZProtoObject value){
@@ -54,6 +56,17 @@ public final class ChickenUtils {
         }
 
         throw new SemanticException("La variable con el nombre id: "+name+", no existe");
+    }
+
+    public static ZProtoObject aumentarZVector(List<ZProtoObject> list, int index){
+
+        if(index> list.size()){
+
+            for (int x = list.size()-1; x<index-1;x++){
+                list.add(new ZVar(ZNothing.getInstance()));
+            }
+        }
+        return  ZNothing.getInstance();
     }
 
 
