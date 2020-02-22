@@ -4,6 +4,7 @@ import com.polloenpelotas.Utils;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.SemanticException;
 
+import javax.swing.text.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,15 +34,14 @@ public class ZVector extends ZProtoObject {
     public ZProtoObject assign(ZInteger zInteger ) throws SemanticException {
 
         ZProtoObject aux = list.get(0);
-        aux.executeOperation("assignV"," [=] ",new ZInteger(zInteger.getValue()));
+        aux.executeOperation("assignV"," [=] ",zInteger );
         return ZNothing.getInstance();
     }
 
     public ZProtoObject assign(ZVector zVector) throws SemanticException {
 
         ZProtoObject aux = list.get(0);
-        aux.executeOperation("assign"," [=] ",new ZVector(zVector.list));
-
+        aux.executeOperation("assignV"," [=] ", ChickenUtils.unwrap(zVector.list.get(0)));
 
         return ZNothing.getInstance();
     }

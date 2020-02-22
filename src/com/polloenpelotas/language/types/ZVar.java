@@ -31,9 +31,11 @@ public class ZVar extends ZProtoObject {
 
     public ZProtoObject assignV(ZInteger zInteger){
 
-        value = zInteger;
+        value = new ZInteger(zInteger.getValue());
         return ZNothing.getInstance();
     }
+
+
 
 
 
