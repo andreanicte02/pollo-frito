@@ -41,8 +41,6 @@ TOKEN : {
     | <PCOMA: ";">
     | <PARENI: "(">
     | <PAREND: ")">
-    | <CORI: "[">
-    | <CORD: "]">
     | <MAS: "+">
     | <MENOS: "-">
     | <POR: "*">
@@ -59,8 +57,11 @@ TOKEN : {
     | <OR: "|">
     | <NOT: "!" >
     | <MODULAR: "%%">
+    | <ABRA: "[">
+    | <CBRA: "]">
     | <TRUE: "true">
     | <FALSE: "false">
+    | <COMA: ",">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -219,8 +220,10 @@ AstNode ExpresionUnaria() :
 
 
 AstNode Primitivo() :
-{AstNode e; Token t;}
+{AstNode e; Token t;   List<AstNode> e1;  }
 {
+    <PARENI> e = ExpresionOr() <PAREND>   { return e; }
+    |
     <NUMERO>  { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
     |
     <DECIMAL> { return new CreateZNumericNode (new FileLocation(token.beginColumn, token.beginLine), Double.parseDouble(token.image )); }
@@ -233,7 +236,16 @@ AstNode Primitivo() :
     |
     t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
     |
-    <PARENI> e = ExpresionOr() <PAREND>   { return e; }
+    <ABRA> e1=CrearVector()  <CBRA> {return new CreateZVectorNode(new FileLocation(token.beginColumn, token.beginLine), e1); }
 
+}
 
+List<AstNode> CrearVector():
+{ AstNode e,e1;  List<AstNode> l = new ArrayList<AstNode>(); }
+{
+    e=ExpresionOr() { l.add(e); } (
+
+        <COMA> e1=ExpresionOr() { l.add(e1); }
+
+    )* {return l;}
 }

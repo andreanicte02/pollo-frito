@@ -74,7 +74,7 @@ terminal mas, menos, por, dividir, potenciar, modulo;
 terminal igualQue, difQue, mayorQue, mayorIgualQue,menorQue, menorIgualQue;
 terminal and, or, not;
 terminal tern, dosp;
-terminal apar, cpar, pComa, igual;
+terminal apar, cpar, pComa, igual, abra, cbra, coma;
 terminal String numero,decimal, identifier,truee, falsee, cadena;
 terminal umenos;
 
@@ -88,6 +88,9 @@ non terminal AstNode exp, asignacion;
 non terminal AstNode sentenciaPrueba;
 non terminal AstNode imprimir;
 non terminal endSent;
+non terminal AstNode crearVector;
+non terminal List<AstNode> listExp;
+non terminal List<AstNode> exps;
 
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
@@ -102,6 +105,7 @@ precedence left mas, menos;
 precedence left por, dividir, modulo;
 precedence left potenciar;
 precedence right not, umenos;
+precedence left abra;
 
 
 //-------------------> No Terminal inicial
@@ -150,6 +154,9 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
     | exp:a and exp:b               {: RESULT = new AndAstNode(new FileLocation(aleft, aright), a,b); :}
     | exp:a or exp:b                {: RESULT = new OrAstNode (new FileLocation(aleft, aright), a,b);  :}
 
+    | apar exp:e cpar               {: RESULT =  e; :}
+
+
     | not exp:a                     {: RESULT = new NotAstNode(new FileLocation(aleft, aright),a); :}
     | menos exp:a                   {: RESULT = new UnaryMinusNode(new FileLocation(aleft, aright), a); :} %prec umenos
 
@@ -162,7 +169,20 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
 
     | identifier:a                  {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a); :}
 
-    | apar exp:e cpar               {: RESULT =  e; :}
-
-
+    | crearVector:a                 {: RESULT = a; :}
     ;
+
+
+crearVector::= abra listExp:a cbra {: RESULT = new CreateZVectorNode(new FileLocation(aleft, aright), a); :}
+            ;
+
+
+listExp::= exps:a           {: RESULT = a; :}
+                |           {: RESULT = new ArrayList<>(); :}
+                ;
+
+exps::= exps:a coma exp:b   {: RESULT = a; RESULT.add(b); :}
+            | exp:a         {: RESULT = new ArrayList<>(); RESULT.add(a); :}
+            ;
+
+

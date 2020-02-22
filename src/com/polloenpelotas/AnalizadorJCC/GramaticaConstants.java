@@ -25,49 +25,51 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int PAREND = 10;
   /** RegularExpression Id. */
-  int CORI = 11;
+  int MAS = 11;
   /** RegularExpression Id. */
-  int CORD = 12;
+  int MENOS = 12;
   /** RegularExpression Id. */
-  int MAS = 13;
+  int POR = 13;
   /** RegularExpression Id. */
-  int MENOS = 14;
+  int DIV = 14;
   /** RegularExpression Id. */
-  int POR = 15;
+  int POT = 15;
   /** RegularExpression Id. */
-  int DIV = 16;
+  int MENORQUE = 16;
   /** RegularExpression Id. */
-  int POT = 17;
+  int MAYORQUE = 17;
   /** RegularExpression Id. */
-  int MENORQUE = 18;
+  int MENORIGUAL = 18;
   /** RegularExpression Id. */
-  int MAYORQUE = 19;
+  int MAYORIGUAL = 19;
   /** RegularExpression Id. */
-  int MENORIGUAL = 20;
+  int IGUAL = 20;
   /** RegularExpression Id. */
-  int MAYORIGUAL = 21;
+  int IGUALACION = 21;
   /** RegularExpression Id. */
-  int IGUAL = 22;
+  int DIFERENCIACION = 22;
   /** RegularExpression Id. */
-  int IGUALACION = 23;
+  int AND = 23;
   /** RegularExpression Id. */
-  int DIFERENCIACION = 24;
+  int OR = 24;
   /** RegularExpression Id. */
-  int AND = 25;
+  int NOT = 25;
   /** RegularExpression Id. */
-  int OR = 26;
+  int MODULAR = 26;
   /** RegularExpression Id. */
-  int NOT = 27;
+  int ABRA = 27;
   /** RegularExpression Id. */
-  int MODULAR = 28;
+  int CBRA = 28;
   /** RegularExpression Id. */
   int TRUE = 29;
   /** RegularExpression Id. */
   int FALSE = 30;
   /** RegularExpression Id. */
-  int IDENTIFIER = 31;
+  int COMA = 31;
   /** RegularExpression Id. */
-  int STRING = 34;
+  int IDENTIFIER = 32;
+  /** RegularExpression Id. */
+  int STRING = 35;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -87,8 +89,6 @@ public interface GramaticaConstants {
     "\";\"",
     "\"(\"",
     "\")\"",
-    "\"[\"",
-    "\"]\"",
     "\"+\"",
     "\"-\"",
     "\"*\"",
@@ -105,11 +105,14 @@ public interface GramaticaConstants {
     "\"|\"",
     "\"!\"",
     "\"%%\"",
+    "\"[\"",
+    "\"]\"",
     "\"true\"",
     "\"false\"",
+    "\",\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 33>",
+    "<token of kind 34>",
     "\"\\\"\"",
   };
 

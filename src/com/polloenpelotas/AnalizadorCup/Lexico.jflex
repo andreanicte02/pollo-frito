@@ -117,6 +117,9 @@ falsee = "false"
 <YYINITIAL> "!"         {   return new Symbol(Simbolos.not, yycolumn, yyline, yytext());}
 <YYINITIAL> "?"         {   return new Symbol(Simbolos.tern, yycolumn, yyline, yytext());}
 <YYINITIAL> ":"         {   return new Symbol(Simbolos.dosp, yycolumn, yyline, yytext());}
+<YYINITIAL> "["         {   return new Symbol(Simbolos.abra, yycolumn, yyline, yytext());}
+<YYINITIAL> "]"         {   return new Symbol(Simbolos.cbra, yycolumn, yyline, yytext());}
+<YYINITIAL> ","         {   return new Symbol(Simbolos.coma, yycolumn, yyline, yytext());}
 
 
 

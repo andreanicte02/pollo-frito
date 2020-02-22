@@ -6,10 +6,14 @@ import java.util.stream.Collectors;
 
 public class ZVector extends ZProtoObject {
 
-    private final List<ZProtoObject> list = new ArrayList<>();
+    private  List<ZProtoObject> list = new ArrayList<>();
 
     public ZVector(ZProtoObject firstValue) {
         this.list.add(firstValue);
+    }
+
+    public ZVector(List<ZProtoObject> list){
+        this.list = list;
     }
 
     @Override
