@@ -16,11 +16,11 @@ public class ZVar extends ZProtoObject {
 
 
     public ZProtoObject assign(@NotNull ZInteger zInteger){
-        value = new ZVector(zInteger);
+        value = new ZVector(new ZVar(zInteger));
         return ZNothing.getInstance();
     }
     public ZProtoObject assign(@NotNull ZString zString) {
-        value = new ZVector(zString);
+        value = new ZVector(new ZVar(zString));
         return ZNothing.getInstance();
     }
     public ZProtoObject assign(@NotNull ZVector zVector) {

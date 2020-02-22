@@ -1,20 +1,8 @@
-print(-1+1+1+1+2+2*3*4*5);
-print(-1);
-print(-2+1^(2*2+1));
-print((-2>3+3+5+2*2)==false| false & false);
-print(true+"hola mundo");
-print(!!!!!true);
-print("hola"=="hola"| false);
-print(("hola">="hola") + " "+( (5*23+2)>(1+1*2) ) ) ;
-a=5+5;
-print(a);
+
 a = 5;
-print(a);
+b=[3,2,3];
+print(b[2][1][1]);
 
-vector = [a,1,2,3,[1,2,3]];
-
-print(vector);
-
-print("fin");
-
-
+b[1][1][1]=8;
+print(b[1]);
+print(b[2]);

@@ -1,11 +1,15 @@
-package com.polloenpelotas.language.nodes;
+package com.polloenpelotas.language.nodes.CreateZTypes;
 
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.nodes.AstNode;
+import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZProtoObject;
+import com.polloenpelotas.language.types.ZVar;
 import com.polloenpelotas.language.types.ZVector;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -26,7 +30,7 @@ public class CreateZVectorNode extends ProAstNode {
         List<ZProtoObject> list = new ArrayList<>();
 
         for (AstNode exp:listExp) {
-            list.add(ChickenUtils.unwrap(exp.execute(ambit)));
+            list.add(new ZVar(ChickenUtils.unwrap(exp.execute(ambit))));
         }
 
         return new ZVector(list);

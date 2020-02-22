@@ -14,6 +14,7 @@ import com.polloenpelotas.language.nodes.*;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.nodes.Instructions.*;
 import com.polloenpelotas.language.nodes.ExpressionsOperations.*;
+import com.polloenpelotas.language.nodes.CreateZTypes.*;
 
 //-------------------> Codigo para el parser, variables, metodos
 parser code
@@ -170,6 +171,7 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
     | identifier:a                  {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a); :}
 
     | crearVector:a                 {: RESULT = a; :}
+    | exp:a abra exp:b cbra         {: RESULT = new AccessVectorAstNode(new FileLocation(aleft, aright),a,b); :}
     ;
 
 
@@ -184,5 +186,6 @@ listExp::= exps:a           {: RESULT = a; :}
 exps::= exps:a coma exp:b   {: RESULT = a; RESULT.add(b); :}
             | exp:a         {: RESULT = new ArrayList<>(); RESULT.add(a); :}
             ;
+
 
 
