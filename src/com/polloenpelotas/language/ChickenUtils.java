@@ -57,7 +57,7 @@ public final class ChickenUtils {
         throw new SemanticException("La variable con el nombre id: "+name+", no existe");
     }
 
-    public static ZProtoObject aumentarZVector(List<ZProtoObject> list, int index){
+    public static void  increaseZSize(List<ZVar> list, int index){
 
         if(index> list.size()){
 
@@ -65,7 +65,7 @@ public final class ChickenUtils {
                 list.add(new ZVar(ZNothing.getInstance()));
             }
         }
-        return  ZNothing.getInstance();
+
     }
 
     public static ZProtoObject createStructC(List<ZProtoObject> expUnwrap){

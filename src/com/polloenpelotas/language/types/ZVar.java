@@ -4,6 +4,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class ZVar extends ZProtoObject {
 
+    public void setValue(ZProtoObject value) {
+        this.value = value;
+    }
+
     private @NotNull ZProtoObject value;
 
     public ZVar(@NotNull ZProtoObject initialValue){
@@ -27,6 +31,13 @@ public class ZVar extends ZProtoObject {
         // TODO: se tienen mas validaciones? se pasa por referencia o por valor (se hace una copia)?
         value = zVector;
         return ZNothing.getInstance();
+    }
+
+    public ZProtoObject vectorAssign(@NotNull ZProtoObject value){
+
+        this.value = value;
+        return ZNothing.getInstance();
+
     }
 
 
