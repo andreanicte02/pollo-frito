@@ -11,56 +11,24 @@ import java.util.stream.Collectors;
 
 public class ZVector extends ZProtoObject {
 
-    private  List<ZProtoObject> list = new ArrayList<>();
+    public List<ZVar> getList() {
+        return list;
+    }
 
-    public ZVector(ZProtoObject firstValue) {
+    private  List<ZVar> list = new ArrayList<>();
+
+    public ZVector(ZVar firstValue) {
 
         this.list.add(firstValue);
     }
 
-    public ZVector(List<ZProtoObject> list){
+    public ZVector(List<ZVar> list){
         this.list = list;
     }
 
 
-    public ZVector access(ZInteger index){
-
-        ChickenUtils.aumentarZVector(list,index.getValue());
-
-        return new ZVector(list.get(index.getValue()-1));
-
-    }
-
-    public ZProtoObject assign(ZInteger zInteger ) throws SemanticException {
-
-        ZProtoObject aux = list.get(0);
-        aux.executeOperation("assignV"," [=] ",zInteger );
-        return ZNothing.getInstance();
-    }
-
-    public ZProtoObject assign(ZVector zVector) throws SemanticException {
-
-        ZProtoObject aux = list.get(0);
-        aux.executeOperation("assignV"," [=] ", ChickenUtils.unwrap(zVector.list.get(0)));
-
-        return ZNothing.getInstance();
-    }
 
 
-    public ZVector add(ZInteger zInteger) throws SemanticException {
-
-        List<ZProtoObject> lAux = new ArrayList<>();
-
-        for (ZProtoObject v: this.list) {
-
-            ZProtoObject r1 = ChickenUtils.unwrap(v);
-
-            lAux.add( new ZVar(r1.executeOperation("add","+", zInteger)));
-
-        }
-
-        return new ZVector(lAux);
-    }
 
     @Override
     public String toChickenString() {

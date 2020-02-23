@@ -39,6 +39,7 @@ more            = ({letter}| "."{letter})
 identifier      = {more} ({letterDigit}|"_"|".")*
 
 //-------> Palabras Reservadas
+c     = "c"
 print = "print"
 truee = "true"
 falsee = "false"
@@ -126,7 +127,7 @@ falsee = "false"
 
 //-------> PR
 
-
+<YYINITIAL> {c}             {  return new Symbol(Simbolos.c, yyline, yycolumn, yytext()); }
 <YYINITIAL> {print}         {  return new Symbol(Simbolos.print, yyline, yycolumn, yytext()); }
 <YYINITIAL> {truee}         {  return new Symbol(Simbolos.truee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {falsee}        {  return new Symbol(Simbolos.falsee, yyline, yycolumn, yytext()); }

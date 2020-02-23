@@ -1,20 +1,4 @@
 
 a = 5;
-z = [3];
-b=[3,2,3];
-print(b[2][1][1]);
+print(c(a,1,2));
 
-b[1][1][1]=8;
-print(b[1][1][1]);
-print(b+1);
-print(z);
-
-z[4]=2;
-
-print(b);
-print(z[1]);
-
-b[1][1][1]=z[4];
-
-print(b[1][1]);
-print(b);

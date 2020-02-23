@@ -1,4 +1,4 @@
-package com.polloenpelotas.language.nodes.CreateZTypes;
+package com.polloenpelotas.language.nodes.ExpressionsOperations;
 
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
@@ -8,19 +8,16 @@ import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZProtoObject;
 import com.polloenpelotas.language.types.ZVar;
-import com.polloenpelotas.language.types.ZVector;
-
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateZVectorNode extends ProAstNode {
+public class FunctionAstNode extends ProAstNode {
 
-    private final List<AstNode> listExp;
+    private  final List<AstNode> listExp;
 
-    //Solo lo use para pruebas XD
-    public CreateZVectorNode(@NotNull FileLocation fileLocation, List<AstNode> listExp) {
+    public FunctionAstNode(@NotNull FileLocation fileLocation, List<AstNode> listExp) {
         super(fileLocation);
         this.listExp = listExp;
     }
@@ -28,12 +25,18 @@ public class CreateZVectorNode extends ProAstNode {
     @Override
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
-        List<ZVar> list = new ArrayList<>();
+        List<ZProtoObject> listZVar = new ArrayList<>();
 
-        for (AstNode exp:listExp) {
-            list.add(new ZVar(ChickenUtils.unwrap(exp.execute(ambit))));
+        for (AstNode node:
+             listExp) {
+
+            listZVar.add(ChickenUtils.unwrap(node.execute(ambit)));
+
         }
 
-        return new ZVector(list);
+        return ChickenUtils.createStructC(listZVar);
+
+
+
     }
 }
