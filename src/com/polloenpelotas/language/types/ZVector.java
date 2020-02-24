@@ -26,26 +26,33 @@ public class ZVector extends ZProtoObject {
         this.list = list;
     }
 
+    /*el acceso a un vector siempre va retonrar un vector nuevo*/
+    /*en teoria los vectores solo podrian retornar vecotres de tamaño uno de tipo primitivo */
+    /*ChickenUtils.increaseZSize(list, index.getValue()); */
     public ZVector access(ZInteger index){
 
-        //el acceso a un vector siempre va retonrar un vector nuevo
-        //en teoria los vectores solo podrian retornar vecotres de tamaño uno de tipo primitivo
-        //ChickenUtils.increaseZSize(list, index.getValue());
+
 
         return new ZVector( list.get(index.getValue()-1));
 
     }
 
+    /*se evalua cuando se asgina un int*/
+    /*se realiza la copia por valor*/
     public ZProtoObject assign(ZInteger value)  {
 
-        //se realiza la copia copia
+
         primitivesAssign(new ZInteger(value.getValue()));
         return ZNothing.getInstance();
 
     }
 
+    /*solo si el vector para asignar es de tamaño 1 con un dato primitivo*/
+    /*a los vectores solo se deberian de poder asignar datos primitivos
+    * o vectores de tamaño 1 con datos primitivos*/
+    /*cuando se asigna un vector XD*/
     public ZProtoObject assign (ZVector value) throws SemanticException {
-        //solo si el vector para asignar es de tamaño 1 con un dato primitivo
+
         if(value.getList().size()>1 ){
             throw new SemanticException("error al asignar un dato a un vector");
         }
@@ -56,14 +63,15 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    /*Este metodo lo utiliza el metodo assign, pero solo con datos primitvos
+    * era solo para ahorrarme el Zvar aux XD*/
+
     void primitivesAssign(ZProtoObject value)  {
 
         ZVar aux = list.get(0);
         aux.setValue(value);
 
     }
-
-
 
 
 

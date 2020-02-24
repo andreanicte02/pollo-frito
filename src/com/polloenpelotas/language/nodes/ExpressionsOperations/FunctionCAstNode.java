@@ -7,26 +7,35 @@ import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZProtoObject;
+import com.polloenpelotas.language.types.ZVar;
 import org.jetbrains.annotations.NotNull;
 
-public class AccessVectorAstNode extends ProAstNode {
+import java.util.ArrayList;
+import java.util.List;
 
-    private  final AstNode e;
-    private  final AstNode e1;
+public class FunctionCAstNode extends ProAstNode {
 
-    public AccessVectorAstNode(@NotNull FileLocation fileLocation, AstNode e, AstNode e1) {
+    private  final List<AstNode> listExp;
+
+    public FunctionCAstNode(@NotNull FileLocation fileLocation, List<AstNode> listExp) {
         super(fileLocation);
-        this.e = e;
-        this.e1 = e1;
+        this.listExp = listExp;
     }
 
     @Override
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
-        ZProtoObject r1 = ChickenUtils.unwrap(e.execute(ambit));
-        ZProtoObject r2 = ChickenUtils.unwrap(e1.execute(ambit));
+        List<ZProtoObject> listZVar = new ArrayList<>();
 
-        return r1.executeOperation("access","exp[exp]",r2);
+        for (AstNode node:
+             listExp) {
+
+            listZVar.add(ChickenUtils.unwrap(node.execute(ambit)));
+
+        }
+
+        return ChickenUtils.createStructC(listZVar);
+
 
 
     }

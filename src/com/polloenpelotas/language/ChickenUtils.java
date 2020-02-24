@@ -2,7 +2,6 @@ package com.polloenpelotas.language;
 
 import com.polloenpelotas.language.types.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,28 +67,29 @@ public final class ChickenUtils {
 
     }
 
-    public static ZProtoObject createStructC(List<ZProtoObject> expUnwrap){
+    public static ZProtoObject createStructC(List<ZProtoObject> unwrapList){
         //estan totalmente desembueltos
 
-        if (!isVector(expUnwrap)){
+        if (exitsList(unwrapList)){
             return null;
         }
 
 
 
-        return new ZVector(createVectorData(expUnwrap));
+        return new ZVector(createVectorData(unwrapList));
     }
 
-    public static boolean isVector(List<ZProtoObject> expUnwrap){
+    /*indica si existe una lista, entre los valores */
+    public static boolean exitsList(List<ZProtoObject> unwrapList){
 
         for (ZProtoObject zvalue:
-             expUnwrap) {
+             unwrapList) {
 
             if (zvalue instanceof ZList){
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
 
 
     }
@@ -120,6 +120,54 @@ public final class ChickenUtils {
         return  finalValue;
 
     }
+
+    public static List<ZVar>  createListData(List<ZProtoObject> unwrapList){
+
+        List<ZVar> dataList = new ArrayList<>();
+        for (ZProtoObject node:
+             unwrapList) {
+
+            if (node instanceof ZVector){
+                addDataVectorToList(dataList, (ZVector) node);
+                continue;
+            }
+            dataList.add(new ZVar(node));
+        }
+
+        return dataList;
+    }
+
+    public static void addDataVectorToList(List<ZVar> dataList, ZVector vector){
+
+        if(vector.getList().size()>1 || vector.getList().size() == 0) {
+            dataList.add(new ZVar(vector));
+            return;
+        }
+
+        ZVar aux = vector.getList().get(0);
+        dataList.add(new ZVar(aux.getValue()));
+
+
+    }
+
+    /*si es un vector solo se envia el vector otra vez*/
+    /*si es una lista solo se envia la lista otra vez*/
+    /*si viniera un primitivo, se tendria que envolver en un vector*/
+
+    public static ZProtoObject returnValueAcces2List(ZProtoObject unwrapValue, ZVar wrapValue){
+
+        if (unwrapValue instanceof ZVector){
+            return new ZVector(((ZVector) unwrapValue).getList());
+        }
+
+        if(unwrapValue instanceof ZList){
+            return new ZList(((ZList) unwrapValue).getList());
+        }
+
+        return new ZVector(wrapValue);
+
+    }
+
 
 
     private ChickenUtils(){

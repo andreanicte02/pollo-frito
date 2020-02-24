@@ -77,8 +77,9 @@ terminal and, or, not;
 terminal tern, dosp;
 terminal apar, cpar, pComa, igual, abra, cbra, coma;
 terminal String numero,decimal, identifier,truee, falsee, cadena;
-terminal umenos;
+terminal umenos, abra2;
 terminal c;
+terminal list;
 
 terminal print;
 
@@ -94,6 +95,7 @@ non terminal AstNode crearVector;
 non terminal List<AstNode> listExp;
 non terminal List<AstNode> exps;
 non terminal AstNode functionC;
+non terminal AstNode createList;
 
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
@@ -108,7 +110,7 @@ precedence left mas, menos;
 precedence left por, dividir, modulo;
 precedence left potenciar;
 precedence right not, umenos;
-precedence left abra;
+precedence left abra, abra2;
 
 
 //-------------------> No Terminal inicial
@@ -172,12 +174,20 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
 
     | identifier:a                  {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a); :}
 
-    | functionC:a                   {: RESULT = a; :}
-    | exp:a abra exp:b cbra         {: RESULT = new AccessVectorAstNode(new FileLocation(aleft, aright),a,b); :}
+    | functionC:a                       {: RESULT = a; :}
+    | createList:a                      {: RESULT = a; :}
+    | exp:a abra exp:b cbra             {: RESULT = new AccessStructAstNode(new FileLocation(aleft, aright),a,b); :}
+    | exp:a abra abra exp:b cbra cbra   {:RESULT = new Access2ListAstNode(new FileLocation(aleft, aright), a ,b); :} %prec abra2
     ;
 
 
-functionC::= c apar listExp:a cpar    {: RESULT = new FunctionAstNode(new FileLocation(aleft, aright), a); :}
+
+
+functionC::= c apar listExp:a cpar    {: RESULT = new FunctionCAstNode(new FileLocation(aleft, aright), a); :}
+            ;
+
+
+createList::= list:o apar listExp:a cpar  {:RESULT = new CreateZListNode(new FileLocation(oleft, oright),a ); :}
             ;
 
 crearVector::= abra listExp:a cbra {: RESULT = new CreateZVectorNode(new FileLocation(aleft, aright), a); :}

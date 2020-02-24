@@ -33,12 +33,12 @@ public class ZVar extends ZProtoObject {
         return ZNothing.getInstance();
     }
 
-    public ZProtoObject vectorAssign(@NotNull ZProtoObject value){
-
-        this.value = value;
+    public ZProtoObject assign (@NotNull ZList zList){
+        value = zList;
         return ZNothing.getInstance();
-
     }
+
+
 
 
 
