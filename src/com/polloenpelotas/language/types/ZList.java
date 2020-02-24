@@ -1,6 +1,7 @@
 package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
+import com.polloenpelotas.language.SemanticException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,14 @@ public class ZList extends ZProtoObject {
     /*Este acceso devuelve el valor envuelto en una lista nueva*/
     /*Si se crea una nueva lista, y se hacen cambios en esta,
     no deberia de afectar los datos de donde se origino? */
-    public ZList access(ZInteger index){
+    public ZProtoObject access(ZInteger index) throws SemanticException {
+
+        boolean  is = isAccesListLeft();
+        if(isAccesListLeft()){
+
+            return this.executeOperation("access2", " exp[[exp]] ", index);
+
+        }
 
         ZVar aux = list.get(index.getValue()-1);
         List<ZProtoObject> unwrapList = new ArrayList<>();

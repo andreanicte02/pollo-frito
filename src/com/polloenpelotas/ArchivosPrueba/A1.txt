@@ -1,5 +1,30 @@
 
+a = 5;
+a = c(a,1,c(1,2), "hola");
+print(c(a,1,2));
+print(a);
+
+a[1][1][1]=15;
+print(a);
+b=c(5,5,5);
+b[1][1]=a[1][1][1];
+print(b);
+a[1]= 20;
+print(b);
+print(a);
+
+vec1 = 100;
+a[1]=vec1[1];
+vec1[1]= c(20);
+print(vec1);
+print(c(vec1, a, b, "hola", 3+3));
+print("--- probando listas ---");
+print(list(1,2,3, list(1,2), c(1),c(1,2))[4] );
+print(list(1,2,3, list(1,2), c(1),c(1,2))[4][[1]] );
+print(list(1,2,3, list(1,2), c(1),c(1,2))[4][[1]][[2]][1] );
+print(list(1,2,3, list(1,2), c(1),c(1,2))[2] );
+
 
 lista = list(1,2,3);
-lista[[1]]=5;
+lista[1][1]=5;
 print(lista);

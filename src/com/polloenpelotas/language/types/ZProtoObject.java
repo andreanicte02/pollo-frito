@@ -9,6 +9,16 @@ import java.util.Map;
 
 
 public abstract class ZProtoObject {
+    public boolean isAccesListLeft() {
+        return accesListLeft;
+    }
+
+    public void setAccesListLeft(boolean accesListLeft) {
+        this.accesListLeft = accesListLeft;
+    }
+
+    /*vandera que se usa para saber si el acceso de tipo2 de la lista esta del lado izquierdo*/
+    private boolean accesListLeft = false;
     public ZProtoObject getAnterior() {
         return anterior;
     }
