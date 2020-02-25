@@ -96,6 +96,8 @@ non terminal List<AstNode> listExp;
 non terminal List<AstNode> exps;
 non terminal AstNode functionC;
 non terminal AstNode createList;
+non terminal AstNode expLeft;
+non terminal AstNode expAssignLeft;
 
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
@@ -128,18 +130,26 @@ sentenciasPrueba::= sentenciasPrueba:a sentenciaPrueba:b    {: RESULT= a; RESULT
             |sentenciaPrueba:a              {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
 sentenciaPrueba::=
-                //asignacion:a             {: RESULT = a; :}
-                imprimir:a                  {: RESULT = a; :};
+                asignacion:a             {: RESULT = a; :}
+                |imprimir:a                  {: RESULT = a; :};
 
 asignacion::=
 
-        exp:a igual:o exp:b endSent     {: RESULT = new AssignAstNode(new FileLocation(oleft, oright),a,b); :};
+        expLeft:a igual:o exp:b endSent     {: RESULT = new AssignAstNode(new FileLocation(oleft, oright),a,b); :};
+
+
 
 imprimir ::= print apar exp:e cpar endSent    {: RESULT = new PrintAstNode(new FileLocation(eleft, eright),e); :};
+
+expLeft ::= identifier:e                      {: RESULT = new FindIDLeftAstNode(new FileLocation(eleft, eright), e); :}
+           | expLeft abra exp cbra
+           | expLeft abra abra exp cbra cbra
+           ;
 
 endSent::= pComa
         |
         ;
+
 
 exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(oleft, oright),a,b); :}
 

@@ -47,6 +47,8 @@ public class ZList extends ZProtoObject {
         return ChickenUtils.returnValueAcces2List(unwrapVar,wrapVar);
     }
 
+
+
     /*Cuando se asgina un vector*/
     public ZProtoObject assign(ZVector value){
 
@@ -57,7 +59,6 @@ public class ZList extends ZProtoObject {
     /*Cuando se asgina un int*/
     public ZProtoObject assign(ZInteger value){
 
-        primitivesAssign(new ZInteger(value.getValue()));
         return ZNothing.getInstance();
     }
 

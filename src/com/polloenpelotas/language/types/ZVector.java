@@ -41,24 +41,14 @@ public class ZVector extends ZProtoObject {
     /*se realiza la copia por valor*/
     public ZProtoObject assign(ZInteger value)  {
 
-
-        primitivesAssign(new ZInteger(value.getValue()));
         return ZNothing.getInstance();
-
     }
 
-    /*solo si el vector para asignar es de tamaño 1 con un dato primitivo*/
-    /*a los vectores solo se deberian de poder asignar datos primitivos
-    * o vectores de tamaño 1 con datos primitivos*/
-    /*cuando se asigna un vector XD*/
+
+
     public ZProtoObject assign (ZVector value) throws SemanticException {
 
-        if(value.getList().size()>1 ){
-            throw new SemanticException("error al asignar un dato a un vector");
-        }
 
-        ZProtoObject res = ChickenUtils.unwrap(value.getList().get(0));
-        this.executeOperation("assign", "asginar vector", res);
         return ZNothing.getInstance();
 
     }
@@ -68,8 +58,6 @@ public class ZVector extends ZProtoObject {
 
     void primitivesAssign(ZProtoObject value)  {
 
-        ZVar aux = list.get(0);
-        aux.setValue(value);
 
     }
 

@@ -30,8 +30,13 @@ public class AssignAstNode extends ProAstNode {
         ZProtoObject r2 = ChickenUtils.unwrap(e2.execute(ambit));
         ZProtoObject r1 = e.execute(ambit);
 
+        if(e instanceof FindIDLeftAstNode){
 
-        r1.executeOperation("assign"," [=] ",r2);
+            r1.executeOperation("assign"," [=] ",r2);
+            return ZNothing.getInstance();
+        }
+
+
 
 
         return ZNothing.getInstance();

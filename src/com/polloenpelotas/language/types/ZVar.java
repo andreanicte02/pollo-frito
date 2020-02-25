@@ -29,23 +29,15 @@ public class ZVar extends ZProtoObject {
     }
     public ZProtoObject assign(@NotNull ZVector zVector) {
         // TODO: se tienen mas validaciones? se pasa por referencia o por valor (se hace una copia)?
+
         value = zVector;
         return ZNothing.getInstance();
     }
 
-    public ZProtoObject assign (@NotNull ZList zList){
-        value = zList;
-        return ZNothing.getInstance();
-    }
 
 
 
 
-
-
-
-
-    //-> un
 
 
 

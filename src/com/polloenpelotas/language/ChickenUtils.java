@@ -22,9 +22,11 @@ public final class ChickenUtils {
 
             if(e.getMembers().containsKey(name)){
 
+                // se obtiene un zvar
                 return e.getMembers().get(name);
             }
         }
+
         return createVariable(ambit,name);
 
     }
