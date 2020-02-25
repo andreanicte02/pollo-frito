@@ -9,7 +9,7 @@ import com.polloenpelotas.language.types.ZProtoObject;
 import org.jetbrains.annotations.NotNull;
 
 public class FindIDAstNode extends ProAstNode {
-    boolean isLeft;
+
     private final String name;
 
 
@@ -18,27 +18,18 @@ public class FindIDAstNode extends ProAstNode {
     public FindIDAstNode(@NotNull FileLocation fileLocation, String name) {
         super(fileLocation);
         this.name = name;
-        this.isLeft = false;
     }
 
     @Override
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
 
-        if(isLeft) {
-
-            return ChickenUtils.getVarLeft(ambit, name);
-
-        }
 
         return ChickenUtils.getVarRight(ambit, name);
 
 
     }
 
-    public void setLeft(boolean left) {
-        isLeft = left;
-    }
 
 
 

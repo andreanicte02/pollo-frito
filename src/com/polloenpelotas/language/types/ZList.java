@@ -28,12 +28,6 @@ public class ZList extends ZProtoObject {
     no deberia de afectar los datos de donde se origino? */
     public ZProtoObject access(ZInteger index) throws SemanticException {
 
-        boolean  is = isAccesListLeft();
-        if(isAccesListLeft()){
-
-            return this.executeOperation("access2", " exp[[exp]] ", index);
-
-        }
 
         ZVar aux = list.get(index.getValue()-1);
         List<ZProtoObject> unwrapList = new ArrayList<>();

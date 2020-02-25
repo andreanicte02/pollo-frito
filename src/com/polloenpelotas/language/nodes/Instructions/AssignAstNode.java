@@ -27,15 +27,6 @@ public class AssignAstNode extends ProAstNode {
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
 
-
-        if(e instanceof FindIDAstNode){
-            ((FindIDAstNode) e).setLeft(true);
-        }
-
-        if(e instanceof AccessStructAstNode){
-            ((AccessStructAstNode) e).setLeft(true);
-        }
-
         ZProtoObject r2 = ChickenUtils.unwrap(e2.execute(ambit));
         ZProtoObject r1 = e.execute(ambit);
 

@@ -127,10 +127,13 @@ inicio::= sentenciasPrueba:a  {: RESULT = a; :};
 sentenciasPrueba::= sentenciasPrueba:a sentenciaPrueba:b    {: RESULT= a; RESULT.add(b); :}
             |sentenciaPrueba:a              {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
-sentenciaPrueba::= asignacion:a             {: RESULT = a; :}
-               |imprimir:a                  {: RESULT = a; :};
+sentenciaPrueba::=
+                //asignacion:a             {: RESULT = a; :}
+                imprimir:a                  {: RESULT = a; :};
 
-asignacion::= exp:a igual:o exp:b endSent     {: RESULT = new AssignAstNode(new FileLocation(oleft, oright),a,b); :};
+asignacion::=
+
+        exp:a igual:o exp:b endSent     {: RESULT = new AssignAstNode(new FileLocation(oleft, oright),a,b); :};
 
 imprimir ::= print apar exp:e cpar endSent    {: RESULT = new PrintAstNode(new FileLocation(eleft, eright),e); :};
 
