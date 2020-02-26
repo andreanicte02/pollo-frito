@@ -27,7 +27,7 @@ public class LeftAccess2AstNode extends ProAstNode {
         ZProtoObject r1 = ChickenUtils.unwrap(e.execute(ambit));
         ZProtoObject r2 = ChickenUtils.unwrap(e1.execute(ambit));
 
-        return r1.executeOperation("access2Left","id[[exp]]",r2);
+        return r1.executeOperation("access2Left"," exp[[exp]] left",r2);
 
     }
 }

@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.types;
 
+import com.polloenpelotas.language.ChickenUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class ZVar extends ZProtoObject {
@@ -18,6 +19,11 @@ public class ZVar extends ZProtoObject {
         return value;
     }
 
+    /* * * * * * * * * * * * * * * * * * * * * * * * * *
+    * "assign" only when set the value to a variable   *
+    * * * * * * * * * * * * * * * * * * * * * * * * *  */
+
+    /*primitivos*/
 
     public ZProtoObject assign(@NotNull ZInteger zInteger){
         value = new ZVector(new ZVar(zInteger));
@@ -27,24 +33,77 @@ public class ZVar extends ZProtoObject {
         value = new ZVector(new ZVar(zString));
         return ZNothing.getInstance();
     }
-    public ZProtoObject assign(@NotNull ZVector zVector) {
-        // TODO: se tienen mas validaciones? se pasa por referencia o por valor (se hace una copia)?
 
-        value = zVector;
+    public ZProtoObject assign(@NotNull ZNumeric zNumeric) {
+        value = new ZVector(new ZVar(zNumeric));
+        return ZNothing.getInstance();
+    }
+
+    public ZProtoObject assign(@NotNull ZBoolean zBoolean ) {
+        value = new ZVector(new ZVar(zBoolean));
+        return ZNothing.getInstance();
+    }
+
+    /*no primitivos*/
+    /*se hace una copia, no es por referencia*/
+
+    public ZProtoObject assign(@NotNull ZVector zVector) {
+
+        value = new ZVector( ChickenUtils.copiaPorValor(zVector.getList()));
         return ZNothing.getInstance();
     }
     public ZProtoObject assign(@NotNull ZList zList) {
-        // TODO: se tienen mas validaciones? se pasa por referencia o por valor (se hace una copia)?
 
-        value = zList;
+        value = new ZList(ChickenUtils.copiaPorValor(zList.getList()));
         return ZNothing.getInstance();
     }
 
+    /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+     * "assign2" lo uso para un acceso de tipo 2 de una lista    *
+     * * * * * * * * * * * * * * * * * * * * * * * * *  * * * * **/
+
+
+    /*primtivos*/
     public ZProtoObject assign2(@NotNull ZInteger value) {
 
         this.value = value;
         return ZNothing.getInstance();
     }
+
+    public ZProtoObject assign2(@NotNull ZNumeric value) {
+
+        this.value = value;
+        return ZNothing.getInstance();
+    }
+
+    public ZProtoObject assign2(@NotNull ZBoolean value) {
+
+        this.value = value;
+        return ZNothing.getInstance();
+    }
+
+    public ZProtoObject assign2(@NotNull ZString value) {
+
+        this.value = value;
+        return ZNothing.getInstance();
+    }
+
+
+    /*no primtivos*/
+    public ZProtoObject assign2(@NotNull ZVector value) {
+
+        ChickenUtils.castVectorSize1(this,value);
+        return ZNothing.getInstance();
+    }
+
+    public ZProtoObject assign2(@NotNull ZList value) {
+
+        this.value = value;
+        return ZNothing.getInstance();
+    }
+
+
+
 
 
 

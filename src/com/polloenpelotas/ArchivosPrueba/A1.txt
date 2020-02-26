@@ -1,12 +1,48 @@
 
-a = list(1,2,3,list(5,5));
-
-a[[4]][1]=9;
-print(a);
 
 a = list(list(1,list(1,2)));
-a[[1]][[2]][1]=5;
+a[[1]][[2]][1]=c(5);
 print(a);
+a[[1]][[2]]=c(5);
+
+print(a);
+
+vector = c(0,0,0);
+vector[1] = c(2);
+print (vector);
+vector[1] = c(6);
+print (vector);
+print (a);
+a[[1]][2]=vector[2];
+print (vector);
+print (a);
+a[[1]][2]=55;
+print (vector);
+print("---");
+a[[1]][2] = list(0);
+print (a);
+
+
+a = c(2,3,12,3)
+b= a;
+b[1][1]=0;
+print(a);
+print(b);
+
+a=list(25,25,50);
+a[1]=b[1];
+print(a);
+print(b);
+
+a[1]=list(c(2,2));
+print(a);
+print(b[b[2]]);
+b[b[4]]="ja";
+print(b);
+print(a);
+a[b[2][1]]="asdf";
+print(a);
+
 
 
 

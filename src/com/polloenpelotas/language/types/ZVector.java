@@ -26,23 +26,35 @@ public class ZVector extends ZProtoObject {
         this.list = list;
     }
 
-    /*el acceso a un vector siempre va retonrar un vector nuevo*/
-    /*en teoria los vectores solo podrian retornar vecotres de tamaño uno de tipo primitivo */
-    /*ChickenUtils.increaseZSize(list, index.getValue()); */
+
+
+    /* * * * * * * * * * * * * * * *
+     *  access from the right side  *
+     * * * * * * * * * * * * * * * */
+
     public ZVector access(ZInteger index){
-
-
 
         return new ZVector( list.get(index.getValue()-1) ) ;
 
     }
 
+    public ZProtoObject access(ZVector index) throws SemanticException {
+
+        ChickenUtils.isSize0(index,"derecho");
+
+        return this.executeOperation("access"," exp[exp] right ",index.getList().get(0).getValue());
+    }
+
+    /* * * * * * * * * * * * * * * *
+     *  access from the left side  *
+     * * * * * * * * * * * * * * * */
+
     public ZProtoObject access1Left(ZInteger index){
 
         ZVar aux = list.get(index.getValue()-1);
 
-        if(!(aux.getValue() instanceof ZVector) && !(aux.getValue() instanceof ZVector)){
-            //seria un primitivo
+        if(ChickenUtils.isPrimitive(aux.getValue())){
+
             return new ZVector(list.get(index.getValue()-1));
 
         }
@@ -51,6 +63,19 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    public ZProtoObject access1Left(ZVector index) throws SemanticException {
+
+        ChickenUtils.isSize0(index,"izquierdo");
+
+        return this.executeOperation("access1Left"," exp[exp] left ",index.getList().get(0).getValue());
+
+    }
+
+    /* * * * * *
+    *  assign  *
+    * * * * * */
+
+    /* primitives values */
     public ZProtoObject assign(ZInteger newValue){
 
         ZVar aux = list.get(0);
@@ -60,11 +85,40 @@ public class ZVector extends ZProtoObject {
 
     }
 
-    public ZProtoObject assign(ZVector newValue){
-
+    public ZProtoObject assign(ZString newValue){
 
         ZVar aux = list.get(0);
         aux.setValue(newValue);
+
+        return ZNothing.getInstance();
+
+    }
+
+    public ZProtoObject assign(ZBoolean newValue){
+
+        ZVar aux = list.get(0);
+        aux.setValue(newValue);
+
+        return ZNothing.getInstance();
+
+    }
+
+    public ZProtoObject assign(ZNumeric newValue){
+
+        ZVar aux = list.get(0);
+        aux.setValue(newValue);
+
+        return ZNothing.getInstance();
+
+    }
+
+    /* not primitives values */
+
+
+    public ZProtoObject assign(ZVector newValue){
+
+        ZVar aux = list.get(0);
+        ChickenUtils.castVectorSize1(aux,newValue);
 
         return ZNothing.getInstance();
 
@@ -72,16 +126,12 @@ public class ZVector extends ZProtoObject {
 
     public ZProtoObject assign(ZList newValue){
 
-
         ZVar aux = list.get(0);
         aux.setValue(newValue);
 
         return ZNothing.getInstance();
 
     }
-
-
-
 
 
     @Override

@@ -158,7 +158,7 @@ public final class ChickenUtils {
     /*si es una lista solo se envia la lista otra vez*/
     /*si viniera un primitivo, se tendria que envolver en un vector*/
 
-    public static ZProtoObject returnValueAcces2List(ZProtoObject unwrapValue, ZVar wrapValue){
+    public static ZProtoObject returnValueAccess2List(ZProtoObject unwrapValue, ZVar wrapValue){
 
         if (unwrapValue instanceof ZVector){
             return new ZVector(((ZVector) unwrapValue).getList());
@@ -172,10 +172,54 @@ public final class ChickenUtils {
 
     }
 
+    public static boolean isPrimitive(ZProtoObject val) {
 
+        if (val instanceof ZInteger || val instanceof ZNumeric || val instanceof ZString || val instanceof ZBoolean) {
+            return true;
 
-    private ChickenUtils(){
+        }
+        return false;
+    }
+
+    public static void castVectorSize1(ZVar var, ZVector vector){
+
+        if(vector.getList().size()==1 && ChickenUtils.isPrimitive(vector.getList().get(0).getValue())){
+
+            var.setValue(vector.getList().get(0).getValue());
+
+            return;
+        }
+        var.setValue(vector);
+
+        return;
+    }
+
+    @NotNull
+    public static List<ZVar> copiaPorValor(@NotNull List<ZVar> actual){
+
+        List<ZVar> nueva =  new ArrayList<>();
+
+        for (ZVar node:
+             actual) {
+
+            nueva.add(new ZVar(node.getValue()));
+
+        }
+
+        return nueva;
+
+    }
+
+    public static void isSize0(ZVector valor, String lado) throws SemanticException {
+
+        if(valor.getList().size() == 0){
+
+            throw new SemanticException(" Error al acceder id[exp] || id[[exp]]  del lado " + lado );
+        }
 
 
     }
+
+
+
 }

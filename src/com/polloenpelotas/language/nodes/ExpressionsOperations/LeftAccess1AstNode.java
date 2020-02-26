@@ -30,6 +30,6 @@ public class LeftAccess1AstNode extends ProAstNode {
 
 
 
-        return r1.executeOperation("access1Left","id[exp]",r2);
+        return r1.executeOperation("access1Left"," exp[exp] left ",r2);
     }
 }

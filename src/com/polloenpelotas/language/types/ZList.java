@@ -22,10 +22,13 @@ public class ZList extends ZProtoObject {
         return list;
     }
 
-    /*Este el acceso de tipo uno de las listas*/
-    /*Este acceso devuelve el valor envuelto en una lista nueva*/
-    /*Si se crea una nueva lista, y se hacen cambios en esta,
-    no deberia de afectar los datos de donde se origino? */
+    /* * * * * * * * * * * * * * * *
+     *  access from the right side  *
+     * * * * * * * * * * * * * * * */
+
+    /*acces devuelve el valor en una lista*/
+    /*acces2 devuelve el valor indicado como tal*/
+
     public ZProtoObject access(ZInteger index) throws SemanticException {
 
 
@@ -33,19 +36,40 @@ public class ZList extends ZProtoObject {
         List<ZProtoObject> unwrapList = new ArrayList<>();
         unwrapList.add(ChickenUtils.unwrap(aux));
 
-        //creo que voy a tener que hacer cambios
+        //TODO posibles cambios
+
         return new ZList(ChickenUtils.createListData(unwrapList));
 
     }
 
-    /* Este acceso devuelve el valor, lo que se encuentra en el inidice indicado */
+    public ZProtoObject access(ZVector index) throws SemanticException {
+
+        ChickenUtils.isSize0(index,"derecho");
+
+        return this.executeOperation("access"," exp[exp] right ", index.getList().get(0).getValue());
+
+    }
+
+
     public ZProtoObject access2(ZInteger index){
 
         ZVar wrapVar = list.get(index.getValue()-1);
         ZProtoObject unwrapVar = ChickenUtils.unwrap(wrapVar);
 
-        return ChickenUtils.returnValueAcces2List(unwrapVar,wrapVar);
+        return ChickenUtils.returnValueAccess2List(unwrapVar,wrapVar);
     }
+
+    public ZProtoObject access2(ZVector index) throws SemanticException {
+
+        ChickenUtils.isSize0(index, "derecho");
+
+        return this.executeOperation("access2", " exp[[exp]] right ", index.getList().get(0).getValue());
+
+    }
+
+    /* * * * * * * * * * * * * * * *
+     *  access from the left side  *
+     * * * * * * * * * * * * * * * */
 
     public ZProtoObject access1Left(ZInteger index){
 
@@ -54,12 +78,21 @@ public class ZList extends ZProtoObject {
         return  new ZVector(aux);
     }
 
+    public ZProtoObject access1Left(ZVector index) throws SemanticException {
+
+        ChickenUtils.isSize0(index, "izquierdo");
+
+        return this.executeOperation("access1Left", " exp[exp] left ", index.getList().get(0).getValue());
+
+    }
+
+
     public ZProtoObject access2Left(ZInteger index){
 
         ZVar aux = list.get(index.getValue()-1);
 
-        if(!(aux.getValue() instanceof ZList) && !(aux.getValue() instanceof ZList)){
-            //deberia de ser un primitivo si o si
+        if(ChickenUtils.isPrimitive(aux.getValue())){
+
             return new ZVector(aux);
         }
 
@@ -67,11 +100,13 @@ public class ZList extends ZProtoObject {
 
     }
 
+    public ZProtoObject access2Left(ZVector index) throws SemanticException {
 
+        ChickenUtils.isSize0(index, "izquierdo");
 
+        return this.executeOperation("access2Left", " exp[[exp]] left ", index.getList().get(0).getValue());
 
-
-
+    }
 
 
     @Override
