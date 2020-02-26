@@ -50,7 +50,7 @@ public class ZList extends ZProtoObject {
     public ZProtoObject access1Left(ZInteger index){
 
         ZVar aux = list.get(index.getValue()-1);
-        
+
         return  new ZVector(aux);
     }
 

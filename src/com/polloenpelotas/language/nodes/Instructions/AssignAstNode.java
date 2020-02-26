@@ -33,15 +33,13 @@ public class AssignAstNode extends ProAstNode {
         ZProtoObject r1 = e.execute(ambit);
 
 
-
+        //assginacion de tipo 2 en listas
         if(r1 instanceof ZVar && !(e instanceof FindIDLeftAstNode)){
 
             r1.executeOperation("assign2","  id[[exp]] = exp", r2);
             return ZNothing.getInstance();
 
         }
-
-
 
         r1.executeOperation("assign"," id[exp] || id[[exp]] [exp] || id -> asignacion", r2);
 
