@@ -8,7 +8,9 @@ import java.util.List;
 
 public final class ChickenUtils {
 
+    public static int xxx=-1;
     public static @NotNull ZProtoObject unwrap(@NotNull ZProtoObject value){
+
         if (value instanceof ZVar) {
             return ((ZVar) value).getValue();
         }

@@ -10,6 +10,8 @@ import com.polloenpelotas.language.nodes.ExpressionsOperations.AccessStructAstNo
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZNothing;
 import com.polloenpelotas.language.types.ZProtoObject;
+import com.polloenpelotas.language.types.ZVar;
+import com.polloenpelotas.language.types.ZVector;
 import org.jetbrains.annotations.NotNull;
 
 public class AssignAstNode extends ProAstNode {
@@ -37,6 +39,15 @@ public class AssignAstNode extends ProAstNode {
         }
 
 
+        if(r1 instanceof ZVar){
+
+            r1.executeOperation("assign2","  id[[exp]] = exp", r2);
+            return ZNothing.getInstance();
+        }
+
+
+
+        r1.executeOperation("assignAccess"," id[exp] || id[[exp]] ", r2);
 
 
         return ZNothing.getInstance();

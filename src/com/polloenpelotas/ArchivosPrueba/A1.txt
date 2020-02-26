@@ -1,13 +1,10 @@
 
-a=c(1,2,3);
-print(c(c("hola","hola"), 5, 9, "hola", 3+3));
-print("--- probando listas ---");
-print(list(1,2,3, list(1,2), c(1),c(1,2))[4] );
-print(list(1,2,3, list(1,2), c(1),c(1,2))[4][[1]] );
-print(list(1,2,3, list(1,2), c(1),c(1,2))[4][[1]][[2]][1] );
-print(list(1,2,3, list(1,2), c(1),c(1,2))[2] );
-print(list(c(1,2,3))[[1]][2]);
-a=c(5);
-print(a[1][1]);
+a = list(1,2,3,list(5,5));
+
+a[[4]][1]=9;
+a[[4]]=5;
+print(a);
+
+
 
 

@@ -33,33 +33,54 @@ public class ZVector extends ZProtoObject {
 
 
 
-        return new ZVector( list.get(index.getValue()-1));
+        return new ZVector( list.get(index.getValue()-1) ) ;
 
     }
 
-    /*se evalua cuando se asgina un int*/
-    /*se realiza la copia por valor*/
-    public ZProtoObject assign(ZInteger value)  {
+    public ZProtoObject access1Left(ZInteger index){
+
+        ZVar aux = list.get(index.getValue()-1);
+
+        if(!(aux.getValue() instanceof ZVector) && !(aux.getValue() instanceof ZVector)){
+            //seria un primitivo
+            return new ZVector(list.get(index.getValue()-1));
+
+        }
+
+        return aux.getValue();
+
+    }
+
+    public ZProtoObject assignAccess(ZInteger newValue){
+
+        ZVar aux = list.get(0);
+        aux.setValue(newValue);
 
         return ZNothing.getInstance();
+
     }
 
+    public ZProtoObject assignAccess(ZVector newValue){
 
 
-    public ZProtoObject assign (ZVector value) throws SemanticException {
-
+        ZVar aux = list.get(0);
+        aux.setValue(newValue);
 
         return ZNothing.getInstance();
 
     }
 
-    /*Este metodo lo utiliza el metodo assign, pero solo con datos primitvos
-    * era solo para ahorrarme el Zvar aux XD*/
+    public ZProtoObject assignAccess(ZList newValue){
 
-    void primitivesAssign(ZProtoObject value)  {
 
+        ZVar aux = list.get(0);
+        aux.setValue(newValue);
+
+        return ZNothing.getInstance();
 
     }
+
+
 
 
 

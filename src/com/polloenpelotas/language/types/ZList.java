@@ -47,36 +47,52 @@ public class ZList extends ZProtoObject {
         return ChickenUtils.returnValueAcces2List(unwrapVar,wrapVar);
     }
 
+    public ZProtoObject access1Left(ZInteger index){
+
+        ZVar aux = list.get(index.getValue()-1);
 
 
-    /*Cuando se asgina un vector*/
-    public ZProtoObject assign(ZVector value){
+        return  new ZVector(aux);
+    }
+
+    public ZProtoObject access2Left(ZInteger index){
+
+        ZVar aux = list.get(index.getValue()-1);
+
+        if(aux.getValue() instanceof ZList){
+
+            return aux;
+        }
+        if(aux.getValue() instanceof ZVector){
+
+            return aux;
+        }
+
+        if(aux.getValue() instanceof ZInteger){
+
+            return new ZVector(aux);
+        }
+
 
         return ZNothing.getInstance();
+
     }
 
+    public ZProtoObject assignAccess(ZInteger newValue) throws SemanticException {
 
-    /*Cuando se asgina un int*/
-    public ZProtoObject assign(ZInteger value){
+
+        ZVector aux = new ZVector(this.list);
+
+
+
 
         return ZNothing.getInstance();
-    }
-
-    /*Cuando se asgina una lista*/
-    public ZProtoObject assign(ZList value){
-
-        return ZNothing.getInstance();
 
     }
 
 
 
-    void primitivesAssign(ZProtoObject value)  {
 
-        ZVar aux = list.get(0);
-        aux.setValue(value);
-
-    }
 
 
 
