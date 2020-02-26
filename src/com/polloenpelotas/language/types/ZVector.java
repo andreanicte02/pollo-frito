@@ -51,7 +51,7 @@ public class ZVector extends ZProtoObject {
 
     }
 
-    public ZProtoObject assignAccess(ZInteger newValue){
+    public ZProtoObject assign(ZInteger newValue){
 
         ZVar aux = list.get(0);
         aux.setValue(newValue);
@@ -60,7 +60,7 @@ public class ZVector extends ZProtoObject {
 
     }
 
-    public ZProtoObject assignAccess(ZVector newValue){
+    public ZProtoObject assign(ZVector newValue){
 
 
         ZVar aux = list.get(0);
@@ -70,7 +70,7 @@ public class ZVector extends ZProtoObject {
 
     }
 
-    public ZProtoObject assignAccess(ZList newValue){
+    public ZProtoObject assign(ZList newValue){
 
 
         ZVar aux = list.get(0);

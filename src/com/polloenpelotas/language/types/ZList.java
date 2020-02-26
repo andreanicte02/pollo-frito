@@ -50,8 +50,7 @@ public class ZList extends ZProtoObject {
     public ZProtoObject access1Left(ZInteger index){
 
         ZVar aux = list.get(index.getValue()-1);
-
-
+        
         return  new ZVector(aux);
     }
 
@@ -59,36 +58,15 @@ public class ZList extends ZProtoObject {
 
         ZVar aux = list.get(index.getValue()-1);
 
-        if(aux.getValue() instanceof ZList){
-
-            return aux;
-        }
-        if(aux.getValue() instanceof ZVector){
-
-            return aux;
-        }
-
-        if(aux.getValue() instanceof ZInteger){
-
+        if(!(aux.getValue() instanceof ZList) && !(aux.getValue() instanceof ZList)){
+            //deberia de ser un primitivo si o si
             return new ZVector(aux);
         }
 
-
-        return ZNothing.getInstance();
-
-    }
-
-    public ZProtoObject assignAccess(ZInteger newValue) throws SemanticException {
-
-
-        ZVector aux = new ZVector(this.list);
-
-
-
-
-        return ZNothing.getInstance();
+        return aux;
 
     }
+
 
 
 

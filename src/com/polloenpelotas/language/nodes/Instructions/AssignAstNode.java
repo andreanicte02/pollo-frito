@@ -32,22 +32,18 @@ public class AssignAstNode extends ProAstNode {
         ZProtoObject r2 = ChickenUtils.unwrap(e2.execute(ambit));
         ZProtoObject r1 = e.execute(ambit);
 
-        if(e instanceof FindIDLeftAstNode){
-
-            r1.executeOperation("assign"," [=] ",r2);
-            return ZNothing.getInstance();
-        }
 
 
-        if(r1 instanceof ZVar){
+        if(r1 instanceof ZVar && !(e instanceof FindIDLeftAstNode)){
 
             r1.executeOperation("assign2","  id[[exp]] = exp", r2);
             return ZNothing.getInstance();
+
         }
 
 
 
-        r1.executeOperation("assignAccess"," id[exp] || id[[exp]] ", r2);
+        r1.executeOperation("assign"," id[exp] || id[[exp]] [exp] || id -> asignacion", r2);
 
 
         return ZNothing.getInstance();
