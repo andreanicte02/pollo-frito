@@ -9,12 +9,15 @@ import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.ZAmbit;
 import com.polloenpelotas.language.types.ZNumeric;
+import com.polloenpelotas.language.types.ZVar;
 import java_cup.runtime.Symbol;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
@@ -68,4 +71,6 @@ public class Utils {
         }
 
     }
+
+
 }

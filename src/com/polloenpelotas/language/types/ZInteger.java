@@ -1,6 +1,11 @@
 package com.polloenpelotas.language.types;
 
+import com.polloenpelotas.language.ChickenUtils;
+import com.polloenpelotas.language.SemanticException;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ZInteger extends ZProtoObject {
     private final int value;
@@ -13,6 +18,7 @@ public class ZInteger extends ZProtoObject {
         return value;
     }
 
+    /*suma*/
     public ZInteger add(ZInteger e) {
 
         return new ZInteger(this.value + e.value);
@@ -28,6 +34,14 @@ public class ZInteger extends ZProtoObject {
         return new ZNumeric(this.value+ e.getValue());
     }
 
+    public ZVector add(ZVector vector) throws SemanticException {
+
+
+        return ChickenUtils.rightVectorOperation(this,vector,"add","+");
+    }
+
+    /*resta*/
+
     public ZInteger rest (ZInteger e){
 
         return new ZInteger(this.value -e.getValue());
@@ -37,6 +51,13 @@ public class ZInteger extends ZProtoObject {
 
         return new ZNumeric(this.value -e.getValue());
     }
+
+    public ZVector rest (ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"rest","-");
+    }
+
+    /*mult*/
 
     public ZInteger mult(ZInteger e){
 
@@ -48,7 +69,15 @@ public class ZInteger extends ZProtoObject {
         return new ZNumeric(this.value * e.getValue());
     }
 
+    public ZVector mult(ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"mult","*");
+
+    }
+
+
     // TODO: validar que el numero no sea div entre 0
+    /*div*/
     public ZInteger div(ZInteger e){
 
         return new ZInteger(this.value / e.getValue());
@@ -59,6 +88,12 @@ public class ZInteger extends ZProtoObject {
         return new ZNumeric(this.value /e.getValue());
     }
 
+    public ZVector div(ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"div","/");
+    }
+
+    /*pot*/
     public ZNumeric pot(@NotNull ZInteger e){
 
         return new ZNumeric( Math.pow(this.value, e.getValue()));
@@ -69,6 +104,12 @@ public class ZInteger extends ZProtoObject {
         return new ZNumeric( Math.pow(this.value, e.getValue()));
     }
 
+    public ZVector pot(@NotNull ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"pot","^");
+    }
+
+    /*mod*/
     public ZInteger mod(@NotNull ZInteger e){
 
         return new ZInteger( this.value % e.getValue());
@@ -80,10 +121,21 @@ public class ZInteger extends ZProtoObject {
     }
 
 
+    public ZVector mod(@NotNull ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"mod","%%");
+    }
+
+
+
+    /*unaryMinus*/
     public ZInteger unaryMinus (ZInteger e) {
 
         return  new ZInteger(value * -1);
     }
+
+
+    /*mayor*/
 
 
     public ZBoolean mayor(ZInteger e){
@@ -96,6 +148,15 @@ public class ZInteger extends ZProtoObject {
         return new ZBoolean(this.value > e.getValue());
     }
 
+    public ZVector mayor (ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"mayor",">");
+    }
+
+
+
+    /*menor*/
+
     public ZBoolean menor(ZInteger e){
 
         return new ZBoolean(this.value < e.getValue());
@@ -105,6 +166,14 @@ public class ZInteger extends ZProtoObject {
 
         return new ZBoolean(this.value < e.getValue());
     }
+
+    public ZVector menor (ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"menor","<");
+
+    }
+
+    /*mayorIgual*/
 
     public ZBoolean mayorIgual(ZInteger e){
 
@@ -116,6 +185,14 @@ public class ZInteger extends ZProtoObject {
         return new ZBoolean(this.value >= e.getValue());
     }
 
+    public ZVector mayorIgual (ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"mayorIgual","<=");
+    }
+
+
+    /*menorigual*/
+
     public ZBoolean menorIgual(ZInteger e){
 
         return new ZBoolean(this.value <= e.getValue());
@@ -125,6 +202,13 @@ public class ZInteger extends ZProtoObject {
 
         return new ZBoolean(this.value <= e.getValue());
     }
+
+    public ZVector menorIgual (ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"menorIgual","<=");
+    }
+
+    /*equal to*/
 
 
 
@@ -138,6 +222,17 @@ public class ZInteger extends ZProtoObject {
         return new ZBoolean(this.value == e.getValue());
     }
 
+    public ZVector equalTo (ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"equalTo","==");
+
+    }
+
+
+
+
+    /* not equalTo*/
+
     public ZBoolean notEqualTo (ZNumeric e){
 
         return new ZBoolean( !equalTo(e).getValue() );
@@ -147,6 +242,14 @@ public class ZInteger extends ZProtoObject {
 
         return new ZBoolean( !equalTo(e).getValue() );
     }
+
+    public ZVector notEqualTo (ZVector e) throws SemanticException {
+
+        return ChickenUtils.rightVectorOperation(this,e,"notEqualTo","!=");
+
+    }
+
+
 
 
 

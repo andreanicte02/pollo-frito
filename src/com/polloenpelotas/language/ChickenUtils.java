@@ -220,6 +220,20 @@ public final class ChickenUtils {
 
     }
 
+    public static ZVector rightVectorOperation(ZProtoObject left ,ZVector right, String name, String sim) throws SemanticException {
+
+        List<ZVar> nova = new ArrayList<>();
+        for (ZVar node:
+                right.getList()) {
+
+            ZProtoObject aux = left.executeOperation(name,sim,node.getValue());
+            nova.add(new ZVar(aux));
+        }
+
+        return new ZVector(nova);
+
+    }
+
 
 
 }
