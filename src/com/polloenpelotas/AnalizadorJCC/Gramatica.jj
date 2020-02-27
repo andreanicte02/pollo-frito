@@ -63,6 +63,8 @@ TOKEN : {
     | <TRUE: "true">
     | <FALSE: "false">
     | <COMA: ",">
+    | <C: "c">
+    | <LIST: "list">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -98,7 +100,7 @@ AstNode Instruccion() :
 {
   <PRINT> <PARENI> e=ExpresionOr() <PAREND> (<PCOMA>)?  { return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
   |
-  e=Primitivo() <IGUAL> e1=ExpresionOr() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
+  e=ExpsLeft() <IGUAL> e1=ExpresionOr() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
 
 
 }
@@ -216,11 +218,26 @@ AstNode ExpresionUnaria() :
     |
     <NOT> e=ExpresionUnaria()   { return new NotAstNode(new FileLocation(token.beginColumn, token.beginLine), e); }
     |
-    e=Primitivo() {return e;}
+    e=ExpAccess() {return e;}
+}
+
+AstNode ExpAccess():
+{AstNode e, e1;}
+{
+   e=Primitives()(
+
+        LOOKAHEAD(2) <ABRA> e1=ExpresionOr() <CBRA>
+        {e = new AccessStructAstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        |
+        LOOKAHEAD(2) <ABRA> <ABRA> e1=ExpresionOr() <CBRA> <CBRA>
+        {e = new Access2ListAstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1);}
+
+   )* {return e;}
+
 }
 
 
-AstNode Primitivo() :
+AstNode Primitives() :
 {AstNode e; Token t;   List<AstNode> e1;  }
 {
     <PARENI> e = ExpresionOr() <PAREND>   { return e; }
@@ -235,13 +252,30 @@ AstNode Primitivo() :
     |
     t=<STRING> { return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) ); }
     |
-    t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
+    e=OtherFunctions(){ return e; }
     |
-    <ABRA> e1=CrearVector()  <CBRA> {return new CreateZVectorNode(new FileLocation(token.beginColumn, token.beginLine), e1); }
+    t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
+}
+
+
+AstNode OtherFunctions():
+{ List<AstNode> l = new ArrayList<AstNode>(); }
+{
+    <C> <PARENI>  l=ListExp() <PAREND>       { return new CreateZVectorNode(new FileLocation(token.beginColumn, token.beginLine), l ); }
+    |
+    <LIST> <PARENI> l=ListExp() <PAREND>    { return new CreateZListNode(new FileLocation(token.beginColumn, token.beginLine), l) ; }
 
 }
 
-List<AstNode> CrearVector():
+List<AstNode> ListExp():
+{ List<AstNode> l = new ArrayList<AstNode>(); }
+{
+    l=Exps()    { return l; }
+    |           { return l; }
+
+}
+
+List<AstNode> Exps():
 { AstNode e,e1;  List<AstNode> l = new ArrayList<AstNode>(); }
 {
     e=ExpresionOr() { l.add(e); } (
@@ -249,4 +283,25 @@ List<AstNode> CrearVector():
         <COMA> e1=ExpresionOr() { l.add(e1); }
 
     )* {return l;}
+}
+
+AstNode ExpsLeft():
+{AstNode e, e1; }
+{
+    e=PrimitivesLeft()  (
+        LOOKAHEAD(2) <ABRA> e1=ExpresionOr() <CBRA>
+        {e = new LeftAccess1AstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+        |
+         LOOKAHEAD(2) <ABRA> <ABRA> e1=ExpresionOr() <CBRA> <CBRA>
+        {e = new LeftAccess2AstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1);}
+
+    )* { return e;}
+
+
+}
+
+AstNode PrimitivesLeft():
+{Token t;}
+{
+    t=<IDENTIFIER> {return new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
 }

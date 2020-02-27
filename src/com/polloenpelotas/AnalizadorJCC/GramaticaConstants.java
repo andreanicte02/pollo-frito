@@ -67,9 +67,13 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int COMA = 31;
   /** RegularExpression Id. */
-  int IDENTIFIER = 32;
+  int C = 32;
   /** RegularExpression Id. */
-  int STRING = 35;
+  int LIST = 33;
+  /** RegularExpression Id. */
+  int IDENTIFIER = 34;
+  /** RegularExpression Id. */
+  int STRING = 37;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -110,9 +114,11 @@ public interface GramaticaConstants {
     "\"true\"",
     "\"false\"",
     "\",\"",
+    "\"c\"",
+    "\"list\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 34>",
+    "<token of kind 36>",
     "\"\\\"\"",
   };
 
