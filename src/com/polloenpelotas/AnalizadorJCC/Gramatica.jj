@@ -261,7 +261,7 @@ AstNode Primitives() :
 AstNode OtherFunctions():
 { List<AstNode> l = new ArrayList<AstNode>(); }
 {
-    <C> <PARENI>  l=ListExp() <PAREND>       { return new CreateZVectorNode(new FileLocation(token.beginColumn, token.beginLine), l ); }
+    <C> <PARENI>  l=ListExp() <PAREND>       { return new FunctionCAstNode(new FileLocation(token.beginColumn, token.beginLine), l ); }
     |
     <LIST> <PARENI> l=ListExp() <PAREND>    { return new CreateZListNode(new FileLocation(token.beginColumn, token.beginLine), l) ; }
 

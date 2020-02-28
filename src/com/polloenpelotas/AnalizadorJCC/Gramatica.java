@@ -420,7 +420,7 @@ public class Gramatica implements GramaticaConstants {
       jj_consume_token(PARENI);
       l = ListExp();
       jj_consume_token(PAREND);
-                                               {if (true) return new CreateZVectorNode(new FileLocation(token.beginColumn, token.beginLine), l );}
+                                               {if (true) return new FunctionCAstNode(new FileLocation(token.beginColumn, token.beginLine), l );}
       break;
     case LIST:
       jj_consume_token(LIST);

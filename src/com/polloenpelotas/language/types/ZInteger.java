@@ -249,6 +249,14 @@ public class ZInteger extends ZProtoObject {
 
     }
 
+    /*cast*/
+
+
+    public ZString castS (ZNothing e) throws SemanticException {
+
+        return new ZString(""+this.getValue());
+
+    }
 
 
 

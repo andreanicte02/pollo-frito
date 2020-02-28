@@ -8,7 +8,8 @@ import java.util.List;
 
 public final class ChickenUtils {
 
-    public static int xxx=-1;
+
+
     public static @NotNull ZProtoObject unwrap(@NotNull ZProtoObject value){
 
         if (value instanceof ZVar) {
@@ -33,11 +34,6 @@ public final class ChickenUtils {
 
     }
 
-    public static void setVariable(@NotNull ZProtoObject ambit, String name, ZVar value){
-
-        ambit.getMembers().put(name, value);
-
-    }
 
     public static @NotNull ZProtoObject createVariable(@NotNull ZProtoObject ambit, String name){
 
@@ -74,13 +70,65 @@ public final class ChickenUtils {
     public static ZProtoObject createStructC(List<ZProtoObject> unwrapList){
         //estan totalmente desembueltos
 
+        List<ZVar> newData = new ArrayList<>();
+
         if (exitsList(unwrapList)){
             return null;
         }
 
 
+        for (ZProtoObject node:
+             unwrapList) {
 
-        return new ZVector(createVectorData(unwrapList));
+            if(node instanceof ZVector){
+                newData.addAll(setVectorInVector((ZVector) node));
+                continue;
+            }
+            newData.add(new ZVar(node));
+
+        }
+
+
+        return new ZVector(newData);
+    }
+
+    public static void castearVector(List<ZVar> list){
+
+        int estado =-1;
+
+        for(ZVar node:
+        list){
+            if(node.getValue() instanceof  ZString){
+                return;
+            }
+        }
+
+
+    }
+
+    public static void castearString(){}
+
+
+    public static List<ZVar> setVectorInVector(ZVector vector){
+
+        List<ZVar> list= new ArrayList<>();
+        for (ZVar node:
+             vector.getList()) {
+
+            list.add(new ZVar(node.getValue()));
+
+        }
+        return list;
+        
+    }
+
+    public static ZProtoObject vectorSize1(ZVector vect){
+
+        ZProtoObject aux = unwrap(vect.getList().get(0));
+        if(aux instanceof ZVector){
+            return vectorSize1((ZVector) aux);
+        }
+        return aux;
     }
 
     /*indica si existe una lista, entre los valores */
@@ -95,35 +143,8 @@ public final class ChickenUtils {
         }
         return false;
 
-
     }
 
-    public static void addData(ZVector vector,List<ZVar> finalList){
-
-        //los vectores solo deberian de tener datos primtivos
-        for (ZVar node: vector.getList()) {
-            //se podria verificar si los vectores contienen un valor que no sea primitivo, y tirar error
-            finalList.add(new ZVar(node.getValue()));
-
-        }
-
-    }
-    public static List<ZVar> createVectorData(List<ZProtoObject> actualList){
-
-        List<ZVar> finalValue = new ArrayList<>();
-        for (ZProtoObject node:
-                actualList) {
-
-            if (node instanceof ZVector){
-                addData((ZVector) node, finalValue);
-                continue;
-            }
-            finalValue.add(new ZVar(node));
-
-        }
-        return  finalValue;
-
-    }
 
     public static List<ZVar>  createListData(List<ZProtoObject> unwrapList){
 
@@ -233,6 +254,68 @@ public final class ChickenUtils {
         return new ZVector(nova);
 
     }
+
+    public static ZVector leftVectorOperation (ZVector left, ZProtoObject right, String name, String sim) throws SemanticException {
+
+        List<ZVar> nova = new ArrayList<>();
+
+        for(ZVar node:
+            left.getList()){
+
+            ZProtoObject aux = node.getValue().executeOperation(name, sim,right);
+            nova.add(new ZVar(aux));
+        }
+
+        return new ZVector(nova);
+
+    }
+
+    public static ZVector vectorVectorOperation(ZVector left, ZVector right, String name, String sim) throws SemanticException {
+
+
+        if(left.getList().size()==right.getList().size()){
+
+            return operar2VecotresXD(left,right,name,sim);
+
+        }
+
+        if(left.getList().size()==1){
+
+            ZProtoObject aux =  unwrap(left.getList().get(0));
+            return rightVectorOperation(aux,right, name, sim);
+        }
+
+        if(right.getList().size() == 1){
+
+            ZProtoObject aux = unwrap(right.getList().get(0));
+            return leftVectorOperation(left,aux, name, sim);
+        }
+
+        throw new SemanticException("error al operar vectores, no son del mismo tamaño");
+    }
+
+    public static ZVector operar2VecotresXD(ZVector left, ZVector right, String name, String sim) throws SemanticException {
+        ZProtoObject aux;
+        ZProtoObject aux2;
+        ZProtoObject niuValue;
+        List<ZVar> nueva = new ArrayList<>();
+
+        for (int i = 0; i<left.getList().size();i++){
+
+            aux = unwrap(left.getList().get(i));
+            aux2 = unwrap(right.getList().get(i));
+            niuValue = aux.executeOperation(name, sim,aux2);
+            nueva.add(new ZVar(niuValue));
+
+        }
+
+        return new ZVector(nueva);
+
+    }
+
+
+
+
 
 
 

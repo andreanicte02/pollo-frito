@@ -133,6 +133,43 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    /* * * * * * * * * * * * * * *
+     *  operaciones aritmeticas  *
+     * * * * * * * * * * * * * * */
+
+    /*suma*/
+    public ZVector add(ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+
+    }
+
+    public ZVector add(ZString e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+
+    }
+    public ZVector add(ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+
+    }
+
+    public ZVector add(ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this,e,"add","+");
+
+    }
+
+    /*resta*/
+
+
+
+
+
+
+
+
 
     @Override
     public String toChickenString() {

@@ -44,9 +44,10 @@ public abstract class ZProtoObject {
             // Ejemplo:
             // + llamar a un metodo no existente
             // + QUe exception se obtiene si se da un RuntimeException dentro de un nodo?
+            // saber :v
             e.printStackTrace();
             // TODO: agregar los nombres de los tipos
-            throw new SemanticException("No se puede aplicar" + symbol + " : " + e.getMessage());
+            throw new SemanticException("No se puede aplicar " + symbol + " : " + e.getMessage());
         }
         /*        try {
             var method= MathMap.class.getDeclaredMethod(name, v1.getClass(), v2.getClass());

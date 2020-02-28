@@ -203,7 +203,7 @@ functionC::= c apar listExp:a cpar    {: RESULT = new FunctionCAstNode(new FileL
 createList::= list:o apar listExp:a cpar  {:RESULT = new CreateZListNode(new FileLocation(oleft, oright),a ); :}
             ;
 
-crearVector::= abra listExp:a cbra {: RESULT = new CreateZVectorNode(new FileLocation(aleft, aright), a); :}
+crearVector::= abra listExp:a cbra {: RESULT = null; :}
             ;
 
 
