@@ -1,5 +1,7 @@
 package com.polloenpelotas.language.types;
 
+import com.polloenpelotas.language.SemanticException;
+
 /**
  * representa el retorno de una sentencia que no es una expresion
  */
@@ -14,6 +16,6 @@ public class ZNothing extends ZProtoObject {
 
     @Override
     public String toChickenString() {
-        return "-nada-";
+        return "Nothing";
     }
 }

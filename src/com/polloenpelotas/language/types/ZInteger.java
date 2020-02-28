@@ -135,7 +135,7 @@ public class ZInteger extends ZProtoObject {
     }
 
 
-    /*mayor*/
+    /**mayor*/
 
 
     public ZBoolean mayor(ZInteger e){
@@ -155,7 +155,7 @@ public class ZInteger extends ZProtoObject {
 
 
 
-    /*menor*/
+    /**menor*/
 
     public ZBoolean menor(ZInteger e){
 
@@ -187,7 +187,7 @@ public class ZInteger extends ZProtoObject {
 
     public ZVector mayorIgual (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"mayorIgual","<=");
+        return ChickenUtils.rightVectorOperation(this,e,"mayorIgual",">=");
     }
 
 
