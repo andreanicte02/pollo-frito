@@ -155,15 +155,250 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    public ZVector add(ZBoolean e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+
+    }
+
     public ZVector add(ZVector e) throws SemanticException {
 
         return ChickenUtils.vectorVectorOperation(this,e,"add","+");
 
     }
 
-    /*resta*/
 
 
+    /**resta*/
+
+    public ZVector rest (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"rest","-");
+    }
+
+    public ZVector rest (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"rest","-");
+    }
+
+    public ZVector rest (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"rest","-");
+    }
+
+
+    /**mult*/
+    public ZVector mult (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mult","*");
+    }
+
+    public ZVector mult (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mult","*");
+    }
+
+    public ZVector mult (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"mult","*");
+    }
+
+    // TODO: validar que el numero no sea div entre 0
+    /**div**/
+
+    public ZVector div (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"div","/");
+
+    }
+
+    public ZVector div (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"div","/");
+
+    }
+
+    public ZVector div (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"div","/");
+
+    }
+
+    /**pot*/
+
+    public ZVector pot (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"pot","^");
+
+    }
+
+    public ZVector pot (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"pot","^");
+
+    }
+
+    public ZVector pot (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"pot","^");
+
+    }
+
+    /**mod*/
+    public ZVector mod (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mod","%");
+
+    }
+
+    public ZVector mod (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mod","%");
+
+    }
+
+    public ZVector mod (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"mod","%");
+
+    }
+
+    /**mayor*/
+    public ZVector mayor (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mayor",">");
+
+    }
+
+    public ZVector mayor (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mayor",">");
+
+    }
+
+    public ZVector mayor (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"mayor",">");
+
+    }
+
+    /**menor*/
+    public ZVector menor (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"menor","<");
+
+    }
+    public ZVector menor (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"menor","<");
+
+    }
+    public ZVector menor (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"menor","<");
+
+    }
+
+    /**mayorigual*/
+    public ZVector mayorIgual (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mayorIgual",">=");
+
+    }
+    public ZVector mayorIgual (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mayorIgual",">=");
+
+    }
+    public ZVector mayorIgual (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"mayorIgual",">=");
+
+    }
+
+    /**menorigual*/
+    public ZVector menorIgual (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mayorIgual","<=");
+
+    }
+    public ZVector menorIgual (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"mayorIgual","<=");
+
+    }
+    public ZVector menorIgual (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"mayorIgual","<=");
+
+    }
+
+    /**equalto*/
+    public ZVector equalTo (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"equalTo","==");
+
+    }
+    public ZVector equalTo (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"equalTo","==");
+
+    }
+    public ZVector equalTo (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"equalTo","==");
+
+    }
+
+    /**notequalto*/
+    public ZVector notEqualTo (ZInteger e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"notEqualTo","!=");
+
+    }
+    public ZVector notEqualTo (ZNumeric e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"notEqualTo","!=");
+
+    }
+    public ZVector notEqualTo (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"notEqualTo","!=");
+
+    }
+
+    /**and*/
+    public ZVector and (ZBoolean e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"and","&");
+
+    }
+
+    public ZVector and (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"and","&");
+
+    }
+
+    /**or*/
+    public ZVector or (ZBoolean e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"or","|");
+
+    }
+
+    public ZVector or (ZVector e) throws SemanticException {
+
+        return ChickenUtils.vectorVectorOperation(this, e,"and","|");
+
+    }
+
+
+
+
+
+    //TODO faltan el unario menos
+    //TODO falta el negado menos
 
 
 

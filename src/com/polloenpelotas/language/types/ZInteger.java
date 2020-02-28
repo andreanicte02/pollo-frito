@@ -75,9 +75,8 @@ public class ZInteger extends ZProtoObject {
 
     }
 
-
     // TODO: validar que el numero no sea div entre 0
-    /*div*/
+    /**div*/
     public ZInteger div(ZInteger e){
 
         return new ZInteger(this.value / e.getValue());
@@ -93,7 +92,7 @@ public class ZInteger extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,e,"div","/");
     }
 
-    /*pot*/
+    /**pot*/
     public ZNumeric pot(@NotNull ZInteger e){
 
         return new ZNumeric( Math.pow(this.value, e.getValue()));
@@ -109,7 +108,7 @@ public class ZInteger extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,e,"pot","^");
     }
 
-    /*mod*/
+    /**mod*/
     public ZInteger mod(@NotNull ZInteger e){
 
         return new ZInteger( this.value % e.getValue());
@@ -128,7 +127,7 @@ public class ZInteger extends ZProtoObject {
 
 
 
-    /*unaryMinus*/
+    /**unaryMinus*/
     public ZInteger unaryMinus (ZInteger e) {
 
         return  new ZInteger(value * -1);
@@ -136,8 +135,6 @@ public class ZInteger extends ZProtoObject {
 
 
     /**mayor*/
-
-
     public ZBoolean mayor(ZInteger e){
 
         return new ZBoolean(this.value > e.getValue());
@@ -156,7 +153,6 @@ public class ZInteger extends ZProtoObject {
 
 
     /**menor*/
-
     public ZBoolean menor(ZInteger e){
 
         return new ZBoolean(this.value < e.getValue());
@@ -173,8 +169,7 @@ public class ZInteger extends ZProtoObject {
 
     }
 
-    /*mayorIgual*/
-
+    /**mayorIgual*/
     public ZBoolean mayorIgual(ZInteger e){
 
         return new ZBoolean(this.value >= e.getValue());
@@ -191,8 +186,7 @@ public class ZInteger extends ZProtoObject {
     }
 
 
-    /*menorigual*/
-
+    /**menorigual*/
     public ZBoolean menorIgual(ZInteger e){
 
         return new ZBoolean(this.value <= e.getValue());
@@ -208,10 +202,7 @@ public class ZInteger extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,e,"menorIgual","<=");
     }
 
-    /*equal to*/
-
-
-
+    /**equal to*/
     public ZBoolean equalTo(ZInteger e){
 
         return new ZBoolean(this.value == e.getValue());
@@ -229,10 +220,7 @@ public class ZInteger extends ZProtoObject {
     }
 
 
-
-
-    /* not equalTo*/
-
+    /*** not equalTo*/
     public ZBoolean notEqualTo (ZNumeric e){
 
         return new ZBoolean( !equalTo(e).getValue() );

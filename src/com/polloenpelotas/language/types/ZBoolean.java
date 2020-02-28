@@ -16,7 +16,7 @@ public class ZBoolean extends ZProtoObject {
         return value;
     }
 
-    /*add*/
+    /**add*/
     public ZString add(ZString e){
 
         return new ZString(this.value + e.getValue());
@@ -28,8 +28,7 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
-    /*equalTo*/
-
+    /**equalTo*/
     public ZBoolean equalTo(ZBoolean e){
 
         return new ZBoolean(this.value == e.getValue());
@@ -41,8 +40,7 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
-    /*and*/
-
+    /**and*/
     public ZBoolean and(ZBoolean e){
 
         return new ZBoolean(this.value && e.getValue());
@@ -54,8 +52,7 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
-    /*or*/
-
+    /**or*/
     public ZBoolean or(ZBoolean e){
 
         return new ZBoolean(this.value || e.getValue());
@@ -66,10 +63,8 @@ public class ZBoolean extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,e,"or","|");
 
     }
-    /**/
 
-
-
+    /**not*/
     public ZBoolean not(ZBoolean e){
 
         return new ZBoolean(!this.value);
