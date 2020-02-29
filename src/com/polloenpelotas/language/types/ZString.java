@@ -34,6 +34,12 @@ public class ZString extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,vector,"add","+");
     }
 
+    public ZString  add( ZNothing e) {
+
+        return new ZString(value+"Nothing");
+
+    }
+
 
 
     /**menor**/
@@ -104,6 +110,11 @@ public class ZString extends ZProtoObject {
 
     }
 
+    public ZBoolean equalTo (ZNothing e){
+
+        return new ZBoolean( false);
+    }
+
     public ZVector equalTo (ZVector e) throws SemanticException {
 
         return ChickenUtils.rightVectorOperation(this,e,"equalTo","==");
@@ -116,6 +127,11 @@ public class ZString extends ZProtoObject {
     public ZBoolean notEqualTo (ZString e){
 
         return new ZBoolean( !equalTo(e).getValue() );
+    }
+
+    public ZBoolean notEqualTo (ZNothing e){
+
+        return new ZBoolean( true);
     }
 
     public ZVector notEqualTo (ZVector e) throws SemanticException {

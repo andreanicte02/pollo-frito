@@ -80,6 +80,7 @@ terminal String numero,decimal, identifier,truee, falsee, cadena;
 terminal umenos, abra2;
 terminal c;
 terminal list;
+terminal nothing;
 
 terminal print;
 
@@ -185,12 +186,13 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
     | truee:a                       {: RESULT = new CreateZBooleanNode (new FileLocation(aleft, aright), true);  :}
     | falsee:a                      {: RESULT = new CreateZBooleanNode (new FileLocation(aleft, aright), false); :}
 
-    | identifier:a                  {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a); :}
+    | identifier:a                  {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a.toLowerCase()); :}
 
     | functionC:a                       {: RESULT = a; :}
     | createList:a                      {: RESULT = a; :}
     | exp:a abra exp:b cbra             {: RESULT = new AccessStructAstNode(new FileLocation(aleft, aright),a,b); :}
-    | exp:a abra abra exp:b cbra cbra   {:RESULT = new Access2ListAstNode(new FileLocation(aleft, aright), a ,b); :} %prec abra2
+    | exp:a abra abra exp:b cbra cbra   {: RESULT = new Access2ListAstNode(new FileLocation(aleft, aright), a ,b); :} %prec abra2
+    | nothing:a                         {: RESULT = new CreateZNothingNode(new FileLocation(aleft, aright)); :}
     ;
 
 

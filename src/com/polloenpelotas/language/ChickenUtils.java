@@ -9,7 +9,7 @@ import java.util.List;
 public final class ChickenUtils {
 
 
-
+    /**maneja las variables*/
     public static @NotNull ZProtoObject unwrap(@NotNull ZProtoObject value){
 
         if (value instanceof ZVar) {
@@ -18,7 +18,7 @@ public final class ChickenUtils {
         return value;
     }
 
-
+    /**obtiene la variable del lado izquierdo*/
     public static @NotNull ZProtoObject getVarLeft(@NotNull ZProtoObject ambit, String name){
 
         for(ZProtoObject e = ambit; e!= null; e= e.getAnterior()){
@@ -34,7 +34,7 @@ public final class ChickenUtils {
 
     }
 
-
+    /**crea una variavle*/
     public static @NotNull ZProtoObject createVariable(@NotNull ZProtoObject ambit, String name){
 
         ambit.getMembers().put(name, new ZVar(ZNothing.getInstance()));
@@ -42,7 +42,7 @@ public final class ChickenUtils {
 
     }
 
-
+    /**obtiene una varialbe del lado derecho*/
     public static @NotNull ZProtoObject getVarRight(@NotNull ZProtoObject ambit, String name) throws SemanticException {
 
         for(ZProtoObject e = ambit; e!= null; e= e.getAnterior()){
@@ -56,6 +56,7 @@ public final class ChickenUtils {
         throw new SemanticException("La variable con el nombre id: "+name+", no existe");
     }
 
+    /**aumenta el tamaño*/
     public static void  increaseZSize(List<ZVar> list, int index){
 
         if(index> list.size()){
@@ -66,6 +67,8 @@ public final class ChickenUtils {
         }
 
     }
+
+    /**funcionC*/
 
     public static ZProtoObject createStructC(List<ZProtoObject> unwrapList) throws SemanticException {
         //estan totalmente desembueltos
@@ -90,6 +93,7 @@ public final class ChickenUtils {
         return new ZVector(defineTypeVector(newData));
     }
 
+    /**encuentra la prioridad del vector*/
     public static  List<ZVar>  defineTypeVector(List<ZVar> list) throws SemanticException {
 
         int estado =0;
@@ -127,6 +131,7 @@ public final class ChickenUtils {
 
     }
 
+    /**metodo que se encarga de castear los vectores*/
     public static List<ZVar> castearVector(List<ZVar> list,String name, String simbol) throws SemanticException {
         List <ZVar> niuList= new ArrayList<>();
         for (ZVar node:
@@ -138,8 +143,8 @@ public final class ChickenUtils {
     }
 
 
-
-
+    /**si en una funcionC viene un vector saca los valores y los
+     *  agrega en una nueva lista para poder juntarlos con el vector final*/
     public static List<ZVar> setVectorInVector(ZVector vector){
 
         List<ZVar> list= new ArrayList<>();
@@ -162,7 +167,7 @@ public final class ChickenUtils {
         return aux;
     }
 
-    /*indica si existe una lista, entre los valores */
+    /**indica si existe una lista, entre los valores */
     public static boolean exitsList(List<ZProtoObject> unwrapList){
 
         for (ZProtoObject zvalue:
@@ -176,7 +181,7 @@ public final class ChickenUtils {
 
     }
 
-
+    /**metodo con el se crea una lsita nueva*/
     public static List<ZVar>  createListData(List<ZProtoObject> unwrapList){
 
         List<ZVar> dataList = new ArrayList<>();
@@ -193,6 +198,7 @@ public final class ChickenUtils {
         return dataList;
     }
 
+    /**si una vector es del tamaño1 se obtiene el dato primitivo que este tiene*/
     public static void addDataVectorToList(List<ZVar> dataList, ZVector vector){
 
         if(vector.getList().size()>1 || vector.getList().size() == 0) {
@@ -223,10 +229,10 @@ public final class ChickenUtils {
         return new ZVector(wrapValue);
 
     }
-
+    /**si hay un dato primitivo**/
     public static boolean isPrimitive(ZProtoObject val) {
 
-        if (val instanceof ZInteger || val instanceof ZNumeric || val instanceof ZString || val instanceof ZBoolean) {
+        if (val instanceof ZInteger || val instanceof ZNumeric || val instanceof ZString || val instanceof ZBoolean || val instanceof ZNothing) {
             return true;
 
         }

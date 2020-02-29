@@ -44,6 +44,7 @@ print = "print"
 truee = "true"
 falsee = "false"
 list = "list"
+nothing = "nothing"
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -133,6 +134,7 @@ list = "list"
 <YYINITIAL> {truee}         {  return new Symbol(Simbolos.truee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {falsee}        {  return new Symbol(Simbolos.falsee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {list}          {  return new Symbol(Simbolos.list, yyline, yycolumn, yytext()); }
+<YYINITIAL> {nothing}          {  return new Symbol(Simbolos.nothing, yyline, yycolumn, yytext()); }
 
 //-------> ER
 

@@ -224,6 +224,13 @@ public class ZNumeric extends ZProtoObject {
         return new ZBoolean(this.value == e.getValue());
     }
 
+    public ZBoolean equalTo(ZNothing e){
+
+        return new ZBoolean(false);
+    }
+
+
+
     public ZVector equalTo (ZVector e) throws SemanticException {
 
         return ChickenUtils.rightVectorOperation(this,e,"equalTo","==");
@@ -240,6 +247,11 @@ public class ZNumeric extends ZProtoObject {
     public ZBoolean notEqualTo (ZInteger e){
 
         return new ZBoolean( !equalTo(e).getValue() );
+    }
+
+    public ZBoolean notEqualTo (ZNothing e){
+
+        return new ZBoolean( true);
     }
     
     public ZVector notEqualTo (ZVector e) throws SemanticException {

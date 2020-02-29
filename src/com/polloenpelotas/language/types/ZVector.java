@@ -137,7 +137,7 @@ public class ZVector extends ZProtoObject {
      *  operaciones aritmeticas  *
      * * * * * * * * * * * * * * */
 
-    /*suma*/
+    /**suma*/
     public ZVector add(ZInteger e) throws SemanticException {
 
         return ChickenUtils.leftVectorOperation(this,e,"add","+");
@@ -156,6 +156,12 @@ public class ZVector extends ZProtoObject {
     }
 
     public ZVector add(ZBoolean e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+
+    }
+
+    public ZVector add(ZNothing e) throws SemanticException {
 
         return ChickenUtils.leftVectorOperation(this,e,"add","+");
 
@@ -344,6 +350,13 @@ public class ZVector extends ZProtoObject {
         return ChickenUtils.leftVectorOperation(this, e,"equalTo","==");
 
     }
+
+    public ZVector equalTo (ZNothing e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"equalTo","==");
+
+    }
+
     public ZVector equalTo (ZVector e) throws SemanticException {
 
         return ChickenUtils.vectorVectorOperation(this, e,"equalTo","==");
@@ -361,6 +374,13 @@ public class ZVector extends ZProtoObject {
         return ChickenUtils.leftVectorOperation(this, e,"notEqualTo","!=");
 
     }
+
+    public ZVector notEqualTo (ZNothing e) throws SemanticException {
+
+        return ChickenUtils.leftVectorOperation(this, e,"notEqualTo","!=");
+
+    }
+
     public ZVector notEqualTo (ZVector e) throws SemanticException {
 
         return ChickenUtils.vectorVectorOperation(this, e,"notEqualTo","!=");

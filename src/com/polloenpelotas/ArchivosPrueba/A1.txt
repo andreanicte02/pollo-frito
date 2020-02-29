@@ -51,7 +51,8 @@ v3=c(25,25,"as",1.5,true);
 print(v3);
 v4=c(25,25,1,1.5,true, false, v3[3],b[b[2]]);
 print(v4);
-v5=c(25,25,1,1.5,true, false);
+v5=c(25,25,1,1.5,true, false, nothing);
 print(v5);
+print(v5[7]==nothing);
 
 
