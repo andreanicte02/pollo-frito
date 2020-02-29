@@ -67,7 +67,7 @@ public final class ChickenUtils {
 
     }
 
-    public static ZProtoObject createStructC(List<ZProtoObject> unwrapList){
+    public static ZProtoObject createStructC(List<ZProtoObject> unwrapList) throws SemanticException {
         //estan totalmente desembueltos
 
         List<ZVar> newData = new ArrayList<>();
@@ -75,7 +75,6 @@ public final class ChickenUtils {
         if (exitsList(unwrapList)){
             return null;
         }
-
 
         for (ZProtoObject node:
              unwrapList) {
@@ -88,25 +87,57 @@ public final class ChickenUtils {
 
         }
 
-
-        return new ZVector(newData);
+        return new ZVector(defineTypeVector(newData));
     }
 
-    public static void castearVector(List<ZVar> list){
+    public static  List<ZVar>  defineTypeVector(List<ZVar> list) throws SemanticException {
 
-        int estado =-1;
+        int estado =0;
 
-        for(ZVar node:
-        list){
+        for(ZVar node: list){
+
             if(node.getValue() instanceof  ZString){
-                return;
+
+                return castearVector(list,"castS","castS");
+            }
+
+            if(node.getValue() instanceof  ZNumeric){
+                if(estado<=1){
+                    estado = 2;
+                }
+                continue;
+            }
+
+            if(node.getValue() instanceof  ZInteger){
+                if (estado <=0){
+                    estado = 1;
+                }
             }
         }
 
+        if(estado == 2){
+            return castearVector(list,"castN","castN");
+        }
+
+        if(estado == 1){
+            return castearVector(list,"castI","castI");
+        }
+
+        return list;
 
     }
 
-    public static void castearString(){}
+    public static List<ZVar> castearVector(List<ZVar> list,String name, String simbol) throws SemanticException {
+        List <ZVar> niuList= new ArrayList<>();
+        for (ZVar node:
+             list) {
+            ZProtoObject aux = node.getValue().executeOperation(name, simbol, ZNothing.getInstance());
+            niuList.add(new ZVar(aux));
+        }
+        return  niuList;
+    }
+
+
 
 
     public static List<ZVar> setVectorInVector(ZVector vector){

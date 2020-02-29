@@ -129,7 +129,7 @@ public class ZNumeric extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,e,"mod","%%");
     }
 
-    /*unario*/
+    /**unario*/
 
 
     public ZNumeric unaryMinus (ZNothing e) {
@@ -138,7 +138,7 @@ public class ZNumeric extends ZProtoObject {
 
     }
 
-    /*mayor*/
+    /**mayor*/
 
     public ZBoolean mayor(ZInteger e){
 
@@ -157,7 +157,7 @@ public class ZNumeric extends ZProtoObject {
 
 
 
-    /*menor*/
+    /**menor*/
 
     public ZBoolean menor(ZInteger e){
 
@@ -175,7 +175,7 @@ public class ZNumeric extends ZProtoObject {
 
     }
 
-    /*mayor igual*/
+    /**mayor igual*/
 
     public ZBoolean mayorIgual(ZInteger e){
 
@@ -192,7 +192,7 @@ public class ZNumeric extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,e,"mayorIgual","<=");
     }
 
-    /*menor igual*/
+    /**menor igual*/
 
 
     public ZBoolean menorIgual(ZInteger e){
@@ -211,7 +211,7 @@ public class ZNumeric extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,e,"menorIgual","<=");
     }
 
-    /*equalTo*/
+    /**equalTo*/
 
 
     public ZBoolean equalTo(ZInteger e){
@@ -230,7 +230,7 @@ public class ZNumeric extends ZProtoObject {
 
     }
 
-    /*not equal to*/
+    /**not equal to*/
 
     public ZBoolean notEqualTo (ZNumeric e){
 
@@ -247,6 +247,22 @@ public class ZNumeric extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,e,"notEqualTo","!=");
 
     }
+
+    /**cast*/
+
+    public ZString castS (ZNothing e) throws SemanticException {
+
+        return new ZString(""+this.getValue());
+
+    }
+
+    public ZNumeric castN(ZNothing e){
+
+        return new ZNumeric(this.getValue());
+
+    }
+
+
 
 
     @Override

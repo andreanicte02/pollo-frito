@@ -124,6 +124,17 @@ public class ZString extends ZProtoObject {
 
     }
 
+    /**cast*/
+
+    /**cast*/
+
+
+    public ZString castS (ZNothing e)  {
+
+        return new ZString(this.getValue());
+
+    }
+
 
 
 

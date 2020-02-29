@@ -71,10 +71,38 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
-    
+    /**cast*/
+
+    public ZString castS (ZNothing e) throws SemanticException {
+
+        return new ZString(this.value+"");
+
+    }
 
 
+    public ZNumeric castN (ZNothing e)  {
 
+        if(value){
+            return  new ZNumeric(1.0);
+        }
+
+       return  new ZNumeric(0.0);
+
+    }
+
+    public ZInteger castI(ZNothing e){
+        if(value){
+            return  new ZInteger(1);
+        }
+
+        return  new ZInteger(0);
+    }
+
+    public ZBoolean castB(ZNothing e){
+        //o retornar el this
+        return  new ZBoolean(value);
+
+    }
 
 
     @Override
