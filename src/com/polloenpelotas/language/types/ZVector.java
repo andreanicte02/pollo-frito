@@ -393,12 +393,18 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    /**unary*/
+    public ZVector unaryMinus(ZNothing e) throws SemanticException {
 
+        return  ChickenUtils.leftVectorOperation(this,e,"unaryMinus","-E");
+    }
 
+    /**not*/
+    public ZVector not (ZNothing e) throws SemanticException {
 
+        return ChickenUtils.leftVectorOperation(this,e,"not","!");
 
-    //TODO faltan el unario menos
-    //TODO falta el negado menos
+    }
 
 
 

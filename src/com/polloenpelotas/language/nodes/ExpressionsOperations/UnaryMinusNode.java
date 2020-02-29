@@ -8,6 +8,7 @@ import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZBoolean;
 import com.polloenpelotas.language.types.ZInteger;
+import com.polloenpelotas.language.types.ZNothing;
 import com.polloenpelotas.language.types.ZProtoObject;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,6 +24,6 @@ public class UnaryMinusNode extends ProAstNode {
     @Override
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
         ZProtoObject r1 = ChickenUtils.unwrap(this.e.execute(ambit));
-        return r1.executeOperation("unaryMinus", "(-) unary", new ZInteger(-1));
+        return r1.executeOperation("unaryMinus", "(-) unary", ZNothing.getInstance());
     }
 }

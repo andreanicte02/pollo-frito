@@ -128,7 +128,7 @@ public class ZInteger extends ZProtoObject {
 
 
     /**unaryMinus*/
-    public ZInteger unaryMinus (ZInteger e) {
+    public ZInteger unaryMinus (ZNothing e) {
 
         return  new ZInteger(value * -1);
     }

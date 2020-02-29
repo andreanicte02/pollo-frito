@@ -7,6 +7,7 @@ import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZBoolean;
+import com.polloenpelotas.language.types.ZNothing;
 import com.polloenpelotas.language.types.ZProtoObject;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,6 +25,6 @@ public class NotAstNode extends ProAstNode {
     @Override
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
         ZProtoObject r1 = ChickenUtils.unwrap(this.e.execute(ambit));
-        return r1.executeOperation("not", "!", new ZBoolean(true));
+        return r1.executeOperation("not", "!", ZNothing.getInstance());
     }
 }

@@ -65,7 +65,7 @@ public class ZBoolean extends ZProtoObject {
     }
 
     /**not*/
-    public ZBoolean not(ZBoolean e){
+    public ZBoolean not(ZNothing e){
 
         return new ZBoolean(!this.value);
 

@@ -16,7 +16,7 @@ public class ZNumeric extends ZProtoObject {
         this.value = value;
     }
 
-    /*suma*/
+    /**suma*/
     public ZNumeric add(ZNumeric e) {
         return new ZNumeric(value + e.getValue());
     }
@@ -94,7 +94,7 @@ public class ZNumeric extends ZProtoObject {
     }
 
 
-    /*pot*/
+    /**pot*/
     public ZNumeric pot(@NotNull ZInteger e){
 
         return new ZNumeric( Math.pow(this.value, e.getValue()));
@@ -132,7 +132,7 @@ public class ZNumeric extends ZProtoObject {
     /*unario*/
 
 
-    public ZNumeric unaryMinus (ZInteger e) {
+    public ZNumeric unaryMinus (ZNothing e) {
 
         return  new ZNumeric(value * -1);
 
