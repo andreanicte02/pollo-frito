@@ -3,6 +3,7 @@ package com.polloenpelotas.language;
 import com.polloenpelotas.language.types.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,17 +57,6 @@ public final class ChickenUtils {
         throw new SemanticException("La variable con el nombre id: "+name+", no existe");
     }
 
-    /**aumenta el tamaño*/
-    public static void  increaseZSize(List<ZVar> list, int index){
-
-        if(index> list.size()){
-
-            for (int x = list.size()-1; x<index-1;x++){
-                list.add(new ZVar(ZNothing.getInstance()));
-            }
-        }
-
-    }
 
     /**funcionC*/
 
@@ -75,20 +65,32 @@ public final class ChickenUtils {
 
         List<ZVar> newData = new ArrayList<>();
 
-        if (exitsList(unwrapList)){
-            return null;
+
+        if (unwrapList.stream().anyMatch(x->x instanceof ZList)){
+
+            unwrapList.forEach(x->{
+                if(x instanceof ZList){
+                    newData.addAll(setListInList((ZList) x));
+
+                } else if(x instanceof ZVector){
+
+                    newData.addAll(setVectorInVector((ZVector) x));
+
+                }else{
+                    newData.add(new ZVar(x));
+                }
+            });
+
+            return new ZList(newData);
         }
 
-        for (ZProtoObject node:
-             unwrapList) {
-
-            if(node instanceof ZVector){
-                newData.addAll(setVectorInVector((ZVector) node));
-                continue;
+        unwrapList.forEach(x-> {
+            if (x instanceof ZVector){
+                newData.addAll(setVectorInVector((ZVector) x));
+            }else{
+                newData.add(new ZVar(x));
             }
-            newData.add(new ZVar(node));
-
-        }
+        });
 
         return new ZVector(defineTypeVector(newData));
     }
@@ -96,34 +98,15 @@ public final class ChickenUtils {
     /**encuentra la prioridad del vector*/
     public static  List<ZVar>  defineTypeVector(List<ZVar> list) throws SemanticException {
 
-        int estado =0;
-
-        for(ZVar node: list){
-
-            if(node.getValue() instanceof  ZString){
-
-                return castearVector(list,"castS","castS");
-            }
-
-            if(node.getValue() instanceof  ZNumeric){
-                if(estado<=1){
-                    estado = 2;
-                }
-                continue;
-            }
-
-            if(node.getValue() instanceof  ZInteger){
-                if (estado <=0){
-                    estado = 1;
-                }
-            }
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZString)){
+            return castearVector(list,"castS","castS");
         }
 
-        if(estado == 2){
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZNumeric)){
             return castearVector(list,"castN","castN");
         }
 
-        if(estado == 1){
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZInteger)){
             return castearVector(list,"castI","castI");
         }
 
@@ -158,28 +141,29 @@ public final class ChickenUtils {
         
     }
 
-    public static ZProtoObject vectorSize1(ZVector vect){
+    /**funcionC cuando vienen lista*/
 
-        ZProtoObject aux = unwrap(vect.getList().get(0));
-        if(aux instanceof ZVector){
-            return vectorSize1((ZVector) aux);
-        }
-        return aux;
-    }
+    public static List<ZVar> setListInList(ZList lista){
+        List<ZVar> nuevaLista= new ArrayList<>();
+        List<ZVar> temporal = lista.getList();
 
-    /**indica si existe una lista, entre los valores */
-    public static boolean exitsList(List<ZProtoObject> unwrapList){
+        for(int x=0; x<temporal.size();x++){
 
-        for (ZProtoObject zvalue:
-             unwrapList) {
+            if(temporal.get(x).getValue()instanceof ZVector){
 
-            if (zvalue instanceof ZList){
-                return true;
+                ZVar zvar = new ZVar(ZNothing.getInstance());
+                castVectorSize1(zvar, (ZVector) temporal.get(x).getValue());
+                nuevaLista.add(zvar);
+                continue;
             }
+            nuevaLista.add(new ZVar(temporal.get(x).getValue()));
         }
-        return false;
+
+
+        return nuevaLista;
 
     }
+
 
     /**metodo con el se crea una lsita nueva*/
     public static List<ZVar>  createListData(List<ZProtoObject> unwrapList){
@@ -189,7 +173,7 @@ public final class ChickenUtils {
              unwrapList) {
 
             if (node instanceof ZVector){
-                addDataVectorToList(dataList, (ZVector) node);
+                dataList.add(addDataVectorToList( (ZVector) node));
                 continue;
             }
             dataList.add(new ZVar(node));
@@ -199,18 +183,31 @@ public final class ChickenUtils {
     }
 
     /**si una vector es del tamaño1 se obtiene el dato primitivo que este tiene*/
-    public static void addDataVectorToList(List<ZVar> dataList, ZVector vector){
+    public static ZVar addDataVectorToList(ZVector vector){
 
         if(vector.getList().size()>1 || vector.getList().size() == 0) {
-            dataList.add(new ZVar(vector));
-            return;
+            return new ZVar(vector);
         }
 
         ZVar aux = vector.getList().get(0);
-        dataList.add(new ZVar(aux.getValue()));
-
+        return new ZVar(aux.getValue());
 
     }
+
+    /**aumenta el tamaño*/
+    public static void  increaseZSize(List<ZVar> list, int index){
+
+        if(index> list.size()){
+
+            for (int x = list.size()-1; x<index-1;x++){
+                list.add(new ZVar(ZNothing.getInstance()));
+            }
+        }
+
+    }
+
+
+    /**accesos*/
 
     /*si es un vector solo se envia el vector otra vez*/
     /*si es una lista solo se envia la lista otra vez*/

@@ -142,7 +142,7 @@ asignacion::=
 
 imprimir ::= print apar exp:e cpar endSent    {: RESULT = new PrintAstNode(new FileLocation(eleft, eright),e); :};
 
-expLeft ::= identifier:e                      {: RESULT = new FindIDLeftAstNode(new FileLocation(eleft, eright), e); :}
+expLeft ::= identifier:e                      {: RESULT = new FindIDLeftAstNode(new FileLocation(eleft, eright), e.toLowerCase()); :}
            | expLeft:e abra exp:e1 cbra       {: RESULT = new LeftAccess1AstNode(new FileLocation(eleft, eright), e,e1); :}
            | expLeft:e abra abra exp:e1 cbra cbra  {: RESULT = new LeftAccess2AstNode(new FileLocation(eleft, eright), e,e1); :}
            ;
