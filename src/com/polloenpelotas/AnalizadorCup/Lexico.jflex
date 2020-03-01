@@ -44,7 +44,7 @@ print = "print"
 truee = "true"
 falsee = "false"
 list = "list"
-nothing = "nothing"
+nothing = "null"
 
 //-------> Estados
 %state COMENT_SIMPLE

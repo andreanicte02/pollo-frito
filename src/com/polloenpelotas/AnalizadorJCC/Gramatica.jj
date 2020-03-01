@@ -65,6 +65,7 @@ TOKEN : {
     | <COMA: ",">
     | <C: "c">
     | <LIST: "list">
+    | <NOTHING: "null">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -253,6 +254,8 @@ AstNode Primitives() :
     t=<STRING> { return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) ); }
     |
     e=OtherFunctions(){ return e; }
+    |
+    <NOTHING> { return new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine));}
     |
     t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
 }

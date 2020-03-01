@@ -22,7 +22,7 @@ public class ZNothing extends ZProtoObject {
     /**add*/
     public ZString  add( ZString e) {
 
-        return new ZString("Nothing"+ e.getValue());
+        return new ZString("null"+ e.getValue());
 
     }
 
@@ -150,6 +150,6 @@ public class ZNothing extends ZProtoObject {
 
     @Override
     public String toChickenString() {
-        return "Nothing";
+        return "null";
     }
 }

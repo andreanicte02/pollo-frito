@@ -36,7 +36,7 @@ public class ZString extends ZProtoObject {
 
     public ZString  add( ZNothing e) {
 
-        return new ZString(value+"Nothing");
+        return new ZString(value+"null");
 
     }
 

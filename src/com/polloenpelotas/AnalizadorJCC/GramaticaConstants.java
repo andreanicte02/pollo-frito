@@ -71,9 +71,11 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int LIST = 33;
   /** RegularExpression Id. */
-  int IDENTIFIER = 34;
+  int NOTHING = 34;
   /** RegularExpression Id. */
-  int STRING = 37;
+  int IDENTIFIER = 35;
+  /** RegularExpression Id. */
+  int STRING = 38;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -116,9 +118,10 @@ public interface GramaticaConstants {
     "\",\"",
     "\"c\"",
     "\"list\"",
+    "\"null\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 36>",
+    "<token of kind 37>",
     "\"\\\"\"",
   };
 
