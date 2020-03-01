@@ -24,10 +24,10 @@ public final class ChickenUtils {
 
         for(ZProtoObject e = ambit; e!= null; e= e.getAnterior()){
 
-            if(e.getMembers().containsKey(name)){
+            if(e.members.containsKey(name)){
 
                 // se obtiene un zvar
-                return e.getMembers().get(name);
+                return e.members.get(name);
             }
         }
 
@@ -38,8 +38,8 @@ public final class ChickenUtils {
     /**crea una variavle*/
     public static @NotNull ZProtoObject createVariable(@NotNull ZProtoObject ambit, String name){
 
-        ambit.getMembers().put(name, new ZVar(ZNothing.getInstance()));
-        return ambit.getMembers().get(name);
+        ambit.members.put(name, new ZVar(ZNothing.getInstance()));
+        return ambit.members.get(name);
 
     }
 
@@ -48,13 +48,37 @@ public final class ChickenUtils {
 
         for(ZProtoObject e = ambit; e!= null; e= e.getAnterior()){
 
-            if(e.getMembers().containsKey(name)){
+            if(e.members.containsKey(name)){
 
-                return e.getMembers().get(name);
+                return e.members.get(name);
             }
         }
 
         throw new SemanticException("La variable con el nombre id: "+name+", no existe");
+    }
+
+    /**declararparametro*/
+
+    public static void declararParametro(String name, ZProtoObject var, ZProtoObject ambit) throws SemanticException {
+
+        if (ambit.members.containsKey(name)){
+
+            throw new SemanticException("La variable con el nombre id: "+name+", ya existe");
+
+        }
+        ambit.members.put(name,var);
+
+
+    }
+
+    public static void crearFuncion(String name, ZFunction funcion, ZProtoObject ambit) throws SemanticException {
+
+        if(ambit.functions.containsKey(name)){
+
+            throw new SemanticException("La funcion con el nombre id: "+name+", ya existe");
+        }
+        ambit.functions.put(name, funcion);
+
     }
 
 

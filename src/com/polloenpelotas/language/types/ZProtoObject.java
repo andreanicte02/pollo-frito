@@ -11,25 +11,11 @@ import java.util.Map;
 public abstract class ZProtoObject {
 
 
-
-
-    /*vandera que se usa para saber si el acceso de tipo2 de la lista esta del lado izquierdo*/
-
-    public ZProtoObject getAnterior() {
-        return anterior;
-    }
-
-    public void setAnterior(ZProtoObject anterior) {
-        this.anterior = anterior;
-    }
-
     private ZProtoObject anterior=null;
 
-    public Map<String, ZProtoObject> getMembers() {
-        return members;
-    }
+    public final Map<String, ZProtoObject> members = new HashMap<>();
 
-    private final Map<String, ZProtoObject> members = new HashMap<>();
+    public final Map<String, ZFunction> functions = new HashMap<>();
 
 
     public abstract String toChickenString();
@@ -69,6 +55,15 @@ public abstract class ZProtoObject {
         }
         * */
     }
+
+    public ZProtoObject getAnterior() {
+        return anterior;
+    }
+
+    public void setAnterior(ZProtoObject anterior) {
+        this.anterior = anterior;
+    }
+
 
 
 

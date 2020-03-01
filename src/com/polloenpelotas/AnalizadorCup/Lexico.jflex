@@ -44,6 +44,7 @@ print = "print"
 truee = "true"
 falsee = "false"
 list = "list"
+function = "function"
 nothing = "null"
 
 //-------> Estados
@@ -105,6 +106,7 @@ nothing = "null"
 <YYINITIAL> "^"         {   return new Symbol(Simbolos.potenciar, yycolumn, yyline, yytext());}
 <YYINITIAL> "%%"        {   return new Symbol(Simbolos.modulo, yycolumn, yyline, yytext());}
 
+<YYINITIAL> "=>"        {   return new Symbol(Simbolos.arrow, yycolumn, yyline, yytext());}
 <YYINITIAL> "=="        {   return new Symbol(Simbolos.igualQue, yycolumn, yyline, yytext());}
 <YYINITIAL> "!="        {   return new Symbol(Simbolos.difQue, yycolumn, yyline, yytext());}
 
@@ -123,6 +125,8 @@ nothing = "null"
 <YYINITIAL> "["         {   return new Symbol(Simbolos.abra, yycolumn, yyline, yytext());}
 <YYINITIAL> "]"         {   return new Symbol(Simbolos.cbra, yycolumn, yyline, yytext());}
 <YYINITIAL> ","         {   return new Symbol(Simbolos.coma, yycolumn, yyline, yytext());}
+<YYINITIAL> "{"         {   return new Symbol(Simbolos.alla, yycolumn, yyline, yytext());}
+<YYINITIAL> "}"         {   return new Symbol(Simbolos.clla, yycolumn, yyline, yytext());}
 
 
 
@@ -134,11 +138,12 @@ nothing = "null"
 <YYINITIAL> {truee}         {  return new Symbol(Simbolos.truee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {falsee}        {  return new Symbol(Simbolos.falsee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {list}          {  return new Symbol(Simbolos.list, yyline, yycolumn, yytext()); }
+<YYINITIAL> {function}         {  return new Symbol(Simbolos.function, yyline, yycolumn, yytext().toLowerCase()); }
 <YYINITIAL> {nothing}          {  return new Symbol(Simbolos.nothing, yyline, yycolumn, yytext()); }
 
 //-------> ER
 
-<YYINITIAL> {identifier}    {   return new Symbol(Simbolos.identifier, yycolumn, yyline, yytext());}
+<YYINITIAL> {identifier}    {   return new Symbol(Simbolos.identifier, yycolumn, yyline, yytext().toLowerCase());}
 
 <YYINITIAL> {decimal}       {   return new Symbol(Simbolos.decimal, yycolumn, yyline, yytext());}
 

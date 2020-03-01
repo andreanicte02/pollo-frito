@@ -10,6 +10,10 @@ import org.jetbrains.annotations.NotNull;
 
 public class FindIDAstNode extends ProAstNode {
 
+    public String getName() {
+        return name;
+    }
+
     private final String name;
 
 

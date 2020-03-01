@@ -44,6 +44,13 @@ public class ZVar extends ZProtoObject {
         return ZNothing.getInstance();
     }
 
+
+    public ZProtoObject assign(@NotNull ZNothing nothing ) {
+        value =nothing;
+        return ZNothing.getInstance();
+    }
+
+
     /*no primitivos*/
     /*se hace una copia, no es por referencia*/
 
@@ -83,6 +90,12 @@ public class ZVar extends ZProtoObject {
     }
 
     public ZProtoObject assign2(@NotNull ZString value) {
+
+        this.value = value;
+        return ZNothing.getInstance();
+    }
+
+    public ZProtoObject assign2(@NotNull ZNothing value) {
 
         this.value = value;
         return ZNothing.getInstance();

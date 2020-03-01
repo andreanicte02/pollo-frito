@@ -52,7 +52,34 @@ print(v3);
 v4=c(25,25,1,1.5,true, false, v3[3],b[b[2]]);
 print(v4);
 v5=c(25,25,1,1.5,true, false, null);
-print(v5);
+print("----vector-----");
+print(v5[1][1]*25/5+5);
 print(v5[7]==null);
+a=((5*5*2+1*1*1*1/5+100));
+
+print(a);
+a=((a));
+a=(a);
+print(a);
+
+a=function (){
+
+}
+b=function (id, id, 1){
+
+}
+
+h=(3)=> {
+    print("hola");
+    d="asdf";
+}
+d=(a,b)=>{
+    print("asd");
+}
+e=()=>{
+
+}
+a=(25);
+print(a);
 
 

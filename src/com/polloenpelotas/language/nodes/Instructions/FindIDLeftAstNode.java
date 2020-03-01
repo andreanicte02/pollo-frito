@@ -10,11 +10,17 @@ import org.jetbrains.annotations.NotNull;
 
 public class FindIDLeftAstNode extends ProAstNode {
 
+
+
     private final String name;
 
     public FindIDLeftAstNode(@NotNull FileLocation fileLocation, @NotNull String name) {
         super(fileLocation);
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
     }
 
 

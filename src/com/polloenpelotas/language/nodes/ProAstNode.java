@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 
 public abstract class ProAstNode implements AstNode {
 
-    private final @NotNull FileLocation fileLocation;
+    public final @NotNull FileLocation fileLocation;
 
     public ProAstNode(@NotNull FileLocation fileLocation) {
         this.fileLocation = fileLocation;
