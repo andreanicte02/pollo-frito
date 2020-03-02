@@ -67,9 +67,10 @@ h=(b)=> {
 }
 
 a=function (){
-    print("Hola mundo");
+
     print(h(5));
+    return ("hola mundo"+c(1));
 }
 
 
-print(a());
+print(a()[1]+c(2))

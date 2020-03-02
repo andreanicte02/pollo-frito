@@ -28,7 +28,6 @@ public class FindIDAstNode extends ProAstNode {
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
 
-
         return ChickenUtils.getVarRight(ambit, name);
 
 

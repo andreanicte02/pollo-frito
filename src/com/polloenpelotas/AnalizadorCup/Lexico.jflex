@@ -47,6 +47,7 @@ list = "list"
 function = "function"
 nothing = "null"
 defaultt = "default"
+returnn = "return"
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -141,7 +142,8 @@ defaultt = "default"
 <YYINITIAL> {list}          {  return new Symbol(Simbolos.list, yyline, yycolumn, yytext()); }
 <YYINITIAL> {function}         {  return new Symbol(Simbolos.function, yyline, yycolumn, yytext().toLowerCase()); }
 <YYINITIAL> {nothing}          {  return new Symbol(Simbolos.nothing, yyline, yycolumn, yytext()); }
-<YYINITIAL> {defaultt}          {  return new Symbol(Simbolos.defaultt, yyline, yycolumn, yytext()); }
+<YYINITIAL> {defaultt}         {  return new Symbol(Simbolos.defaultt, yyline, yycolumn, yytext()); }
+<YYINITIAL> {returnn}          {  return new Symbol(Simbolos.returnn, yyline, yycolumn, yytext()); }
 
 //-------> ER
 

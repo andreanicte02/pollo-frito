@@ -85,7 +85,7 @@ terminal print;
 terminal function;
 terminal arrow;
 terminal invokeFun;
-terminal defaultt;
+terminal defaultt, returnn;
 
 //-------------------> Declaración de No Terminales
 non terminal List<AstNode> inicio;
@@ -102,7 +102,8 @@ non terminal AstNode functionC;
 non terminal AstNode createList;
 non terminal AstNode expLeft;
 non terminal List<AstNode> listaSentencia;
-non terminal AstNode declararFuncion;
+non terminal AstNode declararFuncion, sentReturn;
+non terminal AstNode invocarFuncion;
 
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
@@ -142,13 +143,19 @@ sentenciasPrueba::= sentenciasPrueba:a sentenciaPrueba:b    {: RESULT= a; RESULT
             |sentenciaPrueba:a              {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
 sentenciaPrueba::=
-                asignacion:a             {: RESULT = a; :}
-                |imprimir:a                  {: RESULT = a; :};
+                sentReturn:a               {: RESULT = a; :}
+                |asignacion:a              {: RESULT = a; :}
+                |imprimir:a                {: RESULT = a; :}
+                |invocarFuncion:a endSent  {: RESULT = a; :}
 
+                ;
 
 asignacion::=
         expLeft:a igual:o exp:b endSent         {: RESULT = new AssignAstNode(new FileLocation(oleft, oright),a,b); :}
         |expLeft:a igual:o declararFuncion:b    {: RESULT = new AssignFunctionAstNode(new FileLocation(oleft, oright),a,b); :};
+
+sentReturn::=  returnn:o exp:a endSent            {: RESULT = new ReturnAstNode(new FileLocation(oleft, oright),a) ; :}
+            ;
 
 declararFuncion::= function apar listExp:a cpar alla listaSentencia:b clla
                 {:
@@ -233,22 +240,20 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
     | exp:a abra abra exp:b cbra cbra   {: RESULT = new Access2ListAstNode(new FileLocation(aleft, aright), a ,b); :} %prec abra2
     | nothing:a                         {: RESULT = new CreateZNothingNode(new FileLocation(aleft, aright)); :}
     | identifier:a igual exp:b          {: RESULT = new DeclararParametroAstNode(new FileLocation(aleft, aright),a,b ); :}
-    | identifier:a apar listExp:b cpar  {: RESULT = new InvocarFuncionAstNode(new FileLocation(aleft, aright),a,b); :}
+    | invocarFuncion:a                  {: RESULT = a; :}
     | defaultt:a                         {: RESULT = new CreateZDefaultNode(new FileLocation(aleft,aright)); :}
 
     ;
 
 
-
+invocarFuncion::= identifier:a apar listExp:b cpar  {: RESULT = new InvocarFuncionAstNode(new FileLocation(aleft, aright),a,b); :}
+                ;
 
 functionC::= c apar listExp:a cpar    {: RESULT = new FunctionCAstNode(new FileLocation(aleft, aright), a); :}
             ;
 
 
 createList::= list:o apar listExp:a cpar  {:RESULT = new CreateZListNode(new FileLocation(oleft, oright),a ); :}
-            ;
-
-crearVector::= abra listExp:a cbra {: RESULT = null; :}
             ;
 
 

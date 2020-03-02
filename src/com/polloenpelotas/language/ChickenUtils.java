@@ -105,7 +105,11 @@ public final class ChickenUtils {
         for (AstNode node:lInstructions
              ) {
 
-            ZProtoObject result = node.execute(ambit);
+            var result = node.execute(ambit);
+
+            if(result instanceof ZRetorno){
+                return result;
+            }
 
         }
 

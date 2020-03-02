@@ -42,9 +42,14 @@ public class ZFunction extends ZProtoObject {
 
         }
 
-        ZProtoObject result = ChickenUtils.ejecutarSentencias(instructions,ambitoFuncion);
+        var result = ChickenUtils.ejecutarSentencias(instructions,ambitoFuncion);
 
-        return result;
+        if(result instanceof ZRetorno){
+            return ((ZRetorno) result).getValue();
+        }
+
+        //si noretorna nada retorna nullo
+        return ZNothing.getInstance();
     }
 
 
