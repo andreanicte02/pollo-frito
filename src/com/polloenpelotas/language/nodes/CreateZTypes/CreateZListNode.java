@@ -22,16 +22,9 @@ public class CreateZListNode extends ProAstNode {
     }
 
     @Override
-    public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
+    public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException {
 
-        List<ZProtoObject> unwrapList= new ArrayList<>();
-
-        for (AstNode node:
-             listExp) {
-
-            unwrapList.add(ChickenUtils.unwrap(node.execute(ambit)));
-
-        }
+        List<ZProtoObject> unwrapList= ChickenUtils.unwrapListExp(listExp,ambit);
 
         return new ZList(ChickenUtils.createListData(unwrapList));
     }

@@ -84,6 +84,9 @@ terminal nothing;
 terminal print;
 terminal function;
 terminal arrow;
+terminal invokeFun;
+terminal defaultt;
+
 //-------------------> Declaración de No Terminales
 non terminal List<AstNode> inicio;
 non terminal List<AstNode> sentenciasPrueba;
@@ -114,7 +117,10 @@ precedence left mas, menos;
 precedence left por, dividir, modulo;
 precedence left potenciar;
 precedence right not, umenos;
-precedence left abra, abra2;
+precedence left invokeFun;
+precedence left abra, abra2, cbra;
+precedence nonassoc apar, cpar;
+
 
 
 //-------------------> No Terminal inicial
@@ -226,8 +232,9 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
     | exp:a abra exp:b cbra             {: RESULT = new AccessStructAstNode(new FileLocation(aleft, aright),a,b); :}
     | exp:a abra abra exp:b cbra cbra   {: RESULT = new Access2ListAstNode(new FileLocation(aleft, aright), a ,b); :} %prec abra2
     | nothing:a                         {: RESULT = new CreateZNothingNode(new FileLocation(aleft, aright)); :}
-
     | identifier:a igual exp:b          {: RESULT = new DeclararParametroAstNode(new FileLocation(aleft, aright),a,b ); :}
+    | identifier:a apar listExp:b cpar  {: RESULT = new InvocarFuncionAstNode(new FileLocation(aleft, aright),a,b); :}
+    | defaultt:a                         {: RESULT = new CreateZDefaultNode(new FileLocation(aleft,aright)); :}
 
     ;
 

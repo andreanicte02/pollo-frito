@@ -62,24 +62,14 @@ a=((a));
 a=(a);
 print(a);
 
+h=(b)=> {
+   print("probando"+b);
+}
+
 a=function (){
-
-}
-b=function (id, id, 1){
-
+    print("Hola mundo");
+    print(h(5));
 }
 
-h=(3)=> {
-    print("hola");
-    d="asdf";
-}
-d=(a,b)=>{
-    print("asd");
-}
-e=()=>{
 
-}
-a=(25);
-print(a);
-
-
+print(a());

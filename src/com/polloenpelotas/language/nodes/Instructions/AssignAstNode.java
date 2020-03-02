@@ -41,7 +41,7 @@ public class AssignAstNode extends ProAstNode {
 
         }
 
-        r1.executeOperation("assign"," id[exp] || id[[exp]] [exp] || id -> asignacion", r2);
+        r1.executeOperation("assign"," id[exp] | id[[exp]] [exp] | id -> asignacion", r2);
 
 
         return ZNothing.getInstance();

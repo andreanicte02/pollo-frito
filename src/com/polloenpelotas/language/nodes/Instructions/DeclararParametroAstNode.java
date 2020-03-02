@@ -33,10 +33,13 @@ public class DeclararParametroAstNode extends ProAstNode {
 
         ZProtoObject r1 = exp.execute(ambit);
         ZVar var = new ZVar(ZNothing.getInstance());
-        var.executeOperation("assign","=",r1);
-        ChickenUtils.declararParametro(name,r1,ambit);
 
-        return ZNothing.getInstance();
+        var.executeOperation("assign","=",r1);
+        ChickenUtils.declararParametro(name,var,ambit);
+
+        return var;
 
     }
+
+
 }

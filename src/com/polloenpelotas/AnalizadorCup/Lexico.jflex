@@ -46,6 +46,7 @@ falsee = "false"
 list = "list"
 function = "function"
 nothing = "null"
+defaultt = "default"
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -140,6 +141,7 @@ nothing = "null"
 <YYINITIAL> {list}          {  return new Symbol(Simbolos.list, yyline, yycolumn, yytext()); }
 <YYINITIAL> {function}         {  return new Symbol(Simbolos.function, yyline, yycolumn, yytext().toLowerCase()); }
 <YYINITIAL> {nothing}          {  return new Symbol(Simbolos.nothing, yyline, yycolumn, yytext()); }
+<YYINITIAL> {defaultt}          {  return new Symbol(Simbolos.defaultt, yyline, yycolumn, yytext()); }
 
 //-------> ER
 

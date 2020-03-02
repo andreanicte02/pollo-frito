@@ -1,5 +1,7 @@
 package com.polloenpelotas.language;
 
+import com.polloenpelotas.Utils;
+import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.*;
 import org.jetbrains.annotations.NotNull;
 
@@ -59,8 +61,9 @@ public final class ChickenUtils {
 
     /**declararparametro*/
 
-    public static void declararParametro(String name, ZProtoObject var, ZProtoObject ambit) throws SemanticException {
+    public static void declararParametro(String name, ZVar var, ZProtoObject ambit) throws SemanticException {
 
+        //en el ambito actual de la funcion
         if (ambit.members.containsKey(name)){
 
             throw new SemanticException("La variable con el nombre id: "+name+", ya existe");
@@ -73,11 +76,54 @@ public final class ChickenUtils {
 
     public static void crearFuncion(String name, ZFunction funcion, ZProtoObject ambit) throws SemanticException {
 
+        //solo deberia ser global
         if(ambit.functions.containsKey(name)){
 
             throw new SemanticException("La funcion con el nombre id: "+name+", ya existe");
         }
         ambit.functions.put(name, funcion);
+
+    }
+
+    //si esta dentro de otra funcion la llamada, el global no va ser el actual
+    public static ZFunction getFuncion(String name, ZProtoObject amibt) throws SemanticException {
+
+        for(ZProtoObject e = amibt; e != null; e= e.getAnterior()){
+
+            if(e.functions.containsKey(name)){
+                return e.functions.get(name);
+            }
+        }
+
+        throw new  SemanticException("La funcion con el nombre id: "+name+", no existe");
+
+
+    }
+
+    public static ZProtoObject ejecutarSentencias(List<AstNode> lInstructions, ZProtoObject ambit) throws LocatedSemanticException {
+
+        for (AstNode node:lInstructions
+             ) {
+
+            ZProtoObject result = node.execute(ambit);
+
+        }
+
+        return ZNothing.getInstance();
+    }
+
+    /**desenvoler una lista con AstNodes*/
+    public static List<ZProtoObject> unwrapListExp(List<AstNode> lista, ZProtoObject ambit) throws LocatedSemanticException {
+        List<ZProtoObject> nueva = new ArrayList<>();
+
+        for (AstNode node:
+             lista) {
+
+            nueva.add(unwrap(node.execute(ambit)));
+
+        }
+
+        return nueva;
 
     }
 

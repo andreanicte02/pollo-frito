@@ -25,16 +25,9 @@ public class FunctionCAstNode extends ProAstNode {
     @Override
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
-        List<ZProtoObject> listZVar = new ArrayList<>();
+        List<ZProtoObject> unwrapList =  ChickenUtils.unwrapListExp(listExp,ambit);
 
-        for (AstNode node:
-             listExp) {
-
-            listZVar.add(ChickenUtils.unwrap(node.execute(ambit)));
-
-        }
-
-        return ChickenUtils.createStructC(listZVar);
+        return ChickenUtils.createStructC(unwrapList);
 
 
 
