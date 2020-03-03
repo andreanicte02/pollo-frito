@@ -98,7 +98,7 @@ non terminal AstNode expLeft;
 non terminal List<AstNode> listaSentencia,sentencias;
 non terminal AstNode declararFuncion, sentReturn;
 non terminal AstNode invocarFuncion, asignarFuncion;
-non terminal AstNode returnExp;
+
 
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
@@ -222,6 +222,8 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
 
     | exp:a and exp:b               {: RESULT = new AndAstNode(new FileLocation(aleft, aright), a,b); :}
     | exp:a or exp:b                {: RESULT = new OrAstNode (new FileLocation(aleft, aright), a,b);  :}
+
+    | exp:a tern exp:b dosp exp:c       {: RESULT = new TernarioAstNode(new FileLocation(aleft, aright),a,b,c); :}
 
     | apar exp:e cpar               {: RESULT =  e; :}
 

@@ -65,6 +65,8 @@ TOKEN : {
     | <COMA: ",">
     | <ALLA: "{">
     | <CLLA: "}">
+    | <TERN: "?">
+    | <DOSP: ":">
     | <NOTHING: "null">
     | <RETURN: "return">
     | <FUNCTION: "function">
@@ -113,7 +115,7 @@ AstNode instruccion() :
   |
   LOOKAHEAD(6)e=funcionFlecha()       {return e;}
   |
-  LOOKAHEAD(1)e=ExpsLeft() <IGUAL> e1=ExpresionOr() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
+  LOOKAHEAD(1)e=ExpsLeft() <IGUAL> e1=Expresion() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
 
 
 
@@ -157,13 +159,24 @@ AstNode funcionFlecha():
 AstNode sentReturn():
 {AstNode e;}
 {
-    LOOKAHEAD(2)<RETURN> e=ExpresionOr() {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
+    LOOKAHEAD(2)<RETURN> e=Expresion() {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
     |
     LOOKAHEAD(1)<RETURN> {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine));}
 
 }
 
 
+AstNode Expresion():
+{AstNode e, e1, e2;}
+{
+    e=ExpresionOr() (
+        <TERN> e1=ExpresionOr() <DOSP> e2=ExpresionOr() {
+                e= new TernarioAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1,e2);
+            }
+    )*
+    { return e;  }
+
+}
 
 
 AstNode ExpresionOr():
@@ -286,10 +299,10 @@ AstNode ExpAccess():
 {
    e=Primitives()(
 
-        LOOKAHEAD(2) <ABRA> e1=ExpresionOr() <CBRA>
+        LOOKAHEAD(2) <ABRA> e1=Expresion() <CBRA>
         {e = new AccessStructAstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1); }
         |
-        LOOKAHEAD(2) <ABRA> <ABRA> e1=ExpresionOr() <CBRA> <CBRA>
+        LOOKAHEAD(2) <ABRA> <ABRA> e1=Expresion() <CBRA> <CBRA>
         {e = new Access2ListAstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1);}
 
    )* {return e;}
@@ -300,7 +313,7 @@ AstNode ExpAccess():
 AstNode Primitives() :
 {AstNode e; Token t;   }
 {
-    <PARENI> e = ExpresionOr() <PAREND>   { return e; }
+    <PARENI> e = Expresion() <PAREND>   { return e; }
     |
     <NUMERO>  { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
     |
@@ -334,9 +347,9 @@ AstNode invokeFunction():
 List<AstNode> exps():
 { AstNode e,e1;  List<AstNode> l = new ArrayList<AstNode>(); }
 {
-    e=ExpresionOr() { l.add(e); } (
+    e=Expresion() { l.add(e); } (
 
-        <COMA> e1=ExpresionOr() { l.add(e1); }
+        <COMA> e1=Expresion() { l.add(e1); }
 
     )* {return l;}
     |
@@ -347,10 +360,10 @@ AstNode ExpsLeft():
 {AstNode e, e1; }
 {
     e=PrimitivesLeft()  (
-        LOOKAHEAD(2) <ABRA> e1=ExpresionOr() <CBRA>
+        LOOKAHEAD(2) <ABRA> e1=Expresion() <CBRA>
         {e = new LeftAccess1AstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1); }
         |
-         LOOKAHEAD(2) <ABRA> <ABRA> e1=ExpresionOr() <CBRA> <CBRA>
+         LOOKAHEAD(2) <ABRA> <ABRA> e1=Expresion() <CBRA> <CBRA>
         {e = new LeftAccess2AstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1);}
 
     )* { return e;}
@@ -378,7 +391,7 @@ AstNode parametro():
 {AstNode e; Token t;}
 {
 
-    LOOKAHEAD(3) t=<IDENTIFIER> <IGUAL> e=ExpresionOr()
+    LOOKAHEAD(3) t=<IDENTIFIER> <IGUAL> e=Expresion()
     {
         return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image, e);
     }

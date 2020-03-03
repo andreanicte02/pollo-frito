@@ -68,9 +68,21 @@ return;
 
 a=function (a=" espacio"){
 
-    print(h(5));
-    return ("hola mundo"+c(1)+a);
+    print(h(5))
+    return ("hola mundo"+c(1)+a)
 }
 
 
-print(a("25")[1]+c(2))
+print(a("25")[1]+a("25")[1]+c(2))
+
+nuevo = c(1,2,3);
+print(nuevo);
+nuevo[5]= "hola";
+print (nuevo);
+nuevo= c(nuevo);
+print (nuevo);
+vectorBOOL = c(true,true,true);
+print(vectorBOOL);
+
+print(vectorBOOL[1]?"hola":"nel");
+

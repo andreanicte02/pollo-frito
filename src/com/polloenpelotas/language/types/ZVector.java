@@ -51,6 +51,9 @@ public class ZVector extends ZProtoObject {
 
     public ZProtoObject access1Left(ZInteger index){
 
+
+        ChickenUtils.increaseZSize(list, index.getValue());
+
         ZVar aux = list.get(index.getValue()-1);
 
         if(ChickenUtils.isPrimitive(aux.getValue())){
@@ -80,6 +83,7 @@ public class ZVector extends ZProtoObject {
 
         ZVar aux = list.get(0);
         aux.setValue(newValue);
+
 
         return ZNothing.getInstance();
 
