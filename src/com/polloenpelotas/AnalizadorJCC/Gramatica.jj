@@ -101,11 +101,9 @@ List<AstNode>  analizar() :
 
 
 AstNode instruccion() :
-{AstNode e, e1;}S
+{AstNode e, e1;}
 {
 
-  LOOKAHEAD(2)e=ExpsLeft() <IGUAL> e1=ExpresionOr() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
-  |
   LOOKAHEAD(2)e=invokeFunction()   (<PCOMA>)?   { return e; }
   |
   LOOKAHEAD(1)e=sentReturn()      (<PCOMA>)?   { return e; }
@@ -113,6 +111,10 @@ AstNode instruccion() :
   LOOKAHEAD(3)e=funcionNormal()       {return e;}
   |
   LOOKAHEAD(6)e=funcionFlecha()       {return e;}
+  |
+  LOOKAHEAD(1)e=ExpsLeft() <IGUAL> e1=ExpresionOr() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
+
+
 
 }
 
@@ -126,7 +128,7 @@ List<AstNode>  listaInstruccion():
 AstNode funcionNormal():
 {Token t; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
 {
-    t=<IDENTIFIER> <IGUAL> <FUNCTION> <PARENI> lPar=exps() <PAREND> <ALLA> lSent=listaInstruccion() <CLLA>
+    t=<IDENTIFIER> <IGUAL> <FUNCTION> <PARENI> lPar=parametros() <PAREND> <ALLA> lSent=listaInstruccion() <CLLA>
     {
         AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
         AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
@@ -140,7 +142,7 @@ AstNode funcionNormal():
 AstNode funcionFlecha():
 {Token t; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
 {
-    t=<IDENTIFIER> <IGUAL> <PARENI> lPar=exps() <PAREND> <ARROW> <ALLA> lSent=listaInstruccion() <CLLA>
+    t=<IDENTIFIER> <IGUAL> <PARENI> lPar=parametros() <PAREND> <ARROW> <ALLA> lSent=listaInstruccion() <CLLA>
     {
         AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
         AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
@@ -372,14 +374,16 @@ List<AstNode>  parametros():
 AstNode parametro():
 {AstNode e; Token t;}
 {
+
+    LOOKAHEAD(3) t=<IDENTIFIER> <IGUAL> e=ExpresionOr()
+    {
+        return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image, e);
+    }
+    |
     LOOKAHEAD(1)  t=<IDENTIFIER>
     {
         return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image,
             new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine)));
      }
-    |
-    LOOKAHEAD(2) t=<IDENTIFIER> <IGUAL> e=ExpresionOr()
-    {
-        return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image, e);
-    }
+
 }

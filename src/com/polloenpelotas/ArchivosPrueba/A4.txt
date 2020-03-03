@@ -50,22 +50,29 @@ print(!c(true,true,true));
 v3=c(25,25,"as",1.5,true);
 print(v3);
 v4=c(25,25,1,1.5,true, false, v3[3],b[b[2]]);
-print(v4)
-v5=c(25,25,1,1.5,true, false, null)
+print(v4);
+v5=c(25,25,1,1.5,true, false, null);
 print("----vector-----");
 print(v5[1][1]*25/5+5);
 print(v5[7]==null);
 a=((5*5*2+1*1*1*1/5+100));
 
-print(a)
+print(a);
 a=((a));
 a=(a);
 print(a);
 
 h=(b)=> {  print("probando"+b);
 }
+h=(b)=> {  print("probando"+b);
+}
+h=()=> {  print("probando"+b);
+}
 
-a=function (){
+h=(b,b,c,a=5,a,d)=> {  print("probando"+b);
+}
+
+a=function (a=5,a,f){
 
     print(h(5));
     return ("hola mundo"+c(1));
