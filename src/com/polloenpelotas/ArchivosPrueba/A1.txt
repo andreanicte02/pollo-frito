@@ -15,11 +15,11 @@ print (vector);
 print (a);
 a[[1]][2]=vector[2];
 print (vector);
-print (a);
+print (a)
 a[[1]][2]=55;
 print (vector);
-print("---");
-a[[1]][2] = list(0);
+print("---")
+a[[1]][2] = list(0)
 print (a);
 
 
@@ -63,13 +63,14 @@ a=(a);
 print(a);
 
 h=(b)=> {  print("probando"+b);
+return;
 }
 
-a=function (){
+a=function (a=" espacio"){
 
     print(h(5));
-    return ("hola mundo"+c(1));
+    return ("hola mundo"+c(1)+a);
 }
 
 
-print(a()[1]+c(2))
+print(a("25")[1]+c(2))

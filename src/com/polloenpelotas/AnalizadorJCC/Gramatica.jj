@@ -68,6 +68,7 @@ TOKEN : {
     | <NOTHING: "null">
     | <RETURN: "return">
     | <FUNCTION: "function">
+    | <DEFAULTT: "default">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -154,11 +155,11 @@ AstNode funcionFlecha():
 }
 
 AstNode sentReturn():
-{AstNode e=null;}
+{AstNode e;}
 {
     LOOKAHEAD(2)<RETURN> e=ExpresionOr() {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
     |
-    LOOKAHEAD(1)<RETURN>
+    LOOKAHEAD(1)<RETURN> {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine));}
 
 }
 
@@ -311,9 +312,11 @@ AstNode Primitives() :
     |
     t=<STRING> { return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) ); }
     |
-    LOOKAHEAD(2) e=invokeFunction() {return e;}
-    |
     <NOTHING> { return new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine));}
+    |
+    <DEFAULTT> { return new CreateZDefaultNode(new FileLocation(token.beginColumn, token.beginLine)); }
+    |
+    LOOKAHEAD(2) e=invokeFunction() {return e;}
     |
     t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
 

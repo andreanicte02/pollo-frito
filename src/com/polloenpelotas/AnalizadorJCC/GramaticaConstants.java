@@ -77,9 +77,11 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int FUNCTION = 36;
   /** RegularExpression Id. */
-  int IDENTIFIER = 37;
+  int DEFAULTT = 37;
   /** RegularExpression Id. */
-  int STRING = 40;
+  int IDENTIFIER = 38;
+  /** RegularExpression Id. */
+  int STRING = 41;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -125,9 +127,10 @@ public interface GramaticaConstants {
     "\"null\"",
     "\"return\"",
     "\"function\"",
+    "\"default\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 39>",
+    "<token of kind 40>",
     "\"\\\"\"",
   };
 
