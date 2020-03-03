@@ -38,7 +38,6 @@ SKIP : {
 TOKEN : {
       <NUMERO: (["0"-"9"])+>
     | <DECIMAL: (["0"-"9"])+"."(["0"-"9"])+>
-    | <PRINT: "print">
     | <PCOMA: ";">
     | <PARENI: "(">
     | <PAREND: ")">
@@ -52,6 +51,7 @@ TOKEN : {
     | <MENORIGUAL: "<=">
     | <MAYORIGUAL: ">=">
     | <IGUAL: "=">
+    | <ARROW: "=>">
     | <IGUALACION: "==">
     | <DIFERENCIACION: "!=">
     | <AND: "&">
@@ -63,9 +63,11 @@ TOKEN : {
     | <TRUE: "true">
     | <FALSE: "false">
     | <COMA: ",">
-    | <C: "c">
-    | <LIST: "list">
+    | <ALLA: "{">
+    | <CLLA: "}">
     | <NOTHING: "null">
+    | <RETURN: "return">
+    | <FUNCTION: "function">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -89,22 +91,76 @@ MORE :
 /** Producción inicial
     Analizar -> (Instruccion)+ EOF
 */
-List<AstNode>  Analizar() :
+
+
+List<AstNode>  analizar() :
 {AstNode e; List<AstNode> l = new ArrayList<AstNode>(); }
 {
-  (e=Instruccion() {l.add(e);})+ <EOF> {return l;}
+  (e=instruccion() {l.add(e);})+ <EOF> {return l;}
 }
 
 
-AstNode Instruccion() :
-{AstNode e, e1;}
+AstNode instruccion() :
+{AstNode e, e1;}S
 {
-  <PRINT> <PARENI> e=ExpresionOr() <PAREND> (<PCOMA>)?  { return new PrintAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
-  |
-  e=ExpsLeft() <IGUAL> e1=ExpresionOr() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
 
+  LOOKAHEAD(2)e=ExpsLeft() <IGUAL> e1=ExpresionOr() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
+  |
+  LOOKAHEAD(2)e=invokeFunction()   (<PCOMA>)?   { return e; }
+  |
+  LOOKAHEAD(1)e=sentReturn()      (<PCOMA>)?   { return e; }
+  |
+  LOOKAHEAD(3)e=funcionNormal()       {return e;}
+  |
+  LOOKAHEAD(6)e=funcionFlecha()       {return e;}
 
 }
+
+List<AstNode>  listaInstruccion():
+{ AstNode e; List<AstNode> l = new ArrayList<AstNode>(); }
+{
+    (e=instruccion(){l.add(e);})+    {return l;}
+    |                                {return l;}
+}
+
+AstNode funcionNormal():
+{Token t; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
+{
+    t=<IDENTIFIER> <IGUAL> <FUNCTION> <PARENI> lPar=exps() <PAREND> <ALLA> lSent=listaInstruccion() <CLLA>
+    {
+        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
+        AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
+
+
+        return new AssignFunctionAstNode(new FileLocation(token.beginColumn, token.beginLine), aux1, aux2);
+
+    }
+}
+
+AstNode funcionFlecha():
+{Token t; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
+{
+    t=<IDENTIFIER> <IGUAL> <PARENI> lPar=exps() <PAREND> <ARROW> <ALLA> lSent=listaInstruccion() <CLLA>
+    {
+        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
+        AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
+
+
+        return new AssignFunctionAstNode(new FileLocation(token.beginColumn, token.beginLine), aux1, aux2);
+
+    }
+}
+
+AstNode sentReturn():
+{AstNode e=null;}
+{
+    LOOKAHEAD(2)<RETURN> e=ExpresionOr() {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
+    |
+    LOOKAHEAD(1)<RETURN>
+
+}
+
+
 
 
 AstNode ExpresionOr():
@@ -239,7 +295,7 @@ AstNode ExpAccess():
 
 
 AstNode Primitives() :
-{AstNode e; Token t;   List<AstNode> e1;  }
+{AstNode e; Token t;   }
 {
     <PARENI> e = ExpresionOr() <PAREND>   { return e; }
     |
@@ -253,32 +309,24 @@ AstNode Primitives() :
     |
     t=<STRING> { return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) ); }
     |
-    e=OtherFunctions(){ return e; }
+    LOOKAHEAD(2) e=invokeFunction() {return e;}
     |
     <NOTHING> { return new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine));}
     |
     t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
+
+
 }
 
-
-AstNode OtherFunctions():
-{ List<AstNode> l = new ArrayList<AstNode>(); }
+AstNode invokeFunction():
+{List<AstNode> l = new ArrayList<AstNode>(); Token t; }
 {
-    <C> <PARENI>  l=ListExp() <PAREND>       { return new FunctionCAstNode(new FileLocation(token.beginColumn, token.beginLine), l ); }
-    |
-    <LIST> <PARENI> l=ListExp() <PAREND>    { return new CreateZListNode(new FileLocation(token.beginColumn, token.beginLine), l) ; }
-
+     t=<IDENTIFIER> <PARENI> l=exps() <PAREND> {return new InvocarFuncionAstNode(new FileLocation(t.beginColumn, t.beginLine),t.image, l); }
 }
 
-List<AstNode> ListExp():
-{ List<AstNode> l = new ArrayList<AstNode>(); }
-{
-    l=Exps()    { return l; }
-    |           { return l; }
 
-}
 
-List<AstNode> Exps():
+List<AstNode> exps():
 { AstNode e,e1;  List<AstNode> l = new ArrayList<AstNode>(); }
 {
     e=ExpresionOr() { l.add(e); } (
@@ -286,6 +334,8 @@ List<AstNode> Exps():
         <COMA> e1=ExpresionOr() { l.add(e1); }
 
     )* {return l;}
+    |
+    {return l;}
 }
 
 AstNode ExpsLeft():
@@ -307,4 +357,29 @@ AstNode PrimitivesLeft():
 {Token t;}
 {
     t=<IDENTIFIER> {return new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
+}
+
+List<AstNode>  parametros():
+{AstNode e, e1; List<AstNode> l = new ArrayList<AstNode>();}
+{
+    e=parametro() {l.add(e); }(
+        <COMA> e1=parametro(){ l.add(e1); }
+    )* {return l;}
+    |
+    {return l;}
+}
+
+AstNode parametro():
+{AstNode e; Token t;}
+{
+    LOOKAHEAD(1)  t=<IDENTIFIER>
+    {
+        return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image,
+            new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine)));
+     }
+    |
+    LOOKAHEAD(2) t=<IDENTIFIER> <IGUAL> e=ExpresionOr()
+    {
+        return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image, e);
+    }
 }

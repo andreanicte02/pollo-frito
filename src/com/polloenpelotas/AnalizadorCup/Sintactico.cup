@@ -78,10 +78,7 @@ terminal tern, dosp;
 terminal apar, cpar, pComa, igual, abra, cbra, coma, alla, clla;
 terminal String numero,decimal, identifier,truee, falsee, cadena;
 terminal umenos, abra2;
-terminal c;
-terminal list;
 terminal nothing;
-terminal print;
 terminal function;
 terminal arrow;
 terminal invokeFun;
@@ -93,17 +90,15 @@ non terminal List<AstNode> sentenciasPrueba;
 
 non terminal AstNode exp, asignacion;
 non terminal AstNode sentenciaPrueba;
-non terminal AstNode imprimir;
+non terminal AstNode sentencia;
 non terminal endSent;
-non terminal AstNode crearVector;
 non terminal List<AstNode> listExp;
 non terminal List<AstNode> exps;
-non terminal AstNode functionC;
-non terminal AstNode createList;
 non terminal AstNode expLeft;
-non terminal List<AstNode> listaSentencia;
+non terminal List<AstNode> listaSentencia,sentencias;
 non terminal AstNode declararFuncion, sentReturn;
-non terminal AstNode invocarFuncion;
+non terminal AstNode invocarFuncion, asignarFuncion;
+non terminal AstNode returnExp;
 
 
 //-------------------> Indicar precedencia(de menor a mayor) y asociatividad
@@ -132,30 +127,39 @@ start with inicio;
 --------------------- 3ra. y ultima area: Reglas Sintacticas
 -------------------------------------------------------------------*/
 
-inicio::= sentenciasPrueba:a  {: RESULT = a; :};
+inicio::= sentencias:a  {: RESULT = a; :};
 
 
-listaSentencia::= sentenciasPrueba:a {: RESULT = a; :}
-                |   {: RESULT = new ArrayList<>(); :}
+listaSentencia::= sentencias:a {: RESULT = a; :}
+                |              {: RESULT = new ArrayList<>(); :}
                 ;
 
-sentenciasPrueba::= sentenciasPrueba:a sentenciaPrueba:b    {: RESULT= a; RESULT.add(b); :}
-            |sentenciaPrueba:a              {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
-sentenciaPrueba::=
-                sentReturn:a               {: RESULT = a; :}
-                |asignacion:a              {: RESULT = a; :}
-                |imprimir:a                {: RESULT = a; :}
-                |invocarFuncion:a endSent  {: RESULT = a; :}
+sentencias::= sentencias:a sentencia:b  {: RESULT= a; RESULT.add(b); :}
+            | sentencia:a               {: RESULT = new ArrayList<>(); RESULT.add(a); :}
+            ;
 
-                ;
+sentencia::=  asignacion:a     endSent      {: RESULT = a; :}
+            | invocarFuncion:a endSent      {: RESULT = a; :}
+            | asignarFuncion:a              {: RESULT = a; :}
+            | sentReturn:a                  {: RESULT = a; :}
+            ;
+
 
 asignacion::=
-        expLeft:a igual:o exp:b endSent         {: RESULT = new AssignAstNode(new FileLocation(oleft, oright),a,b); :}
-        |expLeft:a igual:o declararFuncion:b    {: RESULT = new AssignFunctionAstNode(new FileLocation(oleft, oright),a,b); :};
+        expLeft:a igual:o exp:b              {: RESULT = new AssignAstNode(new FileLocation(oleft, oright),a,b); :}
+        ;
 
-sentReturn::=  returnn:o exp:a endSent            {: RESULT = new ReturnAstNode(new FileLocation(oleft, oright),a) ; :}
+asignarFuncion::=
+        expLeft:a igual:o declararFuncion:b    {: RESULT = new AssignFunctionAstNode(new FileLocation(oleft, oright),a,b); :}
+        ;
+
+
+sentReturn::=  returnn:o exp:a  endSent              {: RESULT = new ReturnAstNode(new FileLocation(oleft, oright), a) ; :}
+            |  returnn:o  pComa                      {: RESULT = new ReturnAstNode(new FileLocation(oleft, oright)) ; :}
             ;
+
+
 
 declararFuncion::= function apar listExp:a cpar alla listaSentencia:b clla
                 {:
@@ -186,7 +190,6 @@ declararFuncion::= function apar listExp:a cpar alla listaSentencia:b clla
 
 
 
-imprimir ::= print apar exp:e cpar endSent    {: RESULT = new PrintAstNode(new FileLocation(eleft, eright),e); :};
 
 expLeft ::= identifier:e                      {: RESULT = new FindIDLeftAstNode(new FileLocation(eleft, eright), e); :}
            | expLeft:e abra exp:e1 cbra       {: RESULT = new LeftAccess1AstNode(new FileLocation(eleft, eright), e,e1); :}
@@ -234,8 +237,6 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
 
     | identifier:a                  {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a); :}
 
-    | functionC:a                       {: RESULT = a; :}
-    | createList:a                      {: RESULT = a; :}
     | exp:a abra exp:b cbra             {: RESULT = new AccessStructAstNode(new FileLocation(aleft, aright),a,b); :}
     | exp:a abra abra exp:b cbra cbra   {: RESULT = new Access2ListAstNode(new FileLocation(aleft, aright), a ,b); :} %prec abra2
     | nothing:a                         {: RESULT = new CreateZNothingNode(new FileLocation(aleft, aright)); :}
@@ -249,13 +250,6 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
 invocarFuncion::= identifier:a apar listExp:b cpar  {: RESULT = new InvocarFuncionAstNode(new FileLocation(aleft, aright),a,b); :}
                 ;
 
-functionC::= c apar listExp:a cpar    {: RESULT = new FunctionCAstNode(new FileLocation(aleft, aright), a); :}
-            ;
-
-
-createList::= list:o apar listExp:a cpar  {:RESULT = new CreateZListNode(new FileLocation(oleft, oright),a ); :}
-            ;
-
 
 listExp::= exps:a           {: RESULT = a; :}
                 |           {: RESULT = new ArrayList<>(); :}
@@ -264,6 +258,4 @@ listExp::= exps:a           {: RESULT = a; :}
 exps::= exps:a coma exp:b   {: RESULT = a; RESULT.add(b); :}
             | exp:a         {: RESULT = new ArrayList<>(); RESULT.add(a); :}
             ;
-
-
 

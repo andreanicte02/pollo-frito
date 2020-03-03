@@ -17,33 +17,33 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int DECIMAL = 6;
   /** RegularExpression Id. */
-  int PRINT = 7;
+  int PCOMA = 7;
   /** RegularExpression Id. */
-  int PCOMA = 8;
+  int PARENI = 8;
   /** RegularExpression Id. */
-  int PARENI = 9;
+  int PAREND = 9;
   /** RegularExpression Id. */
-  int PAREND = 10;
+  int MAS = 10;
   /** RegularExpression Id. */
-  int MAS = 11;
+  int MENOS = 11;
   /** RegularExpression Id. */
-  int MENOS = 12;
+  int POR = 12;
   /** RegularExpression Id. */
-  int POR = 13;
+  int DIV = 13;
   /** RegularExpression Id. */
-  int DIV = 14;
+  int POT = 14;
   /** RegularExpression Id. */
-  int POT = 15;
+  int MENORQUE = 15;
   /** RegularExpression Id. */
-  int MENORQUE = 16;
+  int MAYORQUE = 16;
   /** RegularExpression Id. */
-  int MAYORQUE = 17;
+  int MENORIGUAL = 17;
   /** RegularExpression Id. */
-  int MENORIGUAL = 18;
+  int MAYORIGUAL = 18;
   /** RegularExpression Id. */
-  int MAYORIGUAL = 19;
+  int IGUAL = 19;
   /** RegularExpression Id. */
-  int IGUAL = 20;
+  int ARROW = 20;
   /** RegularExpression Id. */
   int IGUALACION = 21;
   /** RegularExpression Id. */
@@ -67,15 +67,19 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int COMA = 31;
   /** RegularExpression Id. */
-  int C = 32;
+  int ALLA = 32;
   /** RegularExpression Id. */
-  int LIST = 33;
+  int CLLA = 33;
   /** RegularExpression Id. */
   int NOTHING = 34;
   /** RegularExpression Id. */
-  int IDENTIFIER = 35;
+  int RETURN = 35;
   /** RegularExpression Id. */
-  int STRING = 38;
+  int FUNCTION = 36;
+  /** RegularExpression Id. */
+  int IDENTIFIER = 37;
+  /** RegularExpression Id. */
+  int STRING = 40;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -91,7 +95,6 @@ public interface GramaticaConstants {
     "\"\\n\"",
     "<NUMERO>",
     "<DECIMAL>",
-    "\"print\"",
     "\";\"",
     "\"(\"",
     "\")\"",
@@ -105,6 +108,7 @@ public interface GramaticaConstants {
     "\"<=\"",
     "\">=\"",
     "\"=\"",
+    "\"=>\"",
     "\"==\"",
     "\"!=\"",
     "\"&\"",
@@ -116,12 +120,14 @@ public interface GramaticaConstants {
     "\"true\"",
     "\"false\"",
     "\",\"",
-    "\"c\"",
-    "\"list\"",
+    "\"{\"",
+    "\"}\"",
     "\"null\"",
+    "\"return\"",
+    "\"function\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 37>",
+    "<token of kind 39>",
     "\"\\\"\"",
   };
 

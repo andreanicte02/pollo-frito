@@ -39,8 +39,7 @@ more            = ({letter}| "."{letter})
 identifier      = {more} ({letterDigit}|"_"|".")*
 
 //-------> Palabras Reservadas
-c     = "c"
-print = "print"
+
 truee = "true"
 falsee = "false"
 list = "list"
@@ -135,11 +134,9 @@ returnn = "return"
 
 //-------> PR
 
-<YYINITIAL> {c}             {  return new Symbol(Simbolos.c, yyline, yycolumn, yytext()); }
-<YYINITIAL> {print}         {  return new Symbol(Simbolos.print, yyline, yycolumn, yytext()); }
+
 <YYINITIAL> {truee}         {  return new Symbol(Simbolos.truee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {falsee}        {  return new Symbol(Simbolos.falsee, yyline, yycolumn, yytext()); }
-<YYINITIAL> {list}          {  return new Symbol(Simbolos.list, yyline, yycolumn, yytext()); }
 <YYINITIAL> {function}         {  return new Symbol(Simbolos.function, yyline, yycolumn, yytext().toLowerCase()); }
 <YYINITIAL> {nothing}          {  return new Symbol(Simbolos.nothing, yyline, yycolumn, yytext()); }
 <YYINITIAL> {defaultt}         {  return new Symbol(Simbolos.defaultt, yyline, yycolumn, yytext()); }
