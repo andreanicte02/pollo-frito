@@ -83,7 +83,7 @@ terminal function;
 terminal arrow;
 terminal invokeFun;
 terminal defaultt, returnn;
-terminal iff, elsee;
+terminal iff, elsee, breakk;
 
 //-------------------> Declaración de No Terminales
 non terminal List<AstNode> inicio;
@@ -148,6 +148,7 @@ sentencia::=  asignacion:a     endSent      {: RESULT = a; :}
             | asignarFuncion:a              {: RESULT = a; :}
             | sentReturn:a                  {: RESULT = a; :}
             | sentIf:a                      {: RESULT = a; :}
+            | breakk:a endSent              {: RESULT = new BreakAstNode(new FileLocation(aleft, aright)); :}
             ;
 
 

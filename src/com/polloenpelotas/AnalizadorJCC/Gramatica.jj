@@ -73,6 +73,7 @@ TOKEN : {
     | <DEFAULTT: "default">
     | <IF: "if">
     | <ELSE: "else">
+    | <BREAK: "break">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -108,16 +109,17 @@ List<AstNode>  analizar() :
 AstNode instruccion() :
 {AstNode e, e1;}
 {
-
-  e=sentIf()            {return e;}
+  <BREAK>  (<PCOMA>)?                           { return new BreakAstNode( new FileLocation(token.beginColumn, token.beginLine)); }
   |
-  e=sentReturn()      (<PCOMA>)?   { return e; }
+  e=sentIf()                                    { return e;}
+  |
+  e=sentReturn()      (<PCOMA>)?                { return e; }
   |
   LOOKAHEAD(2)e=invokeFunction()   (<PCOMA>)?   { return e; }
   |
-  LOOKAHEAD(3)e=funcionNormal()       {return e;}
+  LOOKAHEAD(3)e=funcionNormal()                 { return e;}
   |
-  LOOKAHEAD(6)e=funcionFlecha()       {return e;}
+  LOOKAHEAD(6)e=funcionFlecha()                 { return e;}
   |
   LOOKAHEAD(1)e=ExpsLeft() <IGUAL> e1=Expresion() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
 

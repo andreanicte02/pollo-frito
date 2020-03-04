@@ -84,7 +84,7 @@ print (nuevo);
 vectorBOOL = c(true,true,true);
 print(vectorBOOL);
 
-print(vectorBOOL[1][1]?"hola":"nel");
+print((vectorBOOL[1][1]?"hola":"nel")+" probando" );
 
 factorial = (num)=>{
     if(num == 0)

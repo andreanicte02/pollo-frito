@@ -107,9 +107,11 @@ public final class ChickenUtils {
 
             var result = node.execute(ambit);
 
-            if(result instanceof ZRetorno){
+            if(result instanceof ZRetorno || result instanceof ZBreak){
                 return result;
             }
+
+
 
         }
 

@@ -49,6 +49,7 @@ defaultt = "default"
 returnn = "return"
 iff = "if"
 elsee = "else"
+breakk = "break"
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -145,7 +146,7 @@ elsee = "else"
 <YYINITIAL> {returnn}          {  return new Symbol(Simbolos.returnn, yyline, yycolumn, yytext()); }
 <YYINITIAL> {iff}              {  return new Symbol(Simbolos.iff, yyline, yycolumn, yytext()); }
 <YYINITIAL> {elsee}            {  return new Symbol(Simbolos.elsee, yyline, yycolumn, yytext()); }
-
+<YYINITIAL> {breakk}            {  return new Symbol(Simbolos.breakk, yyline, yycolumn, yytext()); }
 //-------> ER
 
 <YYINITIAL> {identifier}    {   return new Symbol(Simbolos.identifier, yycolumn, yyline, yytext().toLowerCase());}

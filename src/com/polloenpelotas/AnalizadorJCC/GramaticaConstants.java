@@ -87,9 +87,11 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int ELSE = 41;
   /** RegularExpression Id. */
-  int IDENTIFIER = 42;
+  int BREAK = 42;
   /** RegularExpression Id. */
-  int STRING = 45;
+  int IDENTIFIER = 43;
+  /** RegularExpression Id. */
+  int STRING = 46;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -140,9 +142,10 @@ public interface GramaticaConstants {
     "\"default\"",
     "\"if\"",
     "\"else\"",
+    "\"break\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 44>",
+    "<token of kind 45>",
     "\"\\\"\"",
   };
 
