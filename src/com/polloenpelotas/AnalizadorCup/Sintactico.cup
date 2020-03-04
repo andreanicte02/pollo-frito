@@ -83,6 +83,7 @@ terminal function;
 terminal arrow;
 terminal invokeFun;
 terminal defaultt, returnn;
+terminal iff, elsee;
 
 //-------------------> Declaración de No Terminales
 non terminal List<AstNode> inicio;
@@ -98,6 +99,8 @@ non terminal AstNode expLeft;
 non terminal List<AstNode> listaSentencia,sentencias;
 non terminal AstNode declararFuncion, sentReturn;
 non terminal AstNode invocarFuncion, asignarFuncion;
+non terminal AstNode sentIf;
+non terminal List<AstNode> bodyIf;
 
 
 
@@ -144,6 +147,7 @@ sentencia::=  asignacion:a     endSent      {: RESULT = a; :}
             | invocarFuncion:a endSent      {: RESULT = a; :}
             | asignarFuncion:a              {: RESULT = a; :}
             | sentReturn:a                  {: RESULT = a; :}
+            | sentIf:a                      {: RESULT = a; :}
             ;
 
 
@@ -201,6 +205,18 @@ endSent::= pComa
         |
         ;
 
+sentIf::=iff apar exp:e cpar bodyIf:l                   {: RESULT = new IfAstNode(new FileLocation(eleft, eright),e,l, new ArrayList<>()); :}
+        |iff apar exp:e cpar bodyIf:l elsee bodyIf:l2   {: RESULT = new IfAstNode(new FileLocation(eleft, eright),e,l,l2); :}
+        |iff apar exp:e cpar bodyIf:l elsee sentIf:l2   {:
+
+                                                            List<AstNode> list = new ArrayList<>();
+                                                            list.add(l2);
+                                                            RESULT = new IfAstNode(new FileLocation(eleft, eright),e, l,list );
+
+                                                        :}
+        ;
+
+bodyIf::= alla listaSentencia:l clla {: RESULT = l; :};
 
 exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(oleft, oright),a,b); :}
 

@@ -127,6 +127,12 @@ public class ZBoolean extends ZProtoObject {
         return  new ZBoolean(value);
 
     }
+    /**value condicion*/
+
+    public ZBoolean valueCondition(){
+
+        return this;
+    }
 
 
     @Override

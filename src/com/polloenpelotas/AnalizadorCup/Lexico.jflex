@@ -47,6 +47,8 @@ function = "function"
 nothing = "null"
 defaultt = "default"
 returnn = "return"
+iff = "if"
+elsee = "else"
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -135,12 +137,14 @@ returnn = "return"
 //-------> PR
 
 
-<YYINITIAL> {truee}         {  return new Symbol(Simbolos.truee, yyline, yycolumn, yytext()); }
-<YYINITIAL> {falsee}        {  return new Symbol(Simbolos.falsee, yyline, yycolumn, yytext()); }
+<YYINITIAL> {truee}            {  return new Symbol(Simbolos.truee, yyline, yycolumn, yytext()); }
+<YYINITIAL> {falsee}           {  return new Symbol(Simbolos.falsee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {function}         {  return new Symbol(Simbolos.function, yyline, yycolumn, yytext().toLowerCase()); }
 <YYINITIAL> {nothing}          {  return new Symbol(Simbolos.nothing, yyline, yycolumn, yytext()); }
 <YYINITIAL> {defaultt}         {  return new Symbol(Simbolos.defaultt, yyline, yycolumn, yytext()); }
 <YYINITIAL> {returnn}          {  return new Symbol(Simbolos.returnn, yyline, yycolumn, yytext()); }
+<YYINITIAL> {iff}              {  return new Symbol(Simbolos.iff, yyline, yycolumn, yytext()); }
+<YYINITIAL> {elsee}            {  return new Symbol(Simbolos.elsee, yyline, yycolumn, yytext()); }
 
 //-------> ER
 

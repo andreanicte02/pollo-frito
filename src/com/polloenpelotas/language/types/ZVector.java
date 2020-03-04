@@ -430,6 +430,18 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    /**value conditions*/
+
+    public ZProtoObject valueCondition() throws SemanticException {
+
+        ChickenUtils.isSize0(this,"de una expresion normal");
+        ZProtoObject unwrapVal = ChickenUtils.unwrap(list.get(0));
+        return unwrapVal.executeOperation("valueCondition","if | switch | tern");
+
+
+    }
+
+
 
 
 

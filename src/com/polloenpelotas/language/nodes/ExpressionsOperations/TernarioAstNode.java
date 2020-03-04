@@ -32,26 +32,13 @@ public class TernarioAstNode extends ProAstNode {
 
         //--- el resultado de la condcion o es un valor puntual
         //---el resultado de la o es un vector
+        ZProtoObject finalCon = con.executeOperation("valueCondition", "tern");
+        if(!(finalCon instanceof ZBoolean)){
 
-        if(con instanceof ZBoolean){
-
-            return ((ZBoolean) con).getValue()?v:f;
+            throw new SemanticException("no se puede evaluar el operador ?:");
         }
 
-        if(con instanceof ZVector){
-
-            if(((ZVector) con).getList().size()==0){
-                throw new SemanticException("no se puede evaluar el operador ?:");
-            }
-            ZProtoObject aux = ChickenUtils.unwrap (((ZVector) con).getList().get(0));
-            if(!(aux instanceof ZBoolean)){
-                throw new SemanticException("no se puede evaluar el operador ?:");
-            }
-            return ((ZBoolean) aux).getValue()?v:f;
-
-        }
-
-        throw new SemanticException("no se puede evaluar el operador ?:");
+        return ((ZBoolean) finalCon).getValue() ?v:f;
 
     }
 }

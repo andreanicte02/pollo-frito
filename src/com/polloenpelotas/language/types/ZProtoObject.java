@@ -56,10 +56,10 @@ public abstract class ZProtoObject {
         * */
     }
 
-    public final ZProtoObject  executeOperation(String name, String symbol, ZProtoObject o, ZProtoObject p) throws SemanticException {
+    public final ZProtoObject  executeOperation(String name, String symbol) throws SemanticException {
         try {
-            final var method = this.getClass().getDeclaredMethod(name, o.getClass(), p.getClass());
-            return (ZProtoObject) method.invoke(this, o, p);
+            final var method = this.getClass().getDeclaredMethod(name);
+            return (ZProtoObject) method.invoke(this);
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             // TODO: probar los diferentes tipos de exceptiones y agregar mas catch segun sea necesario
             // Ejemplo:

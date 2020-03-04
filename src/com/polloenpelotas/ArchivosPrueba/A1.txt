@@ -84,5 +84,18 @@ print (nuevo);
 vectorBOOL = c(true,true,true);
 print(vectorBOOL);
 
-print(vectorBOOL[1]?"hola":"nel");
+print(vectorBOOL[1][1]?"hola":"nel");
 
+factorial = (num)=>{
+    if(num == 0)
+    {
+        return 1;
+    }
+    else{
+        return num * factorial(num-1);
+    }
+
+
+}
+
+print(factorial(5));
