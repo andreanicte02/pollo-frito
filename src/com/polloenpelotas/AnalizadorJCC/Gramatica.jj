@@ -39,8 +39,8 @@ TOKEN : {
       <NUMERO: (["0"-"9"])+>
     | <DECIMAL: (["0"-"9"])+"."(["0"-"9"])+>
     | <PCOMA: ";">
-    | <PARENI: "(">
-    | <PAREND: ")">
+    | <APAR: "(">
+    | <CPAR: ")">
     | <MAS: "+">
     | <MENOS: "-">
     | <POR: "*">
@@ -71,6 +71,8 @@ TOKEN : {
     | <RETURN: "return">
     | <FUNCTION: "function">
     | <DEFAULTT: "default">
+    | <IF: "if">
+    | <ELSE: "else">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -107,15 +109,18 @@ AstNode instruccion() :
 {AstNode e, e1;}
 {
 
-  LOOKAHEAD(2)e=invokeFunction()   (<PCOMA>)?   { return e; }
+  e=sentIf()            {return e;}
   |
-  LOOKAHEAD(1)e=sentReturn()      (<PCOMA>)?   { return e; }
+  e=sentReturn()      (<PCOMA>)?   { return e; }
+  |
+  LOOKAHEAD(2)e=invokeFunction()   (<PCOMA>)?   { return e; }
   |
   LOOKAHEAD(3)e=funcionNormal()       {return e;}
   |
   LOOKAHEAD(6)e=funcionFlecha()       {return e;}
   |
   LOOKAHEAD(1)e=ExpsLeft() <IGUAL> e1=Expresion() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
+
 
 
 
@@ -131,7 +136,7 @@ List<AstNode>  listaInstruccion():
 AstNode funcionNormal():
 {Token t; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
 {
-    t=<IDENTIFIER> <IGUAL> <FUNCTION> <PARENI> lPar=parametros() <PAREND> <ALLA> lSent=listaInstruccion() <CLLA>
+    t=<IDENTIFIER> <IGUAL> <FUNCTION> <APAR> lPar=parametros() <CPAR> <ALLA> lSent=listaInstruccion() <CLLA>
     {
         AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
         AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
@@ -145,7 +150,7 @@ AstNode funcionNormal():
 AstNode funcionFlecha():
 {Token t; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
 {
-    t=<IDENTIFIER> <IGUAL> <PARENI> lPar=parametros() <PAREND> <ARROW> <ALLA> lSent=listaInstruccion() <CLLA>
+    t=<IDENTIFIER> <IGUAL> <APAR> lPar=parametros() <CPAR> <ARROW> <ALLA> lSent=listaInstruccion() <CLLA>
     {
         AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
         AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
@@ -164,6 +169,37 @@ AstNode sentReturn():
     LOOKAHEAD(1)<RETURN> {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine));}
 
 }
+
+AstNode sentIf():
+{AstNode e; List<AstNode> l, l2;}
+{
+    <IF> <APAR> e=Expresion() <CPAR>  <ALLA> l=listaInstruccion() <CLLA>  l2=sentIf2()
+    {
+        return new IfAstNode(new FileLocation(token.beginColumn, token.beginLine), e,l,l2);
+    }
+
+}
+
+List<AstNode> sentIf2():
+{AstNode e; List<AstNode> l;}
+{
+
+
+    LOOKAHEAD(2) <ELSE> <ALLA> l=listaInstruccion() <CLLA> {return l;}
+    |
+
+    LOOKAHEAD(2) <ELSE> e=sentIf()                         {
+                                                                List<AstNode> list = new ArrayList<AstNode>();
+                                                                list.add(e);
+                                                                return list;
+                                                           }
+    |
+
+    {return new ArrayList<AstNode>(); }
+
+
+}
+
 
 
 AstNode Expresion():
@@ -313,7 +349,7 @@ AstNode ExpAccess():
 AstNode Primitives() :
 {AstNode e; Token t;   }
 {
-    <PARENI> e = Expresion() <PAREND>   { return e; }
+    <APAR> e = Expresion() <CPAR>   { return e; }
     |
     <NUMERO>  { return new CreateZIntegerNode(new FileLocation(token.beginColumn, token.beginLine),Integer.parseInt( token.image )); }
     |
@@ -339,7 +375,7 @@ AstNode Primitives() :
 AstNode invokeFunction():
 {List<AstNode> l = new ArrayList<AstNode>(); Token t; }
 {
-     t=<IDENTIFIER> <PARENI> l=exps() <PAREND> {return new InvocarFuncionAstNode(new FileLocation(t.beginColumn, t.beginLine),t.image, l); }
+     t=<IDENTIFIER> <APAR> l=exps() <CPAR> {return new InvocarFuncionAstNode(new FileLocation(t.beginColumn, t.beginLine),t.image, l); }
 }
 
 

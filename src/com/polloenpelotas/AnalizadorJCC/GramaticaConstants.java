@@ -19,9 +19,9 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int PCOMA = 7;
   /** RegularExpression Id. */
-  int PARENI = 8;
+  int APAR = 8;
   /** RegularExpression Id. */
-  int PAREND = 9;
+  int CPAR = 9;
   /** RegularExpression Id. */
   int MAS = 10;
   /** RegularExpression Id. */
@@ -83,9 +83,13 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int DEFAULTT = 39;
   /** RegularExpression Id. */
-  int IDENTIFIER = 40;
+  int IF = 40;
   /** RegularExpression Id. */
-  int STRING = 43;
+  int ELSE = 41;
+  /** RegularExpression Id. */
+  int IDENTIFIER = 42;
+  /** RegularExpression Id. */
+  int STRING = 45;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -134,9 +138,11 @@ public interface GramaticaConstants {
     "\"return\"",
     "\"function\"",
     "\"default\"",
+    "\"if\"",
+    "\"else\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 42>",
+    "<token of kind 44>",
     "\"\\\"\"",
   };
 

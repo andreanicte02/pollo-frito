@@ -98,4 +98,28 @@ factorial = (num)=>{
 
 }
 
+if(false){
+
+}
+
+if(false){
+
+}else{
+
+    if(false){
+
+    }else if(true){
+        print("aca");
+    }else if(true){
+        print("aca");
+    }
+    else{
+        print("wecos");
+    }
+
+
+}
+
+
+
 print(factorial(5));
