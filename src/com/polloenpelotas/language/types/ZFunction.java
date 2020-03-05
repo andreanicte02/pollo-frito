@@ -4,8 +4,8 @@ import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
-import com.polloenpelotas.language.nodes.Instructions.DeclararFuncionAstNode;
 import com.polloenpelotas.language.nodes.Instructions.DeclararParametroAstNode;
+import com.polloenpelotas.language.types.TransferTypes.ZRetorno;
 
 import java.util.List;
 

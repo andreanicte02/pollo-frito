@@ -6,10 +6,10 @@ import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
-import com.polloenpelotas.language.types.ZBreak;
+import com.polloenpelotas.language.types.TransferTypes.ZBreak;
 import com.polloenpelotas.language.types.ZNothing;
 import com.polloenpelotas.language.types.ZProtoObject;
-import com.polloenpelotas.language.types.ZRetorno;
+import com.polloenpelotas.language.types.TransferTypes.ZRetorno;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

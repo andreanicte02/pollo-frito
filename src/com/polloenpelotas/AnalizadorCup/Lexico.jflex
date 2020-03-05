@@ -150,6 +150,8 @@ casee = "case"
 <YYINITIAL> {breakk}           {  return new Symbol(Simbolos.breakk, yyline, yycolumn, yytext()); }
 <YYINITIAL> {switchh}          {  return new Symbol(Simbolos.switchh, yyline, yycolumn, yytext()); }
 <YYINITIAL> {casee}            {  return new Symbol(Simbolos.casee, yyline, yycolumn, yytext()); }
+<YYINITIAL> {continuee}        {  return new Symbol(Simbolos.continuee, yyline, yycolumn, yytext()); }
+
 
 //-------> ER
 

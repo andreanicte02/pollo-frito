@@ -1,6 +1,8 @@
-package com.polloenpelotas.language.types;
+package com.polloenpelotas.language.types.TransferTypes;
 
-public class ZBreak extends ZProtoObject{
+import com.polloenpelotas.language.types.ZProtoObject;
+
+public class ZBreak extends ZProtoObject {
 
     public static ZBreak getInstance() {
         return instance;

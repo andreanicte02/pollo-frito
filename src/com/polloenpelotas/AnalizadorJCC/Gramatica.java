@@ -10,6 +10,7 @@ import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.nodes.Instructions.*;
 import com.polloenpelotas.language.nodes.ExpressionsOperations.*;
 import com.polloenpelotas.language.nodes.CreateZTypes.*;
+import com.polloenpelotas.language.nodes.Instructions.TransferInstructions.*;
 
 
 public class Gramatica implements GramaticaConstants {
@@ -929,13 +930,13 @@ public class Gramatica implements GramaticaConstants {
     finally { jj_save(11, xla); }
   }
 
-  private boolean jj_3R_22() {
-    if (jj_3R_25()) return true;
+  private boolean jj_3R_20() {
+    if (jj_scan_token(IF)) return true;
     return false;
   }
 
-  private boolean jj_3R_20() {
-    if (jj_scan_token(IF)) return true;
+  private boolean jj_3R_22() {
+    if (jj_3R_25()) return true;
     return false;
   }
 

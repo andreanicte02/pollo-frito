@@ -1,6 +1,8 @@
-package com.polloenpelotas.language.types;
+package com.polloenpelotas.language.types.TransferTypes;
 
-public class ZRetorno  extends ZProtoObject{
+import com.polloenpelotas.language.types.ZProtoObject;
+
+public class ZRetorno  extends ZProtoObject {
 
     public ZProtoObject getValue() {
         return value;
