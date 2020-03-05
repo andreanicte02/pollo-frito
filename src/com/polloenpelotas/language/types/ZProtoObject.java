@@ -1,6 +1,7 @@
 package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.SemanticException;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
@@ -20,8 +21,8 @@ public abstract class ZProtoObject {
 
     public abstract String toChickenString();
 
-    //
-    public final ZProtoObject  executeOperation(String name, String symbol, ZProtoObject o) throws SemanticException {
+    @NotNull
+    public final ZProtoObject  executeOperation(String name, String symbol, @NotNull ZProtoObject o) throws SemanticException {
         try {
             final var method = this.getClass().getDeclaredMethod(name, o.getClass());
             return (ZProtoObject) method.invoke(this, o);

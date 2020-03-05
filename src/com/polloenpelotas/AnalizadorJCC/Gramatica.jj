@@ -74,6 +74,8 @@ TOKEN : {
     | <IF: "if">
     | <ELSE: "else">
     | <BREAK: "break">
+    | <SWITCH: "switch">
+    | <CASE: "case">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -112,6 +114,8 @@ AstNode instruccion() :
   <BREAK>  (<PCOMA>)?                           { return new BreakAstNode( new FileLocation(token.beginColumn, token.beginLine)); }
   |
   e=sentIf()                                    { return e;}
+  |
+  e=sentSwitch()                               { return e;}
   |
   e=sentReturn()      (<PCOMA>)?                { return e; }
   |
@@ -185,8 +189,6 @@ AstNode sentIf():
 List<AstNode> sentIf2():
 {AstNode e; List<AstNode> l;}
 {
-
-
     LOOKAHEAD(2) <ELSE> <ALLA> l=listaInstruccion() <CLLA> {return l;}
     |
 
@@ -196,12 +198,63 @@ List<AstNode> sentIf2():
                                                                 return list;
                                                            }
     |
-
     {return new ArrayList<AstNode>(); }
+}
+
+
+AstNode sentSwitch():
+{AstNode e, e1;}{
+
+    <SWITCH> <APAR> e=Expresion() <CPAR> <ALLA> e1=sentSwitch2(e) <CLLA>
+    {return e1; }
+
+}
+
+AstNode sentSwitch2 (AstNode e):
+{AstNode e1; List<CaseSwitchAstNode> l = new ArrayList<CaseSwitchAstNode>(); }
+{
+    e1=sentDefault()
+    {return new SwitchAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+    |
+    l=listCases() e1=sentSwitch3()
+    {return new SwitchAstNode(new FileLocation(token.beginColumn, token.beginLine),e, l, e1); }
+    |
+    {return new SwitchAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
+
 
 
 }
 
+AstNode sentSwitch3 ():
+{AstNode e; }
+{
+    e=sentDefault()
+    {return e;}
+    |
+    {return new DefaultSwitchAstNode(new FileLocation(token.beginColumn, token.beginLine)); }
+
+}
+
+
+List<CaseSwitchAstNode> listCases():
+{List<CaseSwitchAstNode> list = new ArrayList<CaseSwitchAstNode>(); CaseSwitchAstNode e, e1;}
+{
+    e=sentCase() {list.add(e);} (e1=sentCase() { list.add(e1);} )*
+    {return list;}
+
+}
+
+CaseSwitchAstNode sentCase():
+{AstNode e; List<AstNode> l = new ArrayList<AstNode>(); }
+{
+    <CASE> e=Expresion() <DOSP> l=listaInstruccion() { return new CaseSwitchAstNode(new FileLocation(token.beginColumn, token.beginLine),e,l); }
+}
+
+AstNode sentDefault():
+{List<AstNode> l = new ArrayList<AstNode>(); }{
+
+    <DEFAULTT> <DOSP> l= listaInstruccion() { return new DefaultSwitchAstNode(new FileLocation(token.beginColumn, token.beginLine),l); }
+}
 
 
 AstNode Expresion():

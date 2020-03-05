@@ -24,5 +24,6 @@ public abstract class ProAstNode implements AstNode {
         }
     }
 
+    @NotNull
     public abstract ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException;
 }

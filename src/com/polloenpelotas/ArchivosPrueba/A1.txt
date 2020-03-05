@@ -120,6 +120,16 @@ if(false){
 
 }
 
+switch(5){
+    case 3:
+    case 4:
+
+    case 5:
+        print("asd");
+        break
+    default:
+        print("default");
+}
 
 
 print(factorial(5));

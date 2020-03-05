@@ -100,7 +100,8 @@ public final class ChickenUtils {
 
     }
 
-    public static ZProtoObject ejecutarSentencias(List<AstNode> lInstructions, ZProtoObject ambit) throws LocatedSemanticException {
+    @NotNull
+    public static ZProtoObject  ejecutarSentencias(@NotNull List<AstNode> lInstructions, ZProtoObject ambit) throws LocatedSemanticException {
 
         for (AstNode node:lInstructions
              ) {
@@ -111,14 +112,13 @@ public final class ChickenUtils {
                 return result;
             }
 
-
-
         }
 
         return ZNothing.getInstance();
     }
 
     /**desenvoler una lista con AstNodes*/
+    @NotNull
     public static List<ZProtoObject> unwrapListExp(List<AstNode> lista, ZProtoObject ambit) throws LocatedSemanticException {
         List<ZProtoObject> nueva = new ArrayList<>();
 

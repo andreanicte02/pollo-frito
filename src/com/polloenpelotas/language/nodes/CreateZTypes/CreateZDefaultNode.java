@@ -13,6 +13,7 @@ public class CreateZDefaultNode  extends ProAstNode {
         super(fileLocation);
     }
 
+    /**Eeste es para los defaults durante una llamaa a una funcion**/
     @Override
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
         return ZDefault.getInstance();
