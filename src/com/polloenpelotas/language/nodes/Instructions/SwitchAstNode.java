@@ -7,6 +7,7 @@ import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.TransferTypes.ZBreak;
+import com.polloenpelotas.language.types.TransferTypes.ZContinue;
 import com.polloenpelotas.language.types.ZNothing;
 import com.polloenpelotas.language.types.ZProtoObject;
 import com.polloenpelotas.language.types.TransferTypes.ZRetorno;
@@ -71,7 +72,7 @@ public class SwitchAstNode extends ProAstNode {
             node.setValSwitch(val);
             ZProtoObject result = node.execute(ambit);
 
-            if(result instanceof ZRetorno){
+            if(result instanceof ZRetorno || result instanceof ZContinue){
                 return result;
             }
 
@@ -89,7 +90,7 @@ public class SwitchAstNode extends ProAstNode {
 
         ZProtoObject result = defaul.execute(ambit);
 
-        if(result instanceof ZRetorno){
+        if(result instanceof ZRetorno ||result instanceof ZContinue){
             return  result;
         }
 

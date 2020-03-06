@@ -3,6 +3,7 @@ package com.polloenpelotas.language;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.*;
 import com.polloenpelotas.language.types.TransferTypes.ZBreak;
+import com.polloenpelotas.language.types.TransferTypes.ZContinue;
 import com.polloenpelotas.language.types.TransferTypes.ZRetorno;
 import org.jetbrains.annotations.NotNull;
 
@@ -108,7 +109,7 @@ public final class ChickenUtils {
 
             var result = node.execute(ambit);
 
-            if(result instanceof ZRetorno || result instanceof ZBreak){
+            if(result instanceof ZRetorno || result instanceof ZBreak || result instanceof ZContinue){
                 return result;
             }
 
@@ -420,6 +421,20 @@ public final class ChickenUtils {
         }
 
         return new ZVector(nueva);
+
+    }
+
+    public static boolean valueCond( String simbol, AstNode condition, ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
+
+        //t odo desembuelto
+        ZProtoObject con = unwrap(condition.execute(ambit));
+        ZProtoObject finalCon = con.executeOperation("valueCondition", simbol);
+
+        if(!(finalCon instanceof ZBoolean)){
+            throw new SemanticException("no se puede evaluar la condicion de un "+simbol);
+        }
+
+        return ((ZBoolean) finalCon).getValue();
 
     }
 

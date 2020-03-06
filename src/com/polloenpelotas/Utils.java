@@ -19,7 +19,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Utils {
+public class
+Utils {
     public static FunNativas fn = new FunNativas();
 
     public static void pruebaJCC(String path){

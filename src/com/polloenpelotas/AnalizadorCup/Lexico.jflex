@@ -51,6 +51,10 @@ elsee = "else"
 breakk = "break"
 switchh = "switch"
 casee = "case"
+continuee = "continue"
+whilee = "while"
+doo = "do"
+
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -151,8 +155,8 @@ casee = "case"
 <YYINITIAL> {switchh}          {  return new Symbol(Simbolos.switchh, yyline, yycolumn, yytext()); }
 <YYINITIAL> {casee}            {  return new Symbol(Simbolos.casee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {continuee}        {  return new Symbol(Simbolos.continuee, yyline, yycolumn, yytext()); }
-
-
+<YYINITIAL> {whilee}           {  return new Symbol(Simbolos.whilee, yyline, yycolumn, yytext()); }
+<YYINITIAL> {doo}              {  return new Symbol(Simbolos.doo, yyline, yycolumn, yytext()); }
 //-------> ER
 
 <YYINITIAL> {identifier}    {   return new Symbol(Simbolos.identifier, yycolumn, yyline, yytext().toLowerCase());}

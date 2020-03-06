@@ -133,3 +133,27 @@ switch(5){
 
 
 print(factorial(5));
+
+contador = c(5);
+
+while(contador>0){
+
+    print(contador);
+    if(contador==3){
+        break
+    }
+    contador = contador -1;
+
+}
+
+contador = 5;
+
+do{
+
+    print(contador+" " +55);
+    if(contador==3){
+        break
+    }
+    contador = contador -1;
+
+}while(a>0)

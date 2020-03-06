@@ -93,9 +93,15 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int CASE = 44;
   /** RegularExpression Id. */
-  int IDENTIFIER = 45;
+  int WHILE = 45;
   /** RegularExpression Id. */
-  int STRING = 48;
+  int CONTINUE = 46;
+  /** RegularExpression Id. */
+  int DO = 47;
+  /** RegularExpression Id. */
+  int IDENTIFIER = 48;
+  /** RegularExpression Id. */
+  int STRING = 51;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -149,9 +155,12 @@ public interface GramaticaConstants {
     "\"break\"",
     "\"switch\"",
     "\"case\"",
+    "\"while\"",
+    "\"continue\"",
+    "\"do\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 47>",
+    "<token of kind 50>",
     "\"\\\"\"",
   };
 

@@ -77,6 +77,9 @@ TOKEN : {
     | <BREAK: "break">
     | <SWITCH: "switch">
     | <CASE: "case">
+    | <WHILE :"while">
+    | <CONTINUE: "continue">
+    | <DO: "do">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -114,9 +117,15 @@ AstNode instruccion() :
 {
   <BREAK>  (<PCOMA>)?                           { return new BreakAstNode( new FileLocation(token.beginColumn, token.beginLine)); }
   |
+  <CONTINUE> (<PCOMA>)?                         { return new ContinueAstNode (new FileLocation(token.beginColumn,token.beginLine)); }
+  |
+  e=sentWhile()                                 { return e; }
+  |
+  e=sentDoWhile() (<PCOMA>)?                    { return e; }
+  |
   e=sentIf()                                    { return e;}
   |
-  e=sentSwitch()                               { return e;}
+  e=sentSwitch()                                { return e;}
   |
   e=sentReturn()      (<PCOMA>)?                { return e; }
   |
@@ -257,6 +266,22 @@ AstNode sentDefault():
     <DEFAULTT> <DOSP> l= listaInstruccion() { return new DefaultSwitchAstNode(new FileLocation(token.beginColumn, token.beginLine),l); }
 }
 
+AstNode sentWhile():
+{AstNode e; List<AstNode> l = new ArrayList<AstNode>(); }
+{
+    <WHILE> <APAR> e=Expresion() <CPAR> <ALLA>  l=listaInstruccion()  <CLLA>
+
+    {return new WhileAstNode(new FileLocation(token.beginColumn, token.beginLine), e, l); }
+
+}
+
+AstNode sentDoWhile():
+{AstNode e;  List<AstNode> l = new ArrayList<AstNode>(); }{
+
+    <DO> <ALLA> l = listaInstruccion() <CLLA> <WHILE> <APAR> e=Expresion() <CPAR>
+    { return new DoWhileAstNode(new FileLocation(token.beginColumn, token.beginLine),e,l); }
+
+}
 
 AstNode Expresion():
 {AstNode e, e1, e2;}

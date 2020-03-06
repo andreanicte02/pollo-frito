@@ -85,7 +85,7 @@ terminal arrow;
 terminal invokeFun;
 terminal defaultt, returnn;
 terminal iff, elsee, breakk;
-terminal switchh, casee;
+terminal switchh, casee, continuee, whilee, doo;
 
 //-------------------> Declaración de No Terminales
 non terminal List<AstNode> inicio;
@@ -106,6 +106,7 @@ non terminal List<AstNode> bodyIf;
 non terminal AstNode sentSwitch, sentDefault;
 non terminal CaseSwitchAstNode sentCase;
 non terminal List<CaseSwitchAstNode> listCases;
+non terminal AstNode sentWhile, sentDoWhile;
 
 
 
@@ -155,6 +156,9 @@ sentencia::=  asignacion:a     endSent      {: RESULT = a; :}
             | sentIf:a                      {: RESULT = a; :}
             | breakk:a endSent              {: RESULT = new BreakAstNode(new FileLocation(aleft, aright)); :}
             | sentSwitch:a                  {: RESULT = a; :}
+            | continuee:a endSent           {: RESULT = new ContinueAstNode(new FileLocation(aleft, aright)); :}
+            | sentWhile:a                   {: RESULT = a; :}
+            | sentDoWhile:a endSent         {: RESULT = a; :}
             ;
 
 
@@ -242,6 +246,11 @@ sentCase::= casee:a  exp:e  dosp listaSentencia:l   {: RESULT= new CaseSwitchAst
 sentDefault::= defaultt:a dosp listaSentencia:l       {: RESULT= new DefaultSwitchAstNode( new FileLocation(aleft, aright),l) ; :}
             ;
 
+sentWhile::= whilee apar exp:e cpar alla listaSentencia:l clla {: RESULT = new WhileAstNode( new FileLocation(eleft, eright), e, l); :}
+            ;
+
+sentDoWhile::= doo alla listaSentencia:l clla whilee apar exp:e cpar {: RESULT = new DoWhileAstNode(new FileLocation(eleft,eright) ,e,l); :}
+            ;
 
 exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(oleft, oright),a,b); :}
 

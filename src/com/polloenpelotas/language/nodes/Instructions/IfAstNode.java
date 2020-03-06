@@ -29,16 +29,11 @@ public class IfAstNode extends ProAstNode {
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
         //tod o desenvuelto si no cagadales
-        ZProtoObject con = ChickenUtils.unwrap(condition.execute(ambit));
-        ZProtoObject finalCon = con.executeOperation("valueCondition", "if");
 
-        if(!(finalCon instanceof ZBoolean)){
-            throw new SemanticException("no se puede evaluar la condicion de un if");
-        }
-
+        boolean finalCon = ChickenUtils.valueCond("if",condition, ambit);
         ZAmbit local = new ZAmbit(ambit);
         //aca se heredan las banderas para los breaks y esos
-        List<AstNode> sentecias = ((ZBoolean) finalCon).getValue() ? instructionsTrue: instructionsFalse;
+        List<AstNode> sentecias = finalCon? instructionsTrue: instructionsFalse;
         return ChickenUtils.ejecutarSentencias(sentecias,local);
 
     }
