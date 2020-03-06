@@ -33,6 +33,7 @@ Utils {
             aux.functions.put("print",fn.zfuncionPrint());
             aux.functions.put("c",fn.zfuncionC());
             aux.functions.put("list",fn.zfuncionList());
+            aux.functions.put("length",fn.zLength());
 
 
 
@@ -72,6 +73,7 @@ Utils {
             aux.functions.put("print",fn.zfuncionPrint());
             aux.functions.put("c",fn.zfuncionC());
             aux.functions.put("list",fn.zfuncionList());
+            aux.functions.put("length",fn.zLength());
 
             for (AstNode intruccion: ins){
                 intruccion.execute(aux);
@@ -128,6 +130,29 @@ class FunNativas {
             @Override
             public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
                 return new ZList(ChickenUtils.createListData(argumentos));
+            }
+        };
+    }
+
+    public ZFunction zLength(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            //la lista ya viene desembuelta
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+
+                if(argumentos.size() == 0){
+                    throw new SemanticException("Se esperaba un argumento en la funcion length");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+                if(ChickenUtils.isPrimitive(aux)){
+                    return  new ZInteger(1);
+                }
+
+                return aux.executeOperation("length", "length(EXP)");
+
+
             }
         };
     }

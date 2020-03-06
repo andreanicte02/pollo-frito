@@ -441,6 +441,13 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    /**lenght*/
+
+    public ZInteger length (){
+
+        return new ZInteger(list.size());
+
+    }
 
 
 

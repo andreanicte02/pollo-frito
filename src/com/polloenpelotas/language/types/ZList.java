@@ -111,6 +111,14 @@ public class ZList extends ZProtoObject {
     }
 
 
+    public ZInteger length (){
+
+        return new ZInteger(list.size());
+
+    }
+
+
+
     @Override
     public String toChickenString() {
         var strings = this.list.stream()
