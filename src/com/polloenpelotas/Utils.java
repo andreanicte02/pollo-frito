@@ -34,8 +34,12 @@ Utils {
             aux.functions.put("c",fn.zfuncionC());
             aux.functions.put("list",fn.zfuncionList());
             aux.functions.put("length",fn.zLength());
-
-
+            aux.functions.put("stringlength",fn.zStringLength());
+            aux.functions.put("remove",fn.zRemove());
+            aux.functions.put("tolowercase",fn.zToLower());
+            aux.functions.put("touppercase",fn.zToUpper());
+            aux.functions.put("trunk",fn.zTrunk());
+            aux.functions.put("round",fn.zRound());
 
 
             for (AstNode intruccion: ins){
@@ -74,6 +78,12 @@ Utils {
             aux.functions.put("c",fn.zfuncionC());
             aux.functions.put("list",fn.zfuncionList());
             aux.functions.put("length",fn.zLength());
+            aux.functions.put("stringlength",fn.zStringLength());
+            aux.functions.put("remove",fn.zRemove());
+            aux.functions.put("tolowercase",fn.zToLower());
+            aux.functions.put("touppercase",fn.zToUpper());
+            aux.functions.put("trunk",fn.zTrunk());
+            aux.functions.put("round",fn.zRound());
 
             for (AstNode intruccion: ins){
                 intruccion.execute(aux);
@@ -98,7 +108,7 @@ class FunNativas {
         return new ZFunction( new ArrayList<>(),new ArrayList<>(), new ZAmbit(null) ){
             @Override
             //la lista ya viene desembuelta
-            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos)  {
                 if(argumentos.size() == 0){
                     System.out.println("");
                 }
@@ -116,7 +126,7 @@ class FunNativas {
 
         return  new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
             @Override
-            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
                 return ChickenUtils.createStructC(argumentos);
             }
         };
@@ -128,7 +138,7 @@ class FunNativas {
 
         return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
             @Override
-            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos)   {
                 return new ZList(ChickenUtils.createListData(argumentos));
             }
         };
@@ -139,7 +149,7 @@ class FunNativas {
         return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
             //la lista ya viene desembuelta
             @Override
-            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
 
                 if(argumentos.size() == 0){
                     throw new SemanticException("Se esperaba un argumento en la funcion length");
@@ -156,5 +166,116 @@ class FunNativas {
             }
         };
     }
+
+
+    public ZFunction zStringLength(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+
+                if(argumentos.size() == 0){
+                    throw new SemanticException("Se esperaba un argumento en la funcion zStringLength");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+                return aux.executeOperation("stringLength","stringLength");
+
+
+
+
+            }
+        };
+    }
+
+
+    public ZFunction zRemove(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+
+                if(argumentos.size() != 2){
+                    throw new SemanticException("Se esperaba 2 argumentos en la funcion remove");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+                ZProtoObject aux2 = argumentos.get(1);
+
+                return aux.executeOperation("remove","remove",aux2);
+
+
+
+            }
+        };
+    }
+
+    public ZFunction zToLower(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+                if(argumentos.size() == 0){
+                    throw new SemanticException("Se esperaba un argumento en la funcion tolower");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+                return aux.executeOperation("toLower","toLower");
+
+            }
+        };
+    }
+
+
+    public ZFunction zToUpper(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+                if(argumentos.size() == 0){
+                    throw new SemanticException("Se esperaba un argumento en la funcion toupper");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+                return aux.executeOperation("toUpper","toUpper");
+
+            }
+        };
+    }
+
+
+    public ZFunction zTrunk(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+                if(argumentos.size() == 0){
+                    throw new SemanticException("Se esperaba un argumento en la funcion trunk");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+                return aux.executeOperation("trunk","trunk");
+
+            }
+        };
+    }
+
+
+    public ZFunction zRound(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+                if(argumentos.size() == 0){
+                    throw new SemanticException("Se esperaba un argumento en la funcion round");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+                return aux.executeOperation("round","round");
+
+            }
+        };
+    }
+
 
 }

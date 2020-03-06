@@ -274,6 +274,21 @@ public class ZNumeric extends ZProtoObject {
 
     }
 
+    /**trunk*/
+    public ZInteger trunk(){
+
+        return new ZInteger((int) value);
+
+    }
+
+    /**round*/
+
+    public ZInteger round(){
+
+        return new ZInteger((int) Math.round(value));
+
+    }
+
 
 
 

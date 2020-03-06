@@ -151,6 +151,52 @@ public class ZString extends ZProtoObject {
 
     }
 
+    /**length string*/
+
+    public ZInteger stringLength(){
+
+        return new ZInteger(this.value.length());
+
+    }
+
+
+    /**remove*/
+
+    public ZString remove(ZString val){
+        return new ZString(value.replace(val.value,""));
+    }
+
+    public ZProtoObject remove(ZVector vector) throws SemanticException {
+
+        if(vector.getList().size()!= 1){
+
+            throw new SemanticException("se le aplico remove a un vector > 1 | 0 ");
+        }
+
+        ZProtoObject aux = ChickenUtils.unwrap(vector.getList().get(0));
+        return this.executeOperation("remove", "remove",aux);
+
+    }
+
+    /**tolower***/
+
+    public ZString toLower(){
+
+        return new ZString(value.toLowerCase());
+
+    }
+
+    /**touper*/
+
+
+    public ZString toUpper(){
+
+        return new ZString(value.toUpperCase());
+
+    }
+
+
+
 
 
 

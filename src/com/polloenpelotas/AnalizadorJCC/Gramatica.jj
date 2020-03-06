@@ -154,7 +154,7 @@ AstNode funcionNormal():
 {
     t=<IDENTIFIER> <IGUAL> <FUNCTION> <APAR> lPar=parametros() <CPAR> <ALLA> lSent=listaInstruccion() <CLLA>
     {
-        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
+        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image.toLowerCase() );
         AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
 
 
@@ -168,7 +168,7 @@ AstNode funcionFlecha():
 {
     t=<IDENTIFIER> <IGUAL> <APAR> lPar=parametros() <CPAR> <ARROW> <ALLA> lSent=listaInstruccion() <CLLA>
     {
-        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
+        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image.toLowerCase() );
         AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
 
 
@@ -448,7 +448,7 @@ AstNode Primitives() :
     |
     LOOKAHEAD(2) e=invokeFunction() {return e;}
     |
-    t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
+    t=<IDENTIFIER> {return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image.toLowerCase() ); }
 
 
 }
@@ -456,7 +456,7 @@ AstNode Primitives() :
 AstNode invokeFunction():
 {List<AstNode> l = new ArrayList<AstNode>(); Token t; }
 {
-     t=<IDENTIFIER> <APAR> l=exps() <CPAR> {return new InvocarFuncionAstNode(new FileLocation(t.beginColumn, t.beginLine),t.image, l); }
+     t=<IDENTIFIER> <APAR> l=exps() <CPAR> {return new InvocarFuncionAstNode(new FileLocation(t.beginColumn, t.beginLine),t.image.toLowerCase(), l); }
 }
 
 
@@ -491,7 +491,7 @@ AstNode ExpsLeft():
 AstNode PrimitivesLeft():
 {Token t;}
 {
-    t=<IDENTIFIER> {return new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image ); }
+    t=<IDENTIFIER> {return new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image .toLowerCase()); }
 }
 
 List<AstNode>  parametros():
@@ -510,12 +510,12 @@ AstNode parametro():
 
     LOOKAHEAD(3) t=<IDENTIFIER> <IGUAL> e=Expresion()
     {
-        return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image, e);
+        return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image.toLowerCase(), e);
     }
     |
     LOOKAHEAD(1)  t=<IDENTIFIER>
     {
-        return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image,
+        return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image.toLowerCase(),
             new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine)));
      }
 

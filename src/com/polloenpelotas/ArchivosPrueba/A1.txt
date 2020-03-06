@@ -164,3 +164,12 @@ a[1]=list(c(2,2));
 print(a);
 print(a[[1]][[1]][2])
 print(length(a[[1]][[1]][1]))
+
+a="asd";
+print(a);
+print(StringLength(a[1][1]));
+
+print(remove(c("Cadena"), c("Cad")))
+print(remove(c("Cadena"),  "Cad" ))
+print(remove("Cadena",  "Cad" ))
+print(remove("Cadena", c("cad")))

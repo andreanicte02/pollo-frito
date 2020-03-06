@@ -269,6 +269,20 @@ public class ZInteger extends ZProtoObject {
 
     }
 
+    /**trunk**/
+
+    public ZInteger trunk(){
+
+        return new ZInteger(value);
+    }
+
+    /**round*/
+    public ZInteger round(){
+
+        return new ZInteger(value);
+    }
+
+
 
 
 

@@ -449,6 +449,83 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    /**stringLength**/
+    public ZProtoObject stringLength() throws SemanticException {
+
+        if(list.size()!=1){
+            throw new SemanticException("se le aplico stringLength a un vector > 1 |0 ");
+        }
+
+        ZProtoObject val = ChickenUtils.unwrap(list.get(0));
+        return val.executeOperation("stringLength","stringLength");
+
+    }
+
+    /**remove*/
+    public ZProtoObject remove(ZString val) throws SemanticException {
+        if(list.size()!=1){
+            throw new SemanticException("se le aplico remove a un vector > 1 | 0 ");
+        }
+        ZProtoObject aux = ChickenUtils.unwrap(list.get(0));
+        return  aux.executeOperation("remove","remove",val);
+    }
+
+    public ZProtoObject remove(ZVector val) throws SemanticException {
+
+        if(list.size()!=1){
+            throw new SemanticException("se le aplico remove a un vector > 1 | 0 ");
+        }
+
+        ZProtoObject aux = ChickenUtils.unwrap(list.get(0));
+        return  aux.executeOperation("remove","remove",val);
+    }
+
+    /**tolower*/
+
+
+    public ZProtoObject toLower() throws SemanticException {
+        if(list.size()!=1){
+            throw new SemanticException("se le aplico tolower a un vector > 1 | 0 ");
+        }
+        ZProtoObject aux = ChickenUtils.unwrap(list.get(0));
+        return aux.executeOperation("toLower","toLower");
+
+    }
+
+    public ZProtoObject toUpper() throws SemanticException {
+        if(list.size()!=1){
+            throw new SemanticException("se le aplico toUpper a un vector > 1 | 0 ");
+        }
+        ZProtoObject aux = ChickenUtils.unwrap(list.get(0));
+        return aux.executeOperation("toUpper","toUpper");
+
+    }
+
+    /**trunk**/
+    public ZProtoObject trunk() throws SemanticException {
+
+        if(list.size()!=1){
+            throw new SemanticException("se le aplico trunk a un vector > 1 | 0 ");
+        }
+
+        ZProtoObject aux = ChickenUtils.unwrap(list.get(0));
+        return aux.executeOperation("trunk","trunk");
+
+    }
+
+    /**round**/
+    public ZProtoObject round() throws SemanticException {
+
+        if(list.size()!=1){
+            throw new SemanticException("se le aplico round a un vector > 1 | 0 ");
+        }
+
+        ZProtoObject aux = ChickenUtils.unwrap(list.get(0));
+        return aux.executeOperation("round","round");
+
+    }
+
+
 
 
 

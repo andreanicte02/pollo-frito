@@ -204,7 +204,7 @@ public class Gramatica implements GramaticaConstants {
     jj_consume_token(ALLA);
     lSent = listaInstruccion();
     jj_consume_token(CLLA);
-        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
+        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image.toLowerCase() );
         AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
 
 
@@ -223,7 +223,7 @@ public class Gramatica implements GramaticaConstants {
     jj_consume_token(ALLA);
     lSent = listaInstruccion();
     jj_consume_token(CLLA);
-        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );
+        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image.toLowerCase() );
         AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
 
 
@@ -756,7 +756,7 @@ public class Gramatica implements GramaticaConstants {
         switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
         case IDENTIFIER:
           t = jj_consume_token(IDENTIFIER);
-                    {if (true) return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );}
+                    {if (true) return new FindIDAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image.toLowerCase() );}
           break;
         default:
           jj_la1[30] = jj_gen;
@@ -774,7 +774,7 @@ public class Gramatica implements GramaticaConstants {
     jj_consume_token(APAR);
     l = exps();
     jj_consume_token(CPAR);
-                                            {if (true) return new InvocarFuncionAstNode(new FileLocation(t.beginColumn, t.beginLine),t.image, l);}
+                                            {if (true) return new InvocarFuncionAstNode(new FileLocation(t.beginColumn, t.beginLine),t.image.toLowerCase(), l);}
     throw new Error("Missing return statement in function");
   }
 
@@ -854,7 +854,7 @@ public class Gramatica implements GramaticaConstants {
   final public AstNode PrimitivesLeft() throws ParseException {
  Token t;
     t = jj_consume_token(IDENTIFIER);
-                    {if (true) return new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image );}
+                    {if (true) return new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image .toLowerCase());}
     throw new Error("Missing return statement in function");
   }
 
@@ -893,12 +893,12 @@ public class Gramatica implements GramaticaConstants {
       t = jj_consume_token(IDENTIFIER);
       jj_consume_token(IGUAL);
       e = Expresion();
-        {if (true) return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image, e);}
+        {if (true) return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image.toLowerCase(), e);}
     } else {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case IDENTIFIER:
         t = jj_consume_token(IDENTIFIER);
-        {if (true) return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image,
+        {if (true) return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image.toLowerCase(),
             new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine)));}
         break;
       default:
