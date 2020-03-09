@@ -44,10 +44,6 @@ public class AssignAstNode extends ProAstNode {
 
         r1.executeOperation("assign"," id[exp] | id[[exp]] [exp] | id -> asignacion", r2);
 
-        if(r1 instanceof ZVector){
-
-        }
-
         return ZNothing.getInstance();
     }
 }

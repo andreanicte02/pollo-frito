@@ -440,6 +440,34 @@ public final class ChickenUtils {
 
 
 
+    public static  void changeVector(List<ZVar> list) throws SemanticException {
+
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZString)){
+            changeVector2(list,"castS","castS");
+        }
+
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZNumeric)){
+            changeVector2(list,"castN","castN");
+        }
+
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZInteger)){
+            changeVector2(list,"castI","castI");
+        }
+
+    }
+
+    public static void changeVector2(List<ZVar> list,String name, String simbol) throws SemanticException {
+
+        for (int x =0; x<list.size();x++){
+            ZVar aux = list.get(x);
+            aux.setValue(aux.getValue().executeOperation(name,simbol, ZNothing.getInstance()));
+        }
+
+
+    }
+
+
+
 
 
 
