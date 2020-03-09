@@ -281,6 +281,11 @@ public class ZInteger extends ZProtoObject {
 
         return new ZInteger(value);
     }
+    /**get int**/
+
+    public ZInteger getInt(){
+        return this;
+    }
 
 
 

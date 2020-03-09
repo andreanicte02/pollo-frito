@@ -40,6 +40,8 @@ Utils {
             aux.functions.put("touppercase",fn.zToUpper());
             aux.functions.put("trunk",fn.zTrunk());
             aux.functions.put("round",fn.zRound());
+            aux.functions.put("matrix",fn.zfunctionMat());
+
 
 
             for (AstNode intruccion: ins){
@@ -84,6 +86,7 @@ Utils {
             aux.functions.put("touppercase",fn.zToUpper());
             aux.functions.put("trunk",fn.zTrunk());
             aux.functions.put("round",fn.zRound());
+            aux.functions.put("matrix",fn.zfunctionMat());
 
             for (AstNode intruccion: ins){
                 intruccion.execute(aux);
@@ -275,6 +278,29 @@ class FunNativas {
 
             }
         };
+    }
+
+    public ZFunction zfunctionMat(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+
+                //argumentos desembueltos
+                if(argumentos.size()!=3){
+                    throw new SemanticException("Se esperaban 3 argumentos en la funzion Matrix");
+                }
+
+                ZInteger auxF = (ZInteger) argumentos.get(1).executeOperation("getInt","buscando int first");
+                ZInteger auxC = (ZInteger) argumentos.get(2).executeOperation("getInt","buscando int first");
+                ZMatriz mat = new ZMatriz(auxF, auxC);
+                mat.setData(argumentos.get(0));
+
+                return mat;
+            }
+
+        };
+
     }
 
 

@@ -173,3 +173,6 @@ print(remove(c("Cadena"), c("Cad")))
 print(remove(c("Cadena"),  "Cad" ))
 print(remove("Cadena",  "Cad" ))
 print(remove("Cadena", c("cad")))
+
+m=matrix(c(1,2,3,4,5),5,4)
+print(m);

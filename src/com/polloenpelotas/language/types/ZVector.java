@@ -525,6 +525,16 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    /**getint*/
+    /**get int**/
+
+    public ZProtoObject getInt() throws SemanticException {
+        if(list.size()==0){
+            throw new SemanticException("error");
+        }
+        ZProtoObject aux = ChickenUtils.unwrap(list.get(0));
+        return aux.executeOperation("getInt","buscando int first");
+    }
 
 
 

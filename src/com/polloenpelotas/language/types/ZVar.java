@@ -51,6 +51,8 @@ public class ZVar extends ZProtoObject {
     }
 
 
+
+
     /*no primitivos*/
     /*se hace una copia, no es por referencia*/
 
@@ -64,6 +66,12 @@ public class ZVar extends ZProtoObject {
         value = new ZList(ChickenUtils.copiaPorValor(zList.getList()));
         return ZNothing.getInstance();
     }
+
+    public ZProtoObject assign(@NotNull ZMatriz zmat ) {
+        value =zmat;
+        return ZNothing.getInstance();
+    }
+
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * "assign2" lo uso para un acceso de tipo 2 de una lista    *
