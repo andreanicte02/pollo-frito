@@ -292,6 +292,8 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
     | exp:a abra abra exp:b cbra cbra   {: RESULT = new Access2ListAstNode(new FileLocation(aleft, aright), a ,b); :} %prec abra2
 
     | exp:a abra exp:b coma exp:c cbra        {: RESULT = new Access1MatrixAstNode(new FileLocation(aleft, aright),a,b,c); :}
+    | exp:a abra exp:b coma cbra              {: RESULT = new Access2MatrixAstNode(new FileLocation(aleft, aright),a,b); :}
+    | exp:a abra coma exp:b cbra
 
     | nothing:a                         {: RESULT = new CreateZNothingNode(new FileLocation(aleft, aright)); :}
     | identifier:a igual exp:b          {: RESULT = new DeclararParametroAstNode(new FileLocation(aleft, aright),a,b ); :}

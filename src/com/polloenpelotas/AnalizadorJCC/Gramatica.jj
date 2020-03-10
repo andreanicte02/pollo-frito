@@ -437,8 +437,11 @@ AstNode accessArray1(AstNode e):
 AstNode accessArray2(AstNode e, AstNode e1):
 {AstNode e2;}
 {
-    <COMA> e2=Expresion()
+    LOOKAHEAD(2)<COMA> e2=Expresion()
     { return new Access1MatrixAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1,e2); }
+    |
+    LOOKAHEAD(1)<COMA>
+    { return new Access2MatrixAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
     |
     { return new AccessStructAstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1); }
 

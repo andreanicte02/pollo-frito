@@ -342,15 +342,7 @@ public final class ChickenUtils {
 
     }
 
-    public static void isSize0(ZVector valor, String lado) throws SemanticException {
 
-        if(valor.getList().size() == 0){
-
-            throw new SemanticException(" Error al acceder id[exp] || id[[exp]]  del lado " + lado );
-        }
-
-
-    }
 
     public static ZVector rightVectorOperation(ZProtoObject left ,ZVector right, String name, String sim) throws SemanticException {
 
@@ -469,11 +461,14 @@ public final class ChickenUtils {
 
     }
 
-    /**verificar que el vector solo sea del tamaño 1*/
-    public static void isVectorSize1(ZVector vector) throws SemanticException {
-        if(vector.getList().size()!=1){
-            throw new SemanticException("se esta evaluando un vector que no es de tamaño 1");
+   /**obtiene el primero dato desemvuelto de una lista de ZVAR*/
+    public static ZProtoObject getFirstDataUnwrap(List <ZVar> data) throws SemanticException {
+
+        if(data.size() == 0){
+            throw  new SemanticException("Se esta tratando de acceder a una lista/vector de tamaño 0");
         }
+        return  unwrap(data.get(0));
+
     }
 
 

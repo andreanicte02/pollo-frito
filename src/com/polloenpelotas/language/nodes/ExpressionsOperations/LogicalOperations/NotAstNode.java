@@ -1,4 +1,4 @@
-package com.polloenpelotas.language.nodes.ExpressionsOperations;
+package com.polloenpelotas.language.nodes.ExpressionsOperations.LogicalOperations;
 
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;

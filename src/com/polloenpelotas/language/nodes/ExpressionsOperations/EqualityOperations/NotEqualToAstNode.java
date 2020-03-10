@@ -1,4 +1,4 @@
-package com.polloenpelotas.language.nodes.ExpressionsOperations;
+package com.polloenpelotas.language.nodes.ExpressionsOperations.EqualityOperations;
 
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;

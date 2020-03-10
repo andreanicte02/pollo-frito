@@ -44,9 +44,9 @@ public class ZList extends ZProtoObject {
 
     public ZProtoObject access(ZVector index) throws SemanticException {
 
-        ChickenUtils.isSize0(index,"derecho");
+        ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index.getList());
 
-        return this.executeOperation("access"," exp[exp] right ", index.getList().get(0).getValue());
+        return this.executeOperation("access"," exp[exp] right ", aux);
 
     }
 
@@ -61,9 +61,9 @@ public class ZList extends ZProtoObject {
 
     public ZProtoObject access2(ZVector index) throws SemanticException {
 
-        ChickenUtils.isSize0(index, "derecho");
+        ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index.getList());
 
-        return this.executeOperation("access2", " exp[[exp]] right ", index.getList().get(0).getValue());
+        return this.executeOperation("access2", " exp[[exp]] right ", aux);
 
     }
 
@@ -81,9 +81,9 @@ public class ZList extends ZProtoObject {
 
     public ZProtoObject access1Left(ZVector index) throws SemanticException {
 
-        ChickenUtils.isSize0(index, "izquierdo");
+        ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index.getList());
 
-        return this.executeOperation("access1Left", " exp[exp] left ", index.getList().get(0).getValue());
+        return this.executeOperation("access1Left", " exp[exp] left ", aux);
 
     }
 
@@ -104,9 +104,9 @@ public class ZList extends ZProtoObject {
 
     public ZProtoObject access2Left(ZVector index) throws SemanticException {
 
-        ChickenUtils.isSize0(index, "izquierdo");
+       ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index.getList());
 
-        return this.executeOperation("access2Left", " exp[[exp]] left ", index.getList().get(0).getValue());
+       return this.executeOperation("access2Left", " exp[[exp]] left ", aux);
 
     }
 

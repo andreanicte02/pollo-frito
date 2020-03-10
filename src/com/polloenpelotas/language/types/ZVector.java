@@ -1,10 +1,8 @@
 package com.polloenpelotas.language.types;
 
-import com.polloenpelotas.Utils;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.SemanticException;
 
-import javax.swing.text.Utilities;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,9 +38,10 @@ public class ZVector extends ZProtoObject {
 
     public ZProtoObject access(ZVector index) throws SemanticException {
 
-        ChickenUtils.isSize0(index,"derecho");
 
-        return this.executeOperation("access"," exp[exp] right ",index.getList().get(0).getValue());
+        ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index.getList());
+
+        return this.executeOperation("access"," exp[exp] right ", aux);
     }
 
     /* * * * * * * * * * * * * * * *
@@ -68,9 +67,9 @@ public class ZVector extends ZProtoObject {
 
     public ZProtoObject access1Left(ZVector index) throws SemanticException {
 
-        ChickenUtils.isSize0(index,"izquierdo");
+        ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index.getList());
 
-        return this.executeOperation("access1Left"," exp[exp] left ",index.getList().get(0).getValue());
+        return this.executeOperation("access1Left"," exp[exp] left ",aux);
 
     }
 
@@ -108,6 +107,15 @@ public class ZVector extends ZProtoObject {
     }
 
     public ZProtoObject assign(ZNumeric newValue){
+
+        ZVar aux = list.get(0);
+        aux.setValue(newValue);
+
+        return ZNothing.getInstance();
+
+    }
+
+    public ZProtoObject assign(ZNothing newValue){
 
         ZVar aux = list.get(0);
         aux.setValue(newValue);
@@ -434,8 +442,8 @@ public class ZVector extends ZProtoObject {
 
     public ZProtoObject valueCondition() throws SemanticException {
 
-        ChickenUtils.isSize0(this,"de una expresion normal");
-        ZProtoObject unwrapVal = ChickenUtils.unwrap(list.get(0));
+
+        ZProtoObject unwrapVal = ChickenUtils.getFirstDataUnwrap(list);
         return unwrapVal.executeOperation("valueCondition","if | switch | tern");
 
 
