@@ -40,21 +40,66 @@ public class ZMatriz extends ZProtoObject {
 
     public ZVector access1(ZInteger index1, ZInteger index2) throws SemanticException {
 
+        //index 1 = x
+        //index 2 = y
         if(index1.getValue() == 0 || index2.getValue() == 0){
             throw new SemanticException("Se intenta acceder con un indice 0");
         }
 
-        if(index1.getValue()>row){
+        if(index1.getValue()>col){
             throw new SemanticException("Se intenta acceder con un indice fuera de rango");
         }
 
-        if(index2.getValue()>col){
+        if(index2.getValue()>row){
             throw new SemanticException("Se intenta acceder con un indice fuera de rango");
         }
 
-        return new ZVector(mat[index1.getValue()-1][index2.getValue()-1]);
+
+        return new ZVector(mat[index2.getValue()-1][index1.getValue()-1]);
 
     }
+
+    public ZProtoObject access1(ZVector index1, ZInteger index2) throws SemanticException {
+
+        ChickenUtils.isVectorSize1(index1);
+        ZProtoObject aux = ChickenUtils.unwrap(index1.getList().get(0));
+
+        return this.executeOperation("access1","access1",aux, index2);
+
+    }
+
+    public ZProtoObject access1(ZInteger index1, ZVector index2) throws SemanticException {
+
+        ChickenUtils.isVectorSize1(index2);
+        ZProtoObject aux = ChickenUtils.unwrap(index2.getList().get(0));
+
+        return this.executeOperation("access1","access1", index1, aux);
+
+    }
+
+    public ZProtoObject access1(ZVector index1, ZVector index2) throws SemanticException {
+
+        ChickenUtils.isVectorSize1(index1);
+        ZProtoObject aux1 = ChickenUtils.unwrap(index1.getList().get(0));
+
+        ChickenUtils.isVectorSize1(index2);
+        ZProtoObject aux2 = ChickenUtils.unwrap(index2.getList().get(0));
+
+        return this.executeOperation("access1","access1", aux1, aux2);
+
+    }
+
+    /**acces tipo 2 [exp,]*/
+
+    public ZProtoObject access2(ZVector index1){
+
+
+        return null;
+    }
+
+    
+
+
 
 
     @Override

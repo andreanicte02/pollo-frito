@@ -424,6 +424,7 @@ public final class ChickenUtils {
 
     }
 
+    /**evaluar condicion*/
     public static boolean valueCond( String simbol, AstNode condition, ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
         //t odo desembuelto
@@ -439,7 +440,7 @@ public final class ChickenUtils {
     }
 
 
-
+    /***/
     public static  void changeVector(List<ZVar> list) throws SemanticException {
 
         if(list.stream().anyMatch(x->x.getValue() instanceof  ZString)){
@@ -468,7 +469,12 @@ public final class ChickenUtils {
 
     }
 
-    //public static boolean state = false;
+    /**verificar que el vector solo sea del tamaño 1*/
+    public static void isVectorSize1(ZVector vector) throws SemanticException {
+        if(vector.getList().size()!=1){
+            throw new SemanticException("se esta evaluando un vector que no es de tamaño 1");
+        }
+    }
 
 
 

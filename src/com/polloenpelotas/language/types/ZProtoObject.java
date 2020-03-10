@@ -26,7 +26,8 @@ public abstract class ZProtoObject {
         try {
             final var method = this.getClass().getDeclaredMethod(name, o.getClass());
             return (ZProtoObject) method.invoke(this, o);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+        }
+        catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
             // TODO: probar los diferentes tipos de exceptiones y agregar mas catch segun sea necesario
             // Ejemplo:
             // + llamar a un metodo no existente
@@ -34,6 +35,9 @@ public abstract class ZProtoObject {
             // saber :v
             e.printStackTrace();
             // TODO: agregar los nombres de los tipos
+            if(e instanceof InvocationTargetException){
+                throw new SemanticException("No se puede aplicar " + symbol + ": " + ((InvocationTargetException) e).getTargetException().getMessage()   );
+            }
             throw new SemanticException("No se puede aplicar " + symbol + " : " + e.getMessage());
         }
         /*        try {
@@ -69,6 +73,9 @@ public abstract class ZProtoObject {
             // saber :v
             e.printStackTrace();
             // TODO: agregar los nombres de los tipos
+            if(e instanceof InvocationTargetException){
+                throw new SemanticException("No se puede aplicar " + symbol + ": " + ((InvocationTargetException) e).getTargetException().getMessage()   );
+            }
             throw new SemanticException("No se puede aplicar " + symbol + " : " + e.getMessage());
         }
         /*        try {
@@ -105,7 +112,10 @@ public abstract class ZProtoObject {
             // saber :v
             e.printStackTrace();
             // TODO: agregar los nombres de los tipos
-            throw new SemanticException("No se puede aplicar " + symbol + " : " + e.getMessage());
+            if(e instanceof InvocationTargetException){
+                throw new SemanticException("No se puede aplicar " + symbol + ": " + ((InvocationTargetException) e).getTargetException().getMessage()   );
+            }
+            throw new SemanticException("No se puede aplicar " + symbol + " : " + e.getMessage()   );
         }
         /*        try {
             var method= MathMap.class.getDeclaredMethod(name, v1.getClass(), v2.getClass());
