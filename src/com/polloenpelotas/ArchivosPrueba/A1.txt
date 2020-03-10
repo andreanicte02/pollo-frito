@@ -176,7 +176,4 @@ print(remove("Cadena", c("cad")))
 
 m=matrix(c(1,2,3,4,5),5,4)
 print(m);
-
-c=c(1,2,3);
-c[1]="hola";
-print(c);
+print(m[1,1][1])

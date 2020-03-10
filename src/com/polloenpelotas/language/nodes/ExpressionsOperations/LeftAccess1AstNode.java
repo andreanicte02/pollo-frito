@@ -6,7 +6,9 @@ import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
+import com.polloenpelotas.language.types.ZNothing;
 import com.polloenpelotas.language.types.ZProtoObject;
+import com.polloenpelotas.language.types.ZVector;
 import org.jetbrains.annotations.NotNull;
 
 import java.beans.Expression;
@@ -31,4 +33,19 @@ public class LeftAccess1AstNode extends ProAstNode {
 
         return r1.executeOperation("access1Left"," exp[exp] left ",r2);
     }
+
+    /**
+     if(!ChickenUtils.state) {
+     return r1.executeOperation("access1Left", " exp[exp] left ", r2);
+     }
+
+     if(r1 instanceof ZVector){
+     ChickenUtils.changeVector(((ZVector) r1).getList());
+     return ZNothing.getInstance();
+     }
+
+     if(r1 instanceof ZNothing || r2 instanceof ZNothing){
+     return ZNothing.getInstance();
+     }**/
+
 }

@@ -290,13 +290,16 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
 
     | exp:a abra exp:b cbra             {: RESULT = new AccessStructAstNode(new FileLocation(aleft, aright),a,b); :}
     | exp:a abra abra exp:b cbra cbra   {: RESULT = new Access2ListAstNode(new FileLocation(aleft, aright), a ,b); :} %prec abra2
+
+    | exp:a abra exp:b coma exp:c cbra        {: RESULT = new Access1MatrixAstNode(new FileLocation(aleft, aright),a,b,c); :}
+
     | nothing:a                         {: RESULT = new CreateZNothingNode(new FileLocation(aleft, aright)); :}
     | identifier:a igual exp:b          {: RESULT = new DeclararParametroAstNode(new FileLocation(aleft, aright),a,b ); :}
     | invocarFuncion:a                  {: RESULT = a; :}
     | defaultt:a                        {: RESULT = new CreateZDefaultNode(new FileLocation(aleft,aright)); :}
 
-    | identifier:a                      {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a); :}
 
+    | identifier:a                      {: RESULT = new FindIDAstNode(new FileLocation(aleft, aright),a); :}
 
     ;
 

@@ -444,14 +444,17 @@ public final class ChickenUtils {
 
         if(list.stream().anyMatch(x->x.getValue() instanceof  ZString)){
             changeVector2(list,"castS","castS");
+            return;
         }
 
         if(list.stream().anyMatch(x->x.getValue() instanceof  ZNumeric)){
             changeVector2(list,"castN","castN");
+            return;
         }
 
         if(list.stream().anyMatch(x->x.getValue() instanceof  ZInteger)){
             changeVector2(list,"castI","castI");
+            return;
         }
 
     }
@@ -463,8 +466,9 @@ public final class ChickenUtils {
             aux.setValue(aux.getValue().executeOperation(name,simbol, ZNothing.getInstance()));
         }
 
-
     }
+
+    //public static boolean state = false;
 
 
 
