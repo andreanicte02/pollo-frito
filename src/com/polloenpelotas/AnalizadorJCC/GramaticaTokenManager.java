@@ -9,6 +9,11 @@ import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.nodes.Instructions.*;
 import com.polloenpelotas.language.nodes.ExpressionsOperations.*;
 import com.polloenpelotas.language.nodes.CreateZTypes.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.ArithmeticOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.EqualityOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.LogicalOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.RelationalOperations.*;
 
 /** Token Manager. */
 public class GramaticaTokenManager implements GramaticaConstants

@@ -7,22 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import com.polloenpelotas.language.nodes.*;
 import com.polloenpelotas.language.FileLocation;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.EqualityOperations.EqualToAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.EqualityOperations.NotEqualToAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.LogicalOperations.AndAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.LogicalOperations.NotAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.LogicalOperations.OrAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.Access1MatrixAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.Access2MatrixAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.ArithmeticOperations.*;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.RelationalOperations.MayorAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.RelationalOperations.MayorIgualAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.RelationalOperations.MenorAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.RelationalOperations.MenorIgualAstNode;
 import com.polloenpelotas.language.nodes.Instructions.*;
 import com.polloenpelotas.language.nodes.ExpressionsOperations.*;
 import com.polloenpelotas.language.nodes.CreateZTypes.*;
-
+import com.polloenpelotas.language.nodes.ExpressionsOperations.ArithmeticOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.EqualityOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.LogicalOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.RelationalOperations.*;
 
 
 public class Gramatica implements GramaticaConstants {
@@ -719,6 +711,11 @@ public class Gramatica implements GramaticaConstants {
       jj_consume_token(CBRA);
      {if (true) return new Access2ListAstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1);}
       break;
+    case COMA:
+      jj_consume_token(COMA);
+      e1 = Expresion();
+     {if (true) return new Access3MatrixAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1);}
+      break;
     case NUMERO:
     case DECIMAL:
     case APAR:
@@ -1039,27 +1036,6 @@ public class Gramatica implements GramaticaConstants {
     finally { jj_save(10, xla); }
   }
 
-  private boolean jj_3R_47() {
-    if (jj_scan_token(DEFAULTT)) return true;
-    return false;
-  }
-
-  private boolean jj_3_4() {
-    if (jj_scan_token(RETURN)) return true;
-    if (jj_3R_19()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_46() {
-    if (jj_scan_token(NOTHING)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_45() {
-    if (jj_scan_token(STRING)) return true;
-    return false;
-  }
-
   private boolean jj_3R_44() {
     if (jj_scan_token(FALSE)) return true;
     return false;
@@ -1070,13 +1046,13 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
-  private boolean jj_3R_31() {
-    if (jj_3R_32()) return true;
+  private boolean jj_3R_42() {
+    if (jj_scan_token(DECIMAL)) return true;
     return false;
   }
 
-  private boolean jj_3R_42() {
-    if (jj_scan_token(DECIMAL)) return true;
+  private boolean jj_3R_31() {
+    if (jj_3R_32()) return true;
     return false;
   }
 
@@ -1087,16 +1063,6 @@ public class Gramatica implements GramaticaConstants {
 
   private boolean jj_3R_40() {
     if (jj_scan_token(APAR)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_18() {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    if (jj_scan_token(IGUAL)) return true;
-    if (jj_scan_token(APAR)) return true;
-    if (jj_3R_21()) return true;
-    if (jj_scan_token(CPAR)) return true;
-    if (jj_scan_token(ARROW)) return true;
     return false;
   }
 
@@ -1134,8 +1100,24 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
+  private boolean jj_3R_18() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_scan_token(IGUAL)) return true;
+    if (jj_scan_token(APAR)) return true;
+    if (jj_3R_21()) return true;
+    if (jj_scan_token(CPAR)) return true;
+    if (jj_scan_token(ARROW)) return true;
+    return false;
+  }
+
   private boolean jj_3R_29() {
     if (jj_scan_token(IDENTIFIER)) return true;
+    return false;
+  }
+
+  private boolean jj_3_7() {
+    if (jj_scan_token(COMA)) return true;
+    if (jj_3R_19()) return true;
     return false;
   }
 
@@ -1148,12 +1130,6 @@ public class Gramatica implements GramaticaConstants {
     if (jj_scan_token(IDENTIFIER)) return true;
     if (jj_scan_token(IGUAL)) return true;
     if (jj_scan_token(FUNCTION)) return true;
-    return false;
-  }
-
-  private boolean jj_3_7() {
-    if (jj_scan_token(COMA)) return true;
-    if (jj_3R_19()) return true;
     return false;
   }
 
@@ -1184,11 +1160,6 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
-  private boolean jj_3R_28() {
-    if (jj_3R_30()) return true;
-    return false;
-  }
-
   private boolean jj_3R_21() {
     Token xsp;
     xsp = jj_scanpos;
@@ -1209,6 +1180,11 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
+  private boolean jj_3R_28() {
+    if (jj_3R_30()) return true;
+    return false;
+  }
+
   private boolean jj_3_3() {
     if (jj_3R_18()) return true;
     return false;
@@ -1216,6 +1192,12 @@ public class Gramatica implements GramaticaConstants {
 
   private boolean jj_3_2() {
     if (jj_3R_17()) return true;
+    return false;
+  }
+
+  private boolean jj_3_10() {
+    if (jj_scan_token(ABRA)) return true;
+    if (jj_scan_token(ABRA)) return true;
     return false;
   }
 
@@ -1229,9 +1211,9 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
-  private boolean jj_3_10() {
+  private boolean jj_3_9() {
     if (jj_scan_token(ABRA)) return true;
-    if (jj_scan_token(ABRA)) return true;
+    if (jj_3R_19()) return true;
     return false;
   }
 
@@ -1242,12 +1224,6 @@ public class Gramatica implements GramaticaConstants {
 
   private boolean jj_3R_37() {
     if (jj_3R_38()) return true;
-    return false;
-  }
-
-  private boolean jj_3_9() {
-    if (jj_scan_token(ABRA)) return true;
-    if (jj_3R_19()) return true;
     return false;
   }
 
@@ -1312,18 +1288,39 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
-  private boolean jj_3R_32() {
-    if (jj_3R_33()) return true;
-    return false;
-  }
-
   private boolean jj_3R_48() {
     if (jj_scan_token(IDENTIFIER)) return true;
     return false;
   }
 
+  private boolean jj_3R_32() {
+    if (jj_3R_33()) return true;
+    return false;
+  }
+
   private boolean jj_3_8() {
     if (jj_3R_16()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_47() {
+    if (jj_scan_token(DEFAULTT)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_46() {
+    if (jj_scan_token(NOTHING)) return true;
+    return false;
+  }
+
+  private boolean jj_3_4() {
+    if (jj_scan_token(RETURN)) return true;
+    if (jj_3R_19()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_45() {
+    if (jj_scan_token(STRING)) return true;
     return false;
   }
 
@@ -1346,7 +1343,7 @@ public class Gramatica implements GramaticaConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x0,0x80,0x80,0x80,0x80,0x80,0x80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1000000,0x800000,0x600000,0x600000,0x78000,0x78000,0xc00,0xc00,0x4003000,0x4003000,0x4000,0x62000960,0x8000000,0x6a000960,0x80000000,0x60000160,0x0,0x80000000,0x62000960,0x8000000,0x80000000,0x0,0x0,};
+      jj_la1_0 = new int[] {0x0,0x80,0x80,0x80,0x80,0x80,0x80,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1000000,0x800000,0x600000,0x600000,0x78000,0x78000,0xc00,0xc00,0x4003000,0x4003000,0x4000,0x62000960,0x8000000,0xea000960,0x80000000,0x60000160,0x0,0x80000000,0x62000960,0x8000000,0x80000000,0x0,0x0,};
    }
    private static void jj_la1_init_1() {
       jj_la1_1 = new int[] {0x1ed20,0x0,0x0,0x0,0x0,0x0,0x0,0xed20,0x10000,0x1ed20,0x1ed20,0x20,0x1080,0x80,0x1000,0x4,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x90090,0x0,0x90090,0x0,0x80090,0x10000,0x0,0x90090,0x0,0x0,0x10000,0x10000,};

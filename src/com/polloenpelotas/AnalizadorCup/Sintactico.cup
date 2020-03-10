@@ -15,7 +15,11 @@ import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.nodes.Instructions.*;
 import com.polloenpelotas.language.nodes.ExpressionsOperations.*;
 import com.polloenpelotas.language.nodes.CreateZTypes.*;
-
+import com.polloenpelotas.language.nodes.ExpressionsOperations.ArithmeticOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.EqualityOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.LogicalOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.*;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.RelationalOperations.*;
 //-------------------> Codigo para el parser, variables, metodos
 parser code
 {:
@@ -293,7 +297,7 @@ exp::= exp:a mas:o exp:b            {: RESULT = new AddAstNode(new FileLocation(
 
     | exp:a abra exp:b coma exp:c cbra        {: RESULT = new Access1MatrixAstNode(new FileLocation(aleft, aright),a,b,c); :}
     | exp:a abra exp:b coma cbra              {: RESULT = new Access2MatrixAstNode(new FileLocation(aleft, aright),a,b); :}
-    | exp:a abra coma exp:b cbra
+    | exp:a abra coma exp:b cbra              {: RESULT = new Access3MatrixAstNode(new FileLocation(aleft, aright),a,b); :}
 
     | nothing:a                         {: RESULT = new CreateZNothingNode(new FileLocation(aleft, aright)); :}
     | identifier:a igual exp:b          {: RESULT = new DeclararParametroAstNode(new FileLocation(aleft, aright),a,b ); :}

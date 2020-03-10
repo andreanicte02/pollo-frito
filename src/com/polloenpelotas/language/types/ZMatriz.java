@@ -121,7 +121,7 @@ public class ZMatriz extends ZProtoObject {
     /**access tipo3 [,exp] obtiene las columnas*/
 
 
-    public ZProtoObject access3(ZInteger index1) throws SemanticException {
+    public ZVector access3(ZInteger index1) throws SemanticException {
 
         List<ZVar> niu= new ArrayList<>();
 
@@ -145,6 +145,32 @@ public class ZMatriz extends ZProtoObject {
         ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index1.getList());
         return  this.executeOperation("access3","matrix[,exp]", aux);
     }
+
+    /**access4 devuelve un valor en especifico, el recorrido es por columna*/
+
+    public ZProtoObject access(ZInteger index1) throws SemanticException {
+
+        if(index1.getValue()>(row*col)){
+            throw new SemanticException("Se intenta acceder con un indice fuera de rango ");
+        }
+
+        int cont=1;
+
+        for (int x= 0; x<col; x++){
+
+            for (int y=0; y<row; y++, cont++){
+
+                if(cont == index1.getValue()){
+                    return new ZVector(mat[y][x]);
+                }
+
+            }
+        }
+
+
+        throw new SemanticException("Se intenta acceder con un indice fuera de rango ");
+    }
+
 
 
 
