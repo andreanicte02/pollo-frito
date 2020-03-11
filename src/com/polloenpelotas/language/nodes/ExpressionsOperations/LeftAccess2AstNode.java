@@ -5,6 +5,8 @@ import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
+import com.polloenpelotas.language.nodes.Instructions.FindIDAstNode;
+import com.polloenpelotas.language.nodes.Instructions.FindIDLeftAstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZProtoObject;
 import org.jetbrains.annotations.NotNull;
@@ -17,7 +19,7 @@ public class LeftAccess2AstNode extends ProAstNode {
 
     public LeftAccess2AstNode(@NotNull FileLocation fileLocation, AstNode e, AstNode e1) {
         super(fileLocation);
-        this.e = e;
+        this.e = e instanceof FindIDLeftAstNode ? new FindIDAstNode(fileLocation,((FindIDLeftAstNode) e).getName()):e;
         this.e1 = e1;
     }
 
