@@ -7,6 +7,8 @@ import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ExpressionsOperations.Access2ListAstNode;
 import com.polloenpelotas.language.nodes.ExpressionsOperations.AccessStructAstNode;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.Access2MatrixAstNode;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.Access3MatrixAstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZNothing;
 import com.polloenpelotas.language.types.ZProtoObject;
@@ -32,6 +34,13 @@ public class AssignAstNode extends ProAstNode {
         ZProtoObject r2 = ChickenUtils.unwrap(e2.execute(ambit));
         ZProtoObject r1 = e.execute(ambit);
 
+        if(ambit.inMatrix || r1.inMatrix){
+
+            ambit.inMatrix = false;
+            r1.inMatrix=false;
+            return assignAccessMatrix2o3(r1,r2);
+
+        }
 
         //assginacion de tipo 2 en listas
         if(r1 instanceof ZVar && !(e instanceof FindIDLeftAstNode)){
@@ -42,8 +51,24 @@ public class AssignAstNode extends ProAstNode {
         }
 
 
-        r1.executeOperation("assign"," id[exp] | id[[exp]] [exp] | id -> asignacion", r2);
+        r1.executeOperation("assign"," id[exp] | id[[exp]] [exp] | id -> left", r2);
 
         return ZNothing.getInstance();
     }
+
+
+     ZNothing assignAccessMatrix2o3(ZProtoObject r1, ZProtoObject r2) throws SemanticException {
+
+        if(ChickenUtils.isPrimitive(r2)){
+
+            r2 = new ZVector(new ZVar(r2));
+
+        }
+
+        r1.executeOperation("assignMatrix","Matrix Assign",r2);
+
+        return  ZNothing.getInstance();
+     }
+
+
 }

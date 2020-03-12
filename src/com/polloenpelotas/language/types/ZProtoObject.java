@@ -11,6 +11,7 @@ import java.util.Map;
 
 public abstract class ZProtoObject {
 
+    public boolean inMatrix=false;
 
     private ZProtoObject anterior=null;
 

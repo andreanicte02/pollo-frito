@@ -111,11 +111,10 @@ public class ZList extends ZProtoObject {
     }
 
 
-    public ZInteger length (){
 
-        return new ZInteger(list.size());
 
-    }
+
+
 
 
 

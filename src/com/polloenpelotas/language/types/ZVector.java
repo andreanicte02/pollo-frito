@@ -57,10 +57,14 @@ public class ZVector extends ZProtoObject {
 
         if(ChickenUtils.isPrimitive(aux.getValue())){
 
-            return new ZVector(list.get(index.getValue()-1));
+            ZVector a = new ZVector(list.get(index.getValue()-1));
+            a.inMatrix = this.inMatrix;
+
+            return a;
 
         }
 
+        aux.inMatrix=this.inMatrix;
         return aux.getValue();
 
     }
@@ -542,6 +546,43 @@ public class ZVector extends ZProtoObject {
         }
         ZProtoObject aux = ChickenUtils.unwrap(list.get(0));
         return aux.executeOperation("getInt","buscando int first");
+    }
+
+    /**Acces**/
+
+    public ZProtoObject assignMatrix(ZVector niudato) throws SemanticException {
+
+
+
+
+        if(list.size() == niudato.list.size()){
+
+            for (int x =0; x<list.size(); x++){
+                ZVar aux = list.get(x);
+                ZVar aux2 = niudato.getList().get(x);
+
+                aux.setValue(aux2.getValue());
+
+            }
+
+            return ZNothing.getInstance();
+        }
+
+        if(niudato.list.size() == 1){
+            ZProtoObject nuevo = ChickenUtils.getFirstDataUnwrap(niudato.getList());
+            for (int x =0; x< list.size();x++){
+                ZVar aux = list.get(x);
+                aux.setValue(nuevo);
+            }
+
+            return ZNothing.getInstance();
+        }
+
+
+        throw new SemanticException("Error Modificacion de una matriz");
+
+
+
     }
 
 

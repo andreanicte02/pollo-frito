@@ -184,3 +184,16 @@ print(m[,4])
 print(m[,1])
 print(m[20]);
 
+
+lista2= list(c(1,2,3));
+lista2[[1]][5]=5;
+print(lista2);
+
+
+m[2,]=c(1,2,3,4);
+print("--dato--");
+print(lista2[[1]][2]);
+m[5]=lista2[[1]][2];
+print(m);
+
+print(m[2,]);

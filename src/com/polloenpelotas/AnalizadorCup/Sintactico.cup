@@ -212,7 +212,10 @@ declararFuncion::= function apar listExp:a cpar alla listaSentencia:b clla
 
 expLeft ::= identifier:e                      {: RESULT = new FindIDLeftAstNode(new FileLocation(eleft, eright), e); :}
            | expLeft:e abra exp:e1 cbra       {: RESULT = new LeftAccess1AstNode(new FileLocation(eleft, eright), e,e1); :}
-           | expLeft:e abra abra exp:e1 cbra cbra  {: RESULT = new LeftAccess2AstNode(new FileLocation(eleft, eright), e,e1); :}
+           | expLeft:e abra abra exp:e1 cbra cbra    {: RESULT = new LeftAccess2AstNode(new FileLocation(eleft, eright), e,e1); :}
+           | expLeft:e abra exp:e1 coma exp:e2 cbra  {: RESULT = new LeftAccess1MatrixAstNode(new FileLocation(eleft, eright), e,e1, e2); :}
+           | expLeft:e abra exp:e1 coma cbra         {: RESULT = new LeftAccess2MatrixAstNode(new FileLocation(eleft, eright),e, e1); :}
+           | expLeft:e abra coma exp:e1 cbra         {: RESULT = new LeftAccess2MatrixAstNode(new FileLocation(eleft, eright),e, e1); :}
            ;
 
 endSent::= pComa

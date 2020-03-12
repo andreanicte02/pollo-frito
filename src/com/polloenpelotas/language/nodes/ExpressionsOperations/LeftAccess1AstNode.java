@@ -32,7 +32,6 @@ public class LeftAccess1AstNode extends ProAstNode {
         ZProtoObject r2 = ChickenUtils.unwrap(e1.execute(ambit));
 
 
-
         return r1.executeOperation("access1Left"," exp[exp] left ",r2);
     }
 
