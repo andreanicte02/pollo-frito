@@ -502,19 +502,43 @@ List<AstNode> exps():
 }
 
 AstNode ExpsLeft():
-{AstNode e, e1; }
+{AstNode e, other; }
 {
     e=PrimitivesLeft()  (
-        LOOKAHEAD(2) <ABRA> e1=Expresion() <CBRA>
-        {e = new LeftAccess1AstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1); }
-        |
-         LOOKAHEAD(2) <ABRA> <ABRA> e1=Expresion() <CBRA> <CBRA>
-        {e = new LeftAccess2AstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1);}
-
+        <ABRA> other=LeftAccessArray1(e) <CBRA>
+        { e=other; }
     )* { return e;}
 
 
 }
+
+AstNode LeftAccessArray1(AstNode e):
+{AstNode e1, other;}
+{
+    <ABRA> e1=Expresion() <CBRA>
+    {return new LeftAccess2AstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+    |
+    <COMA> e1=Expresion()
+    {return new LeftAccess3MatrixAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+    |
+    e1=Expresion() other=LeftAccessArray2(e,e1)
+    {return other; }
+
+}
+
+AstNode LeftAccessArray2(AstNode e, AstNode e1):
+{AstNode e2;}
+{
+    LOOKAHEAD(2)<COMA> e2=Expresion()
+    { return new LeftAccess1MatrixAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1,e2); }
+    |
+    LOOKAHEAD(1)<COMA>
+    { return new LeftAccess2MatrixAstNode(new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+    |
+    { return new LeftAccess1AstNode (new FileLocation(token.beginColumn, token.beginLine),e,e1); }
+}
+
+
 
 AstNode PrimitivesLeft():
 {Token t;}

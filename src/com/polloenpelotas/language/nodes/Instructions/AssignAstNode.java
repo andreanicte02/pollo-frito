@@ -37,7 +37,6 @@ public class AssignAstNode extends ProAstNode {
         if(ambit.inMatrix || r1.inMatrix){
 
             ambit.inMatrix = false;
-            r1.inMatrix=false;
             return assignAccessMatrix2o3(r1,r2);
 
         }
