@@ -2,6 +2,7 @@ package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.VectorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +74,7 @@ public class ZList extends ZProtoObject {
 
     public ZProtoObject access1Left(ZInteger index){
 
-        ChickenUtils.increaseZSize(list, index.getValue());
+        VectorUtils.increaseZSize(list, index.getValue());
         ZVar aux = list.get(index.getValue()-1);
 
         return  new ZVector(aux);
@@ -90,7 +91,7 @@ public class ZList extends ZProtoObject {
 
     public ZProtoObject access2Left(ZInteger index){
 
-        ChickenUtils.increaseZSize(list, index.getValue());
+        VectorUtils.increaseZSize(list, index.getValue());
         ZVar aux = list.get(index.getValue()-1);
 
         if(ChickenUtils.isPrimitive(aux.getValue())){

@@ -2,6 +2,7 @@ package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.VectorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class ZVector extends ZProtoObject {
     public ZProtoObject access1Left(ZInteger index){
 
 
-        ChickenUtils.increaseZSize(list, index.getValue());
+        VectorUtils.increaseZSize(list, index.getValue());
 
         ZVar aux = list.get(index.getValue()-1);
 
@@ -156,36 +157,36 @@ public class ZVector extends ZProtoObject {
     /**suma*/
     public ZVector add(ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+        return VectorUtils.leftVectorOperation(this,e,"add","+");
 
     }
 
     public ZVector add(ZString e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+        return VectorUtils.leftVectorOperation(this,e,"add","+");
 
     }
     public ZVector add(ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+        return VectorUtils.leftVectorOperation(this,e,"add","+");
 
     }
 
     public ZVector add(ZBoolean e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+        return VectorUtils.leftVectorOperation(this,e,"add","+");
 
     }
 
     public ZVector add(ZNothing e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this,e,"add","+");
+        return VectorUtils.leftVectorOperation(this,e,"add","+");
 
     }
 
     public ZVector add(ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this,e,"add","+");
+        return VectorUtils.vectorVectorOperation(this,e,"add","+");
 
     }
 
@@ -195,34 +196,34 @@ public class ZVector extends ZProtoObject {
 
     public ZVector rest (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"rest","-");
+        return VectorUtils.leftVectorOperation(this, e,"rest","-");
     }
 
     public ZVector rest (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"rest","-");
+        return VectorUtils.leftVectorOperation(this, e,"rest","-");
     }
 
     public ZVector rest (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"rest","-");
+        return VectorUtils.vectorVectorOperation(this, e,"rest","-");
     }
 
 
     /**mult*/
     public ZVector mult (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mult","*");
+        return VectorUtils.leftVectorOperation(this, e,"mult","*");
     }
 
     public ZVector mult (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mult","*");
+        return VectorUtils.leftVectorOperation(this, e,"mult","*");
     }
 
     public ZVector mult (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"mult","*");
+        return VectorUtils.vectorVectorOperation(this, e,"mult","*");
     }
 
     // TODO: validar que el numero no sea div entre 0
@@ -230,19 +231,19 @@ public class ZVector extends ZProtoObject {
 
     public ZVector div (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"div","/");
+        return VectorUtils.leftVectorOperation(this, e,"div","/");
 
     }
 
     public ZVector div (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"div","/");
+        return VectorUtils.leftVectorOperation(this, e,"div","/");
 
     }
 
     public ZVector div (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"div","/");
+        return VectorUtils.vectorVectorOperation(this, e,"div","/");
 
     }
 
@@ -250,195 +251,195 @@ public class ZVector extends ZProtoObject {
 
     public ZVector pot (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"pot","^");
+        return VectorUtils.leftVectorOperation(this, e,"pot","^");
 
     }
 
     public ZVector pot (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"pot","^");
+        return VectorUtils.leftVectorOperation(this, e,"pot","^");
 
     }
 
     public ZVector pot (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"pot","^");
+        return VectorUtils.vectorVectorOperation(this, e,"pot","^");
 
     }
 
     /**mod*/
     public ZVector mod (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mod","%");
+        return VectorUtils.leftVectorOperation(this, e,"mod","%");
 
     }
 
     public ZVector mod (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mod","%");
+        return VectorUtils.leftVectorOperation(this, e,"mod","%");
 
     }
 
     public ZVector mod (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"mod","%");
+        return VectorUtils.vectorVectorOperation(this, e,"mod","%");
 
     }
 
     /**mayor*/
     public ZVector mayor (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mayor",">");
+        return VectorUtils.leftVectorOperation(this, e,"mayor",">");
 
     }
 
     public ZVector mayor (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mayor",">");
+        return VectorUtils.leftVectorOperation(this, e,"mayor",">");
 
     }
 
     public ZVector mayor (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"mayor",">");
+        return VectorUtils.vectorVectorOperation(this, e,"mayor",">");
 
     }
 
     /**menor*/
     public ZVector menor (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"menor","<");
+        return VectorUtils.leftVectorOperation(this, e,"menor","<");
 
     }
     public ZVector menor (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"menor","<");
+        return VectorUtils.leftVectorOperation(this, e,"menor","<");
 
     }
     public ZVector menor (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"menor","<");
+        return VectorUtils.vectorVectorOperation(this, e,"menor","<");
 
     }
 
     /**mayorigual*/
     public ZVector mayorIgual (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mayorIgual",">=");
+        return VectorUtils.leftVectorOperation(this, e,"mayorIgual",">=");
 
     }
     public ZVector mayorIgual (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mayorIgual",">=");
+        return VectorUtils.leftVectorOperation(this, e,"mayorIgual",">=");
 
     }
     public ZVector mayorIgual (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"mayorIgual",">=");
+        return VectorUtils.vectorVectorOperation(this, e,"mayorIgual",">=");
 
     }
 
     /**menorigual*/
     public ZVector menorIgual (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mayorIgual","<=");
+        return VectorUtils.leftVectorOperation(this, e,"mayorIgual","<=");
 
     }
     public ZVector menorIgual (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"mayorIgual","<=");
+        return VectorUtils.leftVectorOperation(this, e,"mayorIgual","<=");
 
     }
     public ZVector menorIgual (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"mayorIgual","<=");
+        return VectorUtils.vectorVectorOperation(this, e,"mayorIgual","<=");
 
     }
 
     /**equalto*/
     public ZVector equalTo (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"equalTo","==");
+        return VectorUtils.leftVectorOperation(this, e,"equalTo","==");
 
     }
     public ZVector equalTo (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"equalTo","==");
+        return VectorUtils.leftVectorOperation(this, e,"equalTo","==");
 
     }
 
     public ZVector equalTo (ZNothing e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"equalTo","==");
+        return VectorUtils.leftVectorOperation(this, e,"equalTo","==");
 
     }
 
     public ZVector equalTo (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"equalTo","==");
+        return VectorUtils.vectorVectorOperation(this, e,"equalTo","==");
 
     }
 
     /**notequalto*/
     public ZVector notEqualTo (ZInteger e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"notEqualTo","!=");
+        return VectorUtils.leftVectorOperation(this, e,"notEqualTo","!=");
 
     }
     public ZVector notEqualTo (ZNumeric e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"notEqualTo","!=");
+        return VectorUtils.leftVectorOperation(this, e,"notEqualTo","!=");
 
     }
 
     public ZVector notEqualTo (ZNothing e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"notEqualTo","!=");
+        return VectorUtils.leftVectorOperation(this, e,"notEqualTo","!=");
 
     }
 
     public ZVector notEqualTo (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"notEqualTo","!=");
+        return VectorUtils.vectorVectorOperation(this, e,"notEqualTo","!=");
 
     }
 
     /**and*/
     public ZVector and (ZBoolean e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"and","&");
+        return VectorUtils.leftVectorOperation(this, e,"and","&");
 
     }
 
     public ZVector and (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"and","&");
+        return VectorUtils.vectorVectorOperation(this, e,"and","&");
 
     }
 
     /**or*/
     public ZVector or (ZBoolean e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this, e,"or","|");
+        return VectorUtils.leftVectorOperation(this, e,"or","|");
 
     }
 
     public ZVector or (ZVector e) throws SemanticException {
 
-        return ChickenUtils.vectorVectorOperation(this, e,"and","|");
+        return VectorUtils.vectorVectorOperation(this, e,"and","|");
 
     }
 
     /**unary*/
     public ZVector unaryMinus(ZNothing e) throws SemanticException {
 
-        return  ChickenUtils.leftVectorOperation(this,e,"unaryMinus","-E");
+        return  VectorUtils.leftVectorOperation(this,e,"unaryMinus","-E");
     }
 
     /**not*/
     public ZVector not (ZNothing e) throws SemanticException {
 
-        return ChickenUtils.leftVectorOperation(this,e,"not","!");
+        return VectorUtils.leftVectorOperation(this,e,"not","!");
 
     }
 

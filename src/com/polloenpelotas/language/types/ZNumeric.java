@@ -2,6 +2,7 @@ package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.VectorUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class ZNumeric extends ZProtoObject {
@@ -33,7 +34,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector add(ZVector vector) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,vector,"add","+");
+        return VectorUtils.rightVectorOperation(this,vector,"add","+");
     }
 
     //el null se trata como un string
@@ -57,7 +58,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector rest (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"rest","-");
+        return VectorUtils.rightVectorOperation(this,e,"rest","-");
     }
 
     /*mult*/
@@ -74,7 +75,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector mult(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"mult","*");
+        return VectorUtils.rightVectorOperation(this,e,"mult","*");
 
     }
 
@@ -95,7 +96,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector div(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"div","/");
+        return VectorUtils.rightVectorOperation(this,e,"div","/");
     }
 
 
@@ -113,7 +114,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector pot(@NotNull ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"pot","^");
+        return VectorUtils.rightVectorOperation(this,e,"pot","^");
     }
 
 
@@ -131,7 +132,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector mod(@NotNull ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"mod","%%");
+        return VectorUtils.rightVectorOperation(this,e,"mod","%%");
     }
 
     /**unario*/
@@ -157,7 +158,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector mayor (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"mayor",">");
+        return VectorUtils.rightVectorOperation(this,e,"mayor",">");
     }
 
 
@@ -176,7 +177,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector menor (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"menor","<");
+        return VectorUtils.rightVectorOperation(this,e,"menor","<");
 
     }
 
@@ -194,7 +195,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector mayorIgual (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"mayorIgual","<=");
+        return VectorUtils.rightVectorOperation(this,e,"mayorIgual","<=");
     }
 
     /**menor igual*/
@@ -213,7 +214,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector menorIgual (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"menorIgual","<=");
+        return VectorUtils.rightVectorOperation(this,e,"menorIgual","<=");
     }
 
     /**equalTo*/
@@ -238,7 +239,7 @@ public class ZNumeric extends ZProtoObject {
 
     public ZVector equalTo (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"equalTo","==");
+        return VectorUtils.rightVectorOperation(this,e,"equalTo","==");
 
     }
 
@@ -261,7 +262,7 @@ public class ZNumeric extends ZProtoObject {
     
     public ZVector notEqualTo (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"notEqualTo","!=");
+        return VectorUtils.rightVectorOperation(this,e,"notEqualTo","!=");
 
     }
 

@@ -2,6 +2,7 @@ package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.VectorUtils;
 
 public class ZBoolean extends ZProtoObject {
 
@@ -24,7 +25,7 @@ public class ZBoolean extends ZProtoObject {
 
     public ZVector add(ZVector vector) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,vector,"add","+");
+        return VectorUtils.rightVectorOperation(this,vector,"add","+");
 
     }
 
@@ -50,7 +51,7 @@ public class ZBoolean extends ZProtoObject {
 
     public ZVector equalTo (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"equalTo","==");
+        return VectorUtils.rightVectorOperation(this,e,"equalTo","==");
 
     }
 
@@ -67,7 +68,7 @@ public class ZBoolean extends ZProtoObject {
 
     public ZVector notEqualTo (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"notEqualTo","!=");
+        return VectorUtils.rightVectorOperation(this,e,"notEqualTo","!=");
 
     }
 
@@ -79,7 +80,7 @@ public class ZBoolean extends ZProtoObject {
 
     public ZVector and (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"and","&");
+        return VectorUtils.rightVectorOperation(this,e,"and","&");
 
     }
 
@@ -91,7 +92,7 @@ public class ZBoolean extends ZProtoObject {
 
     public ZVector or (ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"or","|");
+        return VectorUtils.rightVectorOperation(this,e,"or","|");
 
     }
 

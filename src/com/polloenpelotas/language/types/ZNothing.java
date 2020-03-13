@@ -2,6 +2,7 @@ package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.VectorUtils;
 
 /**
  * representa el retorno de una sentencia que no es una expresion
@@ -61,7 +62,7 @@ public class ZNothing extends ZProtoObject {
 
     public ZVector add(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this, e, "add", "+");
+        return VectorUtils.rightVectorOperation(this, e, "add", "+");
 
     }
 
@@ -78,7 +79,7 @@ public class ZNothing extends ZProtoObject {
 
     public ZVector menor(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"menor","<");
+        return VectorUtils.rightVectorOperation(this,e,"menor","<");
     }
 
 
@@ -95,7 +96,7 @@ public class ZNothing extends ZProtoObject {
 
     public ZVector mayor(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"mayor",">");
+        return VectorUtils.rightVectorOperation(this,e,"mayor",">");
     }
 
 
@@ -111,7 +112,7 @@ public class ZNothing extends ZProtoObject {
 
     public ZVector mayorIgual(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"mayorIgual",">=");
+        return VectorUtils.rightVectorOperation(this,e,"mayorIgual",">=");
     }
 
 
@@ -130,7 +131,7 @@ public class ZNothing extends ZProtoObject {
 
     public ZVector menorIgual(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"menorIgual","<=");
+        return VectorUtils.rightVectorOperation(this,e,"menorIgual","<=");
     }
 
 
@@ -173,7 +174,7 @@ public class ZNothing extends ZProtoObject {
 
     public ZVector equalTo(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"equalTo","==");
+        return VectorUtils.rightVectorOperation(this,e,"equalTo","==");
 
     }
 
@@ -221,7 +222,7 @@ public class ZNothing extends ZProtoObject {
 
     public ZVector notEqualTo(ZVector e) throws SemanticException {
 
-        return ChickenUtils.rightVectorOperation(this,e,"notEqualTo","!=");
+        return VectorUtils.rightVectorOperation(this,e,"notEqualTo","!=");
 
     }
 
