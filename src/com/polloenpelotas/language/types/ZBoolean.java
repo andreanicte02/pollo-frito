@@ -28,6 +28,13 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
+
+    public ZString add(ZNothing e){
+
+        return new ZString(value + "null");
+    }
+
+
     /**equalTo*/
     public ZBoolean equalTo(ZBoolean e){
 

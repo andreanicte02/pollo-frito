@@ -30,15 +30,17 @@ public class ZString extends ZProtoObject {
         return new ZString(this.value + e.getValue());
     }
 
-    public ZVector add(ZVector vector) throws SemanticException {
-        return ChickenUtils.rightVectorOperation(this,vector,"add","+");
-    }
 
     public ZString  add( ZNothing e) {
 
         return new ZString(value+"null");
 
     }
+
+    public ZVector add(ZVector vector) throws SemanticException {
+        return ChickenUtils.rightVectorOperation(this,vector,"add","+");
+    }
+
 
 
 
@@ -51,11 +53,20 @@ public class ZString extends ZProtoObject {
 
     }
 
+    public ZBoolean menor (ZNothing e){
+
+        int res = this.value.compareTo("null");
+        return res==-1? new ZBoolean(true): new ZBoolean(false);
+
+    }
+
     public ZVector menor (ZVector e) throws SemanticException {
 
         return ChickenUtils.rightVectorOperation(this,e,"menor","<");
 
     }
+
+
 
     /**mayor*/
     public ZBoolean mayor (ZString e){
@@ -65,6 +76,15 @@ public class ZString extends ZProtoObject {
         return res==1? new ZBoolean(true): new ZBoolean(false);
 
     }
+
+    public ZBoolean mayor (ZNothing e){
+
+        int res = this.value.compareTo("null");
+
+        return res==1? new ZBoolean(true): new ZBoolean(false);
+
+    }
+
 
     public ZVector mayor (ZVector e) throws SemanticException {
 
@@ -80,6 +100,13 @@ public class ZString extends ZProtoObject {
 
     }
 
+    public ZBoolean mayorIgual(ZNothing e){
+
+        int res = this.value.compareTo("null");
+        return res >= 0? new ZBoolean(true): new ZBoolean(false);
+
+    }
+
     public ZVector mayorIgual (ZVector e) throws SemanticException {
 
         return ChickenUtils.rightVectorOperation(this,e,"mayorIgual",">=");
@@ -90,6 +117,14 @@ public class ZString extends ZProtoObject {
 
 
         int res = this.value.compareTo(e.getValue());
+        return res <= 0? new ZBoolean(true): new ZBoolean(false);
+
+    }
+
+    public ZBoolean menorIgual (ZNothing e){
+
+
+        int res = this.value.compareTo("null");
         return res <= 0? new ZBoolean(true): new ZBoolean(false);
 
     }
@@ -110,9 +145,11 @@ public class ZString extends ZProtoObject {
 
     }
 
+
     public ZBoolean equalTo (ZNothing e){
 
-        return new ZBoolean( false);
+        int res = this.value.compareTo("null");
+        return res==0? new ZBoolean(true): new ZBoolean(false);
     }
 
     public ZVector equalTo (ZVector e) throws SemanticException {
@@ -131,7 +168,7 @@ public class ZString extends ZProtoObject {
 
     public ZBoolean notEqualTo (ZNothing e){
 
-        return new ZBoolean( true);
+        return new ZBoolean( !equalTo(e).getValue());
     }
 
     public ZVector notEqualTo (ZVector e) throws SemanticException {

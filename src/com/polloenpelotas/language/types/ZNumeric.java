@@ -36,6 +36,11 @@ public class ZNumeric extends ZProtoObject {
         return ChickenUtils.rightVectorOperation(this,vector,"add","+");
     }
 
+    //el null se trata como un string
+    public ZString add(ZNothing e){
+        return new ZString(value + "null");
+    }
+
 
 
     /*resta*/

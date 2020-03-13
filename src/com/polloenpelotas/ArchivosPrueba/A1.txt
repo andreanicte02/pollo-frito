@@ -201,3 +201,5 @@ m[,1]=c("x")
 print(m);
 
 print(m[2,]);
+
+print(1+null)
