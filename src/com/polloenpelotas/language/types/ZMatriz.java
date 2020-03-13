@@ -9,9 +9,17 @@ import java.util.List;
 public class ZMatriz extends ZProtoObject {
 
 
-    private final ZVar mat[][];
+    public final ZVar mat[][];
     private final int row;
     private final int col;
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getCol() {
+        return col;
+    }
 
     public ZMatriz(ZInteger row, ZInteger column) {
         this.mat = new ZVar[row.getValue()][column.getValue()];
@@ -214,7 +222,8 @@ public class ZMatriz extends ZProtoObject {
             }
             cad+="\n";
         }
-        return cad;
+
+        return "------------------\nMatrix:\n"+ cad+"------------------";
 
     }
 

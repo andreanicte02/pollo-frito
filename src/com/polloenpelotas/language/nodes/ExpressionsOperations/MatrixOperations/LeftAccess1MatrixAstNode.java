@@ -12,7 +12,7 @@ import com.polloenpelotas.language.types.ZProtoObject;
 import org.jetbrains.annotations.NotNull;
 
 public class LeftAccess1MatrixAstNode extends ProAstNode {
-    private  final AstNode mat;
+    public   final AstNode mat;
     private  final AstNode index1;
     private  final AstNode index2;
 

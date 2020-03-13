@@ -193,7 +193,7 @@ print(lista2);
 m[2,]=c(1,2,3,4);
 print("--dato--");
 print(lista2[[1]][2]);
-m[5]=lista2[[1]][2];
+m[5][1]=lista2[[1]][2];
 m[3,]=c(50,51,52,53)
 m[,1]=c("x")
 
@@ -203,3 +203,8 @@ print(m);
 print(m[2,]);
 
 print(1+null)
+
+m2 = matrix(c(3),(3),4);
+print(m2);
+m2[1][1]=c(1.0);
+print(m2);

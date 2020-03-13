@@ -1,19 +1,9 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
-import com.polloenpelotas.language.ChickenUtils;
-import com.polloenpelotas.language.FileLocation;
-import com.polloenpelotas.language.LocatedSemanticException;
-import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.*;
 import com.polloenpelotas.language.nodes.AstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.Access2ListAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.AccessStructAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.Access2MatrixAstNode;
-import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.Access3MatrixAstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
-import com.polloenpelotas.language.types.ZNothing;
-import com.polloenpelotas.language.types.ZProtoObject;
-import com.polloenpelotas.language.types.ZVar;
-import com.polloenpelotas.language.types.ZVector;
+import com.polloenpelotas.language.types.*;
 import org.jetbrains.annotations.NotNull;
 
 public class AssignAstNode extends ProAstNode {
@@ -37,7 +27,7 @@ public class AssignAstNode extends ProAstNode {
         if(ambit.inMatrix || r1.inMatrix){
 
             ambit.inMatrix = false;
-            return assignAccessMatrix2o3(r1,r2);
+            return assignAccessMatrix(r1,r2, ambit);
 
         }
 
@@ -56,7 +46,7 @@ public class AssignAstNode extends ProAstNode {
     }
 
 
-     ZNothing assignAccessMatrix2o3(ZProtoObject r1, ZProtoObject r2) throws SemanticException {
+     ZNothing assignAccessMatrix(ZProtoObject r1, ZProtoObject r2, ZProtoObject ambit) throws SemanticException, LocatedSemanticException {
 
         if(ChickenUtils.isPrimitive(r2)){
 
@@ -65,6 +55,13 @@ public class AssignAstNode extends ProAstNode {
         }
 
         r1.executeOperation("assignMatrix","Matrix Assign",r2);
+
+        ZProtoObject aux = MatrixUtils.findMatrix(e, ambit);
+
+        if(aux instanceof ZMatriz){
+
+            MatrixUtils.findTypeMatrix((ZMatriz) aux);
+        }
 
         return  ZNothing.getInstance();
      }

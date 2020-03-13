@@ -54,7 +54,7 @@ public class ZNothing extends ZProtoObject {
 
     public ZString add(ZNothing e) {
 
-        return new ZString("null" + "nulls");
+        return new ZString("null" + "null");
 
     }
 
