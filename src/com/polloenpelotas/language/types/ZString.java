@@ -1,6 +1,7 @@
 package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
+import com.polloenpelotas.language.MatrixUtils;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.VectorUtils;
 
@@ -18,6 +19,7 @@ public class ZString extends ZProtoObject {
     public ZString add(ZInteger e){
         return new ZString(this.value + e.getValue());
     }
+
     public ZString add(ZString e){
         return new ZString(this.value + e.getValue());
     }
@@ -26,20 +28,20 @@ public class ZString extends ZProtoObject {
         return new ZString(this.value + e.getValue());
     }
 
-
     public ZString add(ZBoolean e){
         return new ZString(this.value + e.getValue());
     }
 
-
     public ZString  add( ZNothing e) {
-
         return new ZString(value+"null");
-
     }
 
     public ZVector add(ZVector vector) throws SemanticException {
         return VectorUtils.rightVectorOperation(this,vector,"add","+");
+    }
+
+    public ZMatriz add(ZMatriz e) throws SemanticException {
+        return MatrixUtils.rightMatrixOperation(this,e,"add","+");
     }
 
 
@@ -49,7 +51,6 @@ public class ZString extends ZProtoObject {
     public ZBoolean menor (ZString e){
 
         int res = this.value.compareTo(e.getValue());
-
         return res==-1? new ZBoolean(true): new ZBoolean(false);
 
     }
@@ -67,13 +68,18 @@ public class ZString extends ZProtoObject {
 
     }
 
+    public ZMatriz menor(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"menor","<");
+    }
+
+
 
 
     /**mayor*/
     public ZBoolean mayor (ZString e){
 
         int res = this.value.compareTo(e.getValue());
-
         return res==1? new ZBoolean(true): new ZBoolean(false);
 
     }
@@ -81,17 +87,19 @@ public class ZString extends ZProtoObject {
     public ZBoolean mayor (ZNothing e){
 
         int res = this.value.compareTo("null");
-
         return res==1? new ZBoolean(true): new ZBoolean(false);
 
     }
-
 
     public ZVector mayor (ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"mayor",">");
     }
 
+    public ZMatriz mayor(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"mayor",">");
+    }
 
     /**mayorIgual*/
     public ZBoolean mayorIgual(ZString e){
@@ -113,9 +121,14 @@ public class ZString extends ZProtoObject {
         return VectorUtils.rightVectorOperation(this,e,"mayorIgual",">=");
     }
 
+    public ZMatriz mayorIgual(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"mayorIgual",">=");
+    }
+
+
     /**menorIgual*/
     public ZBoolean menorIgual (ZString e){
-
 
         int res = this.value.compareTo(e.getValue());
         return res <= 0? new ZBoolean(true): new ZBoolean(false);
@@ -123,7 +136,6 @@ public class ZString extends ZProtoObject {
     }
 
     public ZBoolean menorIgual (ZNothing e){
-
 
         int res = this.value.compareTo("null");
         return res <= 0? new ZBoolean(true): new ZBoolean(false);
@@ -135,13 +147,16 @@ public class ZString extends ZProtoObject {
         return VectorUtils.rightVectorOperation(this,e,"menorIgual","<=");
     }
 
+    public ZMatriz menorIgual(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"menorIgual","<=");
+    }
 
 
     /**equalTo*/
     public ZBoolean equalTo (ZString e){
 
         int res = this.value.compareTo(e.getValue());
-
         return res==0? new ZBoolean(true): new ZBoolean(false);
 
     }
@@ -159,6 +174,10 @@ public class ZString extends ZProtoObject {
 
     }
 
+    public ZMatriz equalTo(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"equalTo","==");
+    }
 
     /**notEqualTo*/
 
@@ -176,6 +195,11 @@ public class ZString extends ZProtoObject {
 
         return VectorUtils.rightVectorOperation(this,e,"notEqualTo","!=");
 
+    }
+
+    public ZMatriz notEqualTo(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"notEqualTo","!=");
     }
 
     /**cast*/

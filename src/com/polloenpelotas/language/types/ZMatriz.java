@@ -318,20 +318,20 @@ public class ZMatriz extends ZProtoObject {
 
     /**mod*/
     public ZMatriz mod(ZInteger e) throws SemanticException {
-        return MatrixUtils.leftMatrixOperation(this,e,"mod","%");
+        return MatrixUtils.leftMatrixOperation(this,e,"mod","%%");
     }
 
     public ZMatriz mod(ZNumeric e) throws SemanticException {
-        return MatrixUtils.leftMatrixOperation(this,e,"mod","%");
+        return MatrixUtils.leftMatrixOperation(this,e,"mod","%%");
     }
 
     public ZMatriz mod(ZVector e) throws SemanticException {
         ZProtoObject other = ChickenUtils.ifOnlyOneDataInVector(e.getList(), "se intenta operar una matriz con un vector > 1");
-        return MatrixUtils.leftMatrixOperation(this,other,"mod","%");
+        return MatrixUtils.leftMatrixOperation(this,other,"mod","%%");
     }
 
     public ZMatriz mod(ZMatriz e) throws SemanticException {
-        return MatrixUtils.matrixMatrixOperation(this, e, "mod", "%");
+        return MatrixUtils.matrixMatrixOperation(this, e, "mod", "%%");
     }
 
 
@@ -351,7 +351,6 @@ public class ZMatriz extends ZProtoObject {
     public ZMatriz mayor(ZNothing e) throws SemanticException {
         return MatrixUtils.leftMatrixOperation(this,e,"mayor",">");
     }
-
 
     public ZMatriz mayor(ZVector e) throws SemanticException {
         ZProtoObject other = ChickenUtils.ifOnlyOneDataInVector(e.getList(), "se intenta operar una matriz con un vector > 1");
@@ -406,7 +405,6 @@ public class ZMatriz extends ZProtoObject {
     public ZMatriz mayorIgual(ZNothing e) throws SemanticException {
         return MatrixUtils.leftMatrixOperation(this,e,"mayorIgual",">=");
     }
-
 
     public ZMatriz mayorIgual(ZVector e) throws SemanticException {
         ZProtoObject other = ChickenUtils.ifOnlyOneDataInVector(e.getList(), "se intenta operar una matriz con un vector > 1");

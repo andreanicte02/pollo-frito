@@ -32,6 +32,26 @@ public final class MatrixUtils {
 
     }
 
+    public static ZMatriz rightMatrixOperation(@NotNull ZProtoObject left, ZMatriz m1, String name, String simbol) throws SemanticException {
+        //right ya esta desembuelto XD
+        //lo que se saca de la matriz hay que desembolberlo
+        ZMatriz niu = new ZMatriz(new ZInteger(m1.getRow()), new ZInteger(m1.getCol()));
+
+        for (int i= 0; i<m1.getRow(); i++){
+
+            for (int j=0; j<m1.getCol(); j++){
+
+
+                ZProtoObject aM1 = ChickenUtils.unwrap(m1.mat[i][j]);
+                ZProtoObject other = left.executeOperation(name,simbol, aM1);
+                niu.mat[i][j]=new ZVar(other);
+
+            }
+        }
+        return niu;
+
+    }
+
     @NotNull
     public static ZMatriz matrixMatrixOperation(@NotNull ZMatriz m1, @NotNull ZMatriz m2, String name, String simbol) throws SemanticException {
 

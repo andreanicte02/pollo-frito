@@ -1,6 +1,7 @@
 package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
+import com.polloenpelotas.language.MatrixUtils;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.VectorUtils;
 
@@ -23,16 +24,21 @@ public class ZBoolean extends ZProtoObject {
         return new ZString(this.value + e.getValue());
     }
 
+    public ZString add(ZNothing e){
+
+        return new ZString(value + "null");
+    }
+
     public ZVector add(ZVector vector) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,vector,"add","+");
 
     }
 
+    public ZMatriz add(ZMatriz e) throws SemanticException {
 
-    public ZString add(ZNothing e){
+        return MatrixUtils.rightMatrixOperation(this,e,"add","+");
 
-        return new ZString(value + "null");
     }
 
 
@@ -55,6 +61,12 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
+    public ZMatriz equalTo(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"equalTo","==");
+
+    }
+
     /**notequalto*/
     public ZBoolean notEqualTo(ZBoolean e){
 
@@ -72,6 +84,12 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
+    public ZMatriz notEqualTo(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"notEqualTo","!=");
+
+    }
+
     /**and*/
     public ZBoolean and(ZBoolean e){
 
@@ -84,6 +102,12 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
+    public ZMatriz and(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"and","&");
+
+    }
+
     /**or*/
     public ZBoolean or(ZBoolean e){
 
@@ -93,6 +117,12 @@ public class ZBoolean extends ZProtoObject {
     public ZVector or (ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"or","|");
+
+    }
+
+    public ZMatriz or(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"or","|");
 
     }
 

@@ -1,6 +1,7 @@
 package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
+import com.polloenpelotas.language.MatrixUtils;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.VectorUtils;
 import org.jetbrains.annotations.NotNull;
@@ -34,18 +35,22 @@ public class ZInteger extends ZProtoObject {
 
         return new ZNumeric(this.value+ e.getValue());
     }
-
-    public ZVector add(ZVector vector) throws SemanticException {
-
-
-        return VectorUtils.rightVectorOperation(this,vector,"add","+");
-    }
-
     //el null se trata como un string
     public ZString add(ZNothing e){
 
         return new ZString(value + "null");
     }
+
+    public ZVector add(ZVector vector) throws SemanticException {
+
+        return VectorUtils.rightVectorOperation(this,vector,"add","+");
+    }
+
+    public ZMatriz add(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"add","+");
+    }
+
 
 
     /**resta*/
@@ -65,7 +70,13 @@ public class ZInteger extends ZProtoObject {
         return VectorUtils.rightVectorOperation(this,e,"rest","-");
     }
 
-    /*mult*/
+    public ZMatriz rest(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"rest","-");
+    }
+
+
+    /**mult*/
 
     public ZInteger mult(ZInteger e){
 
@@ -80,6 +91,12 @@ public class ZInteger extends ZProtoObject {
     public ZVector mult(ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"mult","*");
+
+    }
+
+    public ZMatriz mult(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"mult","*");
 
     }
 
@@ -100,6 +117,13 @@ public class ZInteger extends ZProtoObject {
         return VectorUtils.rightVectorOperation(this,e,"div","/");
     }
 
+    public ZMatriz div(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"div","/");
+
+    }
+
+
     /**pot*/
     public ZNumeric pot(@NotNull ZInteger e){
 
@@ -116,6 +140,14 @@ public class ZInteger extends ZProtoObject {
         return VectorUtils.rightVectorOperation(this,e,"pot","^");
     }
 
+    public ZMatriz pot(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"pot","^");
+
+    }
+
+
+
     /**mod*/
     public ZInteger mod(@NotNull ZInteger e){
 
@@ -127,12 +159,16 @@ public class ZInteger extends ZProtoObject {
         return new ZNumeric( this.value % e.getValue());
     }
 
-
     public ZVector mod(@NotNull ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"mod","%%");
     }
 
+    public ZMatriz mod(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"mod","%%");
+
+    }
 
 
     /**unaryMinus*/
@@ -158,6 +194,12 @@ public class ZInteger extends ZProtoObject {
         return VectorUtils.rightVectorOperation(this,e,"mayor",">");
     }
 
+    public ZMatriz mayor(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"mayor",">");
+
+    }
+
 
 
     /**menor*/
@@ -177,6 +219,13 @@ public class ZInteger extends ZProtoObject {
 
     }
 
+    public ZMatriz menor(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"menor","<");
+
+    }
+
+
     /**mayorIgual*/
     public ZBoolean mayorIgual(ZInteger e){
 
@@ -191,6 +240,12 @@ public class ZInteger extends ZProtoObject {
     public ZVector mayorIgual (ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"mayorIgual",">=");
+    }
+
+    public ZMatriz mayorIgual(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"mayorIgual",">=");
+
     }
 
 
@@ -210,6 +265,13 @@ public class ZInteger extends ZProtoObject {
         return VectorUtils.rightVectorOperation(this,e,"menorIgual","<=");
     }
 
+    public ZMatriz menorIgual(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"menorIgual","<=");
+
+    }
+
+
     /**equal to*/
     public ZBoolean equalTo(ZInteger e){
 
@@ -226,10 +288,15 @@ public class ZInteger extends ZProtoObject {
         return new ZBoolean(false);
     }
 
-
     public ZVector equalTo (ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"equalTo","==");
+
+    }
+
+    public ZMatriz equalTo(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"equalTo","==");
 
     }
 
@@ -253,6 +320,12 @@ public class ZInteger extends ZProtoObject {
     public ZVector notEqualTo (ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"notEqualTo","!=");
+
+    }
+
+    public ZMatriz notEqualTo(ZMatriz e) throws SemanticException {
+
+        return MatrixUtils.rightMatrixOperation(this,e,"notEqualTo","!=");
 
     }
 
