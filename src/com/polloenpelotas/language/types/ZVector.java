@@ -229,9 +229,10 @@ public class ZVector extends ZProtoObject {
         return VectorUtils.vectorVectorOperation(this, e,"mult","*");
     }
 
-    // TODO: validar que el numero no sea div entre 0
+
     /**div**/
 
+    //si la division es entre cero se hace en los primitivos
     public ZVector div (ZInteger e) throws SemanticException {
 
         return VectorUtils.leftVectorOperation(this, e,"div","/");
@@ -302,6 +303,19 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    public ZVector mayor (ZString e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"mayor",">");
+
+    }
+
+    public ZVector mayor (ZNothing e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"mayor",">");
+
+    }
+
+
     public ZVector mayor (ZVector e) throws SemanticException {
 
         return VectorUtils.vectorVectorOperation(this, e,"mayor",">");
@@ -319,6 +333,20 @@ public class ZVector extends ZProtoObject {
         return VectorUtils.leftVectorOperation(this, e,"menor","<");
 
     }
+
+    public ZVector menor (ZString e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"menor","<");
+
+    }
+
+    public ZVector menor (ZNothing e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"menor","<");
+
+    }
+
+
     public ZVector menor (ZVector e) throws SemanticException {
 
         return VectorUtils.vectorVectorOperation(this, e,"menor","<");
@@ -336,6 +364,19 @@ public class ZVector extends ZProtoObject {
         return VectorUtils.leftVectorOperation(this, e,"mayorIgual",">=");
 
     }
+
+    public ZVector mayorIgual (ZString e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"mayorIgual",">=");
+
+    }
+
+    public ZVector mayorIgual (ZNothing e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"mayorIgual",">=");
+
+    }
+
     public ZVector mayorIgual (ZVector e) throws SemanticException {
 
         return VectorUtils.vectorVectorOperation(this, e,"mayorIgual",">=");
@@ -345,17 +386,30 @@ public class ZVector extends ZProtoObject {
     /**menorigual*/
     public ZVector menorIgual (ZInteger e) throws SemanticException {
 
-        return VectorUtils.leftVectorOperation(this, e,"mayorIgual","<=");
+        return VectorUtils.leftVectorOperation(this, e,"menorIgual","<=");
 
     }
     public ZVector menorIgual (ZNumeric e) throws SemanticException {
 
-        return VectorUtils.leftVectorOperation(this, e,"mayorIgual","<=");
+        return VectorUtils.leftVectorOperation(this, e,"menorIgual","<=");
 
     }
+
+    public ZVector menorIgual (ZString e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"menorIgual","<=");
+
+    }
+
+    public ZVector menorIgual (ZNothing e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"menorIgual","<=");
+
+    }
+
     public ZVector menorIgual (ZVector e) throws SemanticException {
 
-        return VectorUtils.vectorVectorOperation(this, e,"mayorIgual","<=");
+        return VectorUtils.vectorVectorOperation(this, e,"menorIgual","<=");
 
     }
 
@@ -377,6 +431,12 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    public ZVector equalTo (ZString e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"equalTo","==");
+
+    }
+
     public ZVector equalTo (ZVector e) throws SemanticException {
 
         return VectorUtils.vectorVectorOperation(this, e,"equalTo","==");
@@ -390,6 +450,13 @@ public class ZVector extends ZProtoObject {
 
     }
     public ZVector notEqualTo (ZNumeric e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"notEqualTo","!=");
+
+    }
+
+
+    public ZVector notEqualTo (ZString e) throws SemanticException {
 
         return VectorUtils.leftVectorOperation(this, e,"notEqualTo","!=");
 

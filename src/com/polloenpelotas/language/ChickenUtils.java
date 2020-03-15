@@ -126,7 +126,8 @@ public final class ChickenUtils {
         for (AstNode node:
              lista) {
 
-            nueva.add(unwrap(node.execute(ambit)));
+            ZProtoObject aux = unwrap(node.execute(ambit));
+            nueva.add(aux);
 
         }
 
@@ -359,6 +360,16 @@ public final class ChickenUtils {
     }
 
     /***/
+
+    public static ZProtoObject ifOnlyOneDataInVector(List<ZVar> data,String messError) throws SemanticException {
+
+        if(data.size()!=1){
+            throw new SemanticException(messError);
+        }
+        //desembuelto
+        return  unwrap(data.get(0));
+
+    }
 
 
 

@@ -6,20 +6,59 @@ import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.
 import com.polloenpelotas.language.nodes.Instructions.FindIDAstNode;
 import com.polloenpelotas.language.nodes.Instructions.FindIDLeftAstNode;
 import com.polloenpelotas.language.types.*;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
 public final class MatrixUtils {
 
-    public static ZMatriz leftMatrix(ZMatriz matriz, ZProtoObject data){
+    @NotNull
+    public static ZMatriz leftMatrixOperation(@NotNull ZMatriz m1, ZProtoObject right, String name, String simbol) throws SemanticException {
+        //right ya esta desembuelto XD
+        //lo que se saca de la matriz hay que desembolberlo
+        ZMatriz niu = new ZMatriz(new ZInteger(m1.getRow()), new ZInteger(m1.getCol()));
 
-        ZMatriz niu = new ZMatriz(new ZInteger(matriz.getRow()), new ZInteger(matriz.getCol()));
+        for (int i= 0; i<m1.getRow(); i++){
 
+            for (int j=0; j<m1.getCol(); j++){
 
-        return null;
+                ZProtoObject aM1 = ChickenUtils.unwrap(m1.mat[i][j]);
+                ZProtoObject other = aM1.executeOperation(name,simbol, right);
+                niu.mat[i][j]=new ZVar(other);
+
+            }
+        }
+        return niu;
 
     }
-    
+
+    @NotNull
+    public static ZMatriz matrixMatrixOperation(@NotNull ZMatriz m1, @NotNull ZMatriz m2, String name, String simbol) throws SemanticException {
+
+        if(m1.getRow()!= m2.getRow()){
+            throw new SemanticException("las dimensiones de las matrices a operar no hacen match");
+        }
+        if(m2.getCol() != m2.getCol()){
+            throw new SemanticException("las dimensiones de las matrices a operar no hacen match");
+        }
+
+        ZMatriz niu = new ZMatriz(new ZInteger(m1.getRow()),new ZInteger(m1.getCol()));
+
+        for (int i= 0; i<m1.getRow(); i++){
+
+            for (int j=0; j<m1.getCol(); j++){
+
+                ZProtoObject aM1 = ChickenUtils.unwrap(m1.mat[i][j]);
+                ZProtoObject aM2 = ChickenUtils.unwrap(m2.mat[i][j]);
+                ZProtoObject other = aM1.executeOperation(name,simbol,aM2);
+                niu.mat[i][j]=new ZVar(other);
+
+            }
+        }
+
+        return niu;
+    }
+
 
     public static ZProtoObject findMatrix(AstNode e, ZProtoObject ambit) throws LocatedSemanticException {
 

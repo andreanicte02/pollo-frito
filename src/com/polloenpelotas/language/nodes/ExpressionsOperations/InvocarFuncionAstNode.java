@@ -27,7 +27,7 @@ public class InvocarFuncionAstNode extends ProAstNode {
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
         List<ZProtoObject> unwrapArguments = ChickenUtils.unwrapListExp(argumentos,ambit);
-        ZFunction function = (ZFunction) ChickenUtils.getFuncion(id,ambit);
+        ZFunction function = ChickenUtils.getFuncion(id,ambit);
         return function.ejecutarFuncion(unwrapArguments);
     }
 }

@@ -80,6 +80,6 @@ print(m[5,][4][1]);
 print("modificacion de matrices")
 
 m[2,]=c(1,2,3,4);
-print(m)
+print(m+m*1)
 
 
