@@ -1,9 +1,13 @@
 package com.polloenpelotas.language;
 
-import com.polloenpelotas.language.types.ZNothing;
-import com.polloenpelotas.language.types.ZProtoObject;
-import com.polloenpelotas.language.types.ZVar;
-import com.polloenpelotas.language.types.ZVector;
+import com.polloenpelotas.language.nodes.AstNode;
+import com.polloenpelotas.language.nodes.BinaryOperationNode;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.LeftAccess1AstNode;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.LeftAccess2AstNode;
+import com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations.*;
+import com.polloenpelotas.language.nodes.Instructions.FindIDAstNode;
+import com.polloenpelotas.language.nodes.Instructions.FindIDLeftAstNode;
+import com.polloenpelotas.language.types.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +98,94 @@ public final class VectorUtils {
         }
 
         return new ZVector(nueva);
+
+    }
+
+    public static ZProtoObject  findVector(AstNode e, ZProtoObject ambit) throws SemanticException, LocatedSemanticException {
+
+        if(e instanceof LeftAccess1AstNode){
+            ZProtoObject a1 = findVector(((LeftAccess1AstNode) e).e1, ambit);
+            ZProtoObject a2 = ChickenUtils.unwrap(((LeftAccess1AstNode) e).e2.execute(ambit));
+
+            if(a1 instanceof ZVector || a1 instanceof ZNothing){
+
+                return a1;
+
+            }
+
+            return a1.executeOperation("access1Left","casteo vectores",a2);
+
+        }
+        if( e instanceof LeftAccess2AstNode){
+
+            ZProtoObject a1 = findVector(((LeftAccess2AstNode) e).e1, ambit);
+            ZProtoObject a2 = ChickenUtils.unwrap(((LeftAccess2AstNode) e).e2.execute(ambit));
+
+            if(a1 instanceof ZVector || a1 instanceof ZNothing){
+
+                return a1;
+
+            }
+
+            ZProtoObject other = a1.executeOperation("access2Left","casteo vectores",a2);
+
+            if(other instanceof ZVar){
+
+                return ((ZVar) other).getValue();
+            }
+
+            return other;
+
+
+        }
+
+        if ( e instanceof FindIDAstNode || e instanceof  FindIDLeftAstNode){
+
+            return ChickenUtils.unwrap(e.execute(ambit));
+        }
+
+        return ZNothing.getInstance();
+
+    }
+
+
+    /**castear vectores*/
+    public static  void changeVector(List<ZVar> list) throws SemanticException {
+
+
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZList )){
+            //creo que deberia de marcarse como error
+            return;
+        }
+
+
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZVector )){
+            return;
+        }
+
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZString)){
+            changeVector2(list,"castS","castS");
+            return;
+        }
+
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZNumeric)){
+            changeVector2(list,"castN","castN");
+            return;
+        }
+
+        if(list.stream().anyMatch(x->x.getValue() instanceof  ZInteger)){
+            changeVector2(list,"castI","castI");
+            return;
+        }
+
+    }
+
+    public static void changeVector2(List<ZVar> list,String name, String simbol) throws SemanticException {
+
+        for (int x =0; x<list.size();x++){
+            ZVar aux = list.get(x);
+            aux.setValue(aux.getValue().executeOperation(name,simbol, ZNothing.getInstance()));
+        }
 
     }
 

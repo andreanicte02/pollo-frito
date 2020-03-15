@@ -15,9 +15,11 @@ public final class MatrixUtils {
 
         ZMatriz niu = new ZMatriz(new ZInteger(matriz.getRow()), new ZInteger(matriz.getCol()));
 
+
         return null;
 
     }
+    
 
     public static ZProtoObject findMatrix(AstNode e, ZProtoObject ambit) throws LocatedSemanticException {
 

@@ -49,8 +49,11 @@ public class ZVector extends ZProtoObject {
      *  access from the left side  *
      * * * * * * * * * * * * * * * */
 
-    public ZProtoObject access1Left(ZInteger index){
+    public ZProtoObject access1Left(ZInteger index) throws SemanticException {
 
+        if(index.getValue()>list.size()){
+            throw new SemanticException("se intenta acceder a una posicion que esta fuera de rango");
+        }
 
         VectorUtils.increaseZSize(list, index.getValue());
 
@@ -66,7 +69,7 @@ public class ZVector extends ZProtoObject {
         }
 
         aux.inMatrix=this.inMatrix;
-        return aux.getValue();
+        return new ZVector(aux);
 
     }
 
@@ -549,7 +552,7 @@ public class ZVector extends ZProtoObject {
         return aux.executeOperation("getInt","buscando int first");
     }
 
-    /**Acces**/
+    /**modificacion de matrices**/
 
     public ZProtoObject assignMatrix(ZVector niudato) throws SemanticException {
 

@@ -38,6 +38,7 @@ SKIP : {
     | "\t"
     | "\r"
     | "\n"
+    | <"#" (~["\n", "\r"])*>
 }
 
 TOKEN : {
@@ -104,9 +105,6 @@ MORE :
 {
    <STRING:"\""> : DEFAULT
 }
-/** Producción inicial
-    Analizar -> (Instruccion)+ EOF
-*/
 
 
 List<AstNode>  analizar() :

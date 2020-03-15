@@ -348,35 +348,6 @@ public final class ChickenUtils {
     }
 
 
-    /***/
-    public static  void changeVector(List<ZVar> list) throws SemanticException {
-
-        if(list.stream().anyMatch(x->x.getValue() instanceof  ZString)){
-            changeVector2(list,"castS","castS");
-            return;
-        }
-
-        if(list.stream().anyMatch(x->x.getValue() instanceof  ZNumeric)){
-            changeVector2(list,"castN","castN");
-            return;
-        }
-
-        if(list.stream().anyMatch(x->x.getValue() instanceof  ZInteger)){
-            changeVector2(list,"castI","castI");
-            return;
-        }
-
-    }
-
-    public static void changeVector2(List<ZVar> list,String name, String simbol) throws SemanticException {
-
-        for (int x =0; x<list.size();x++){
-            ZVar aux = list.get(x);
-            aux.setValue(aux.getValue().executeOperation(name,simbol, ZNothing.getInstance()));
-        }
-
-    }
-
    /**obtiene el primero dato desemvuelto de una lista de ZVAR*/
     public static ZProtoObject getFirstDataUnwrap(List <ZVar> data) throws SemanticException {
 

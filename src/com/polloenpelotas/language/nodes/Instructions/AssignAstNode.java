@@ -31,18 +31,19 @@ public class AssignAstNode extends ProAstNode {
 
         }
 
-        //assginacion de tipo 2 en listas
+        //assginacion de tipo 2 en listas o el 1 ya me hice bolas :(
         if(r1 instanceof ZVar && !(e instanceof FindIDLeftAstNode)){
 
             r1.executeOperation("assign2","  id[[exp]] = exp", r2);
-            return ZNothing.getInstance();
+
+            return posibleVector(ambit);
 
         }
 
 
         r1.executeOperation("assign"," id[exp] | id[[exp]] [exp] | id -> left", r2);
 
-        return ZNothing.getInstance();
+        return posibleVector(ambit);
     }
 
 
@@ -65,6 +66,20 @@ public class AssignAstNode extends ProAstNode {
 
         return  ZNothing.getInstance();
      }
+
+     ZNothing posibleVector(ZProtoObject ambit) throws SemanticException, LocatedSemanticException {
+
+        ZProtoObject aux = VectorUtils.findVector(e,ambit);
+
+        if(aux instanceof ZVector){
+            VectorUtils.changeVector(((ZVector) aux).getList());
+        }
+
+
+        return ZNothing.getInstance();
+     }
+
+
 
 
 }
