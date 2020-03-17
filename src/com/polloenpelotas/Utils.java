@@ -94,6 +94,7 @@ Utils {
         aux.functions.put("pie", fn.pieGraphic());
         aux.functions.put("barplot", fn.barGraphic());
         aux.functions.put("plot", fn.plotGraphic());
+        aux.functions.put("hist", fn.histGraphic());
     }
 
 
@@ -342,7 +343,7 @@ class FunNativas {
         return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
 
             @Override
-            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
 
                 if(argumentos.size()!=5){
                     throw new SemanticException("se esperaban 5 argumentos en la funcion pie");
@@ -383,7 +384,7 @@ class FunNativas {
 
         return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
             @Override
-            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
 
                 if(argumentos.size()!=5){
                     throw new SemanticException("se esperaban 5 argumentos en la funcion pie");
@@ -425,6 +426,46 @@ class FunNativas {
                 return ZNothing.getInstance();
             }
         };
+    }
+
+    public ZFunction histGraphic(){
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)) {
+
+
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+
+                if(argumentos.size()!=3){
+
+                    throw new SemanticException("Se esperaban 3 argumentos en la funcion hist");
+                }
+
+                ZProtoObject primero = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                ZProtoObject segundo = ChickenUtils.obtenerUnPrimitivo(argumentos.get(1));
+                ZProtoObject tercero = ChickenUtils.obtenerUnPrimitivo(argumentos.get(2));
+
+                if(!(primero instanceof ZVector)){
+                    throw new SemanticException("se esperaba un vector o un dati primitivo en el primer argumento de la funcion hist");
+                }
+
+                var js = ChickenUtils.histGraphic(primero,segundo,tercero);
+
+                try {
+
+                    ChickenUtils.writeFile(ChickenUtils.writeHtml(""),"H"+ ChickenUtils.grafiteando,"html");
+                    ChickenUtils.writeFile(js, "G"+ChickenUtils.grafiteando,"js");
+                    ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                return ZNothing.getInstance();
+
+            }
+        };
+
     }
 
 

@@ -1,12 +1,10 @@
 var trace1 = { 
-x: [1], 
-y: [5], 
-mode: 'markers'
+x: [1.0, 1.0, 1.0, 1.0, 1.0],
+type: 'histogram', 
 }; 
-var data = [trace1]; 
 var layout = { 
 title: "titulo",
-xaxis:  {title: "etiquetax"},
-yaxis:  {title: "etiquetay"},
+xaxis:  {title: "ejey"},
 }; 
+var data = [trace1]; 
 Plotly.newPlot('G1', data, layout);

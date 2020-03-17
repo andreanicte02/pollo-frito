@@ -556,6 +556,30 @@ public final class ChickenUtils {
         return buffer.toString();
     }
 
+    public static  String histGraphic(ZProtoObject vector, ZProtoObject labelX, ZProtoObject title){
+
+
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("var trace1 = { \n");
+        buffer.append("x: "+vector.toChickenString()+",\n");
+        buffer.append("type: 'histogram', \n");
+        buffer.append("}; \n");
+
+        buffer.append("var layout = { \n");
+        buffer.append("title: "+ title.toChickenString()+",\n");
+        buffer.append("xaxis:  {title: "+labelX.toChickenString()+"},\n");
+        buffer.append("}; \n");
+
+        buffer.append("var data = [trace1]; \n");
+        buffer.append("Plotly.newPlot("+"'G"+grafiteando+"', data, layout);");
+
+
+        return buffer.toString();
+
+    }
+
 
 
 

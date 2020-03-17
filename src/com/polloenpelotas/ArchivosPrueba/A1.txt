@@ -88,4 +88,8 @@ labels = c("prueba1","prueba2","prueba3")
 #barplot(c(20, 14, 23),"etiquetax", c("etiquetay"), "titulo",c("gato","baca", "idiota"))
 
 print(m)
-plot(m[2,]s,"l",c("etiquetax"),c("etiquetay"), c("titulo","as"))
+m[,3]=c(1.0)
+#plot(m[2,]s,"l",c("etiquetax"),c("etiquetay"), c("titulo","as"))
+#hist(m[,3],c("ejey"), c("titulo")[1][1]);
+#print(m[,3])
+#print(m)
