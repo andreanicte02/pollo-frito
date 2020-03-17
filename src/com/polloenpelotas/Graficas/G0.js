@@ -1,13 +1,12 @@
-var data = [{
-title: "salida deseada",
-values: [19, 26, 55],
-labels: ["prueba1", "prueba2", "prueba3"],
-type: 'pie' 
-}];  
- 
-var layout = { 
-height: 600, 
-width: 600 
+var trace1 = { 
+x: [1], 
+y: [5], 
+mode: 'markers'
 }; 
- 
+var data = [trace1]; 
+var layout = { 
+title: "titulo",
+xaxis:  {title: "etiquetax"},
+yaxis:  {title: "etiquetay"},
+}; 
 Plotly.newPlot('G0', data, layout);

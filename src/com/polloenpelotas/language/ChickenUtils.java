@@ -392,6 +392,23 @@ public final class ChickenUtils {
         return  ob;
     }
 
+    public static boolean isYLim(ZVector vector){
+
+        if(vector.getList().size() != 2){
+            return false;
+        }
+
+        if(unwrap(vector.getList().get(0)) instanceof ZNumeric || unwrap(vector.getList().get(0))  instanceof  ZInteger) {
+
+            if (unwrap(vector.getList().get(1)) instanceof ZNumeric || unwrap(vector.getList().get(1)) instanceof ZInteger) {
+                    return true;
+
+            }
+        }
+
+        return false;
+    }
+
 
 
     /**graficas*/
@@ -446,8 +463,6 @@ public final class ChickenUtils {
         buffer.append("}];  \n \n");
 
         buffer.append("var layout = { \n");
-        buffer.append("height: 600, \n");
-        buffer.append("width: 600 \n");
         buffer.append("}; \n \n");
 
         buffer.append("Plotly.newPlot("+"'G"+grafiteando+"', data, layout);");
@@ -469,8 +484,6 @@ public final class ChickenUtils {
 
 
         buffer.append("var layout = { \n");
-        buffer.append("height: 600, \n");
-        buffer.append("width: 600, \n");
         buffer.append("title: "+title.toChickenString() +",\n");
         buffer.append("xaxis:  {title: "+labelX.toChickenString()+"},\n");
         buffer.append("yaxis:  {title: "+labelY.toChickenString()+"},\n");
@@ -484,6 +497,63 @@ public final class ChickenUtils {
         return buffer.toString();
 
 
+    }
+
+    public static String lineGraphic(ZProtoObject v,ZProtoObject type, ZProtoObject labelX, ZProtoObject labelY, ZProtoObject title) throws SemanticException {
+
+
+        StringBuffer buffer = new StringBuffer();
+        String x="";
+        String y="";
+        String tipo = "";
+
+        if(v instanceof ZVector){
+
+            x=((ZVector) v).mapGraphicLine();
+            y= v.toChickenString();
+
+        } else if (v instanceof ZMatriz) {
+
+            x = ((ZMatriz)v).mapGraphicLineX();
+            y = ((ZMatriz)v).mapGraphicLineY();
+
+        }else{
+
+            throw new SemanticException("En la funcion plot de lineas, se esperaba una matriz, vector, o primitivo en e primer parametro");
+
+        }
+
+        if(!(type instanceof ZString)){
+                tipo="'lines+markers'";
+        }else{
+
+            if(((ZString) type).getValue().toLowerCase().equals("o")){
+                tipo="'lines+markers'";
+            }else if(((ZString) type).getValue().toLowerCase().equals("p")){
+                tipo="'lines'";
+            }else if(((ZString) type).getValue().toLowerCase().equals("l")){
+                tipo ="'markers'";
+            }
+
+        }
+
+        buffer.append("var trace1 = { \n");
+        buffer.append("x: "+x+", \n");
+        buffer.append("y: "+y+", \n");
+        buffer.append("mode: "+tipo+"\n");
+        buffer.append("}; \n");
+
+        buffer.append("var data = [trace1]; \n");
+
+        buffer.append("var layout = { \n");
+        buffer.append("title: "+ title.toChickenString()+",\n");
+        buffer.append("xaxis:  {title: "+labelX.toChickenString()+"},\n");
+        buffer.append("yaxis:  {title: "+labelY.toChickenString()+"},\n");
+        buffer.append("}; \n");
+
+        buffer.append("Plotly.newPlot("+"'G"+grafiteando+"', data, layout);");
+
+        return buffer.toString();
     }
 
 

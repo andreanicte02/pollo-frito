@@ -540,7 +540,43 @@ public class ZMatriz extends ZProtoObject {
     }
 
 
+    public  String mapGraphicLineY(){
 
+        var cad ="[";
+        for (int i= 0; i<row; i++){
+
+            for (int j=0; j<col; j++){
+
+                cad+=ChickenUtils.unwrap(mat[i][j]).toChickenString() + ",";
+
+            }
+
+        }
+
+        cad = cad.substring(0,cad.length()-1);
+        cad += "]";
+
+        return cad;
+    }
+
+    public  String mapGraphicLineX(){
+
+        var cad ="[";
+        var cont = 1;
+        for (int i= 0; i<row; i++){
+
+            for (int j=0; j<col; j++, cont++){
+
+                 cad+=cont+",";
+
+            }
+
+        }
+        cad = cad.substring(0,cad.length()-1);
+        cad += "]";
+
+        return cad;
+    }
 
     @Override
     public String toChickenString() {

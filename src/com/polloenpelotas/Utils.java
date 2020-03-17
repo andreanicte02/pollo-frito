@@ -93,6 +93,7 @@ Utils {
         aux.functions.put("matrix",fn.zfunctionMat());
         aux.functions.put("pie", fn.pieGraphic());
         aux.functions.put("barplot", fn.barGraphic());
+        aux.functions.put("plot", fn.plotGraphic());
     }
 
 
@@ -318,8 +319,10 @@ class FunNativas {
 
 
 
+                var js = ChickenUtils.writePie(title, values, labels);
+
                 try {
-                    var js = ChickenUtils.writePie(title, values, labels);
+
                     ChickenUtils.writeFile(ChickenUtils.writeHtml(""),"H"+ ChickenUtils.grafiteando,"html");
                     ChickenUtils.writeFile(js, "G"+ChickenUtils.grafiteando,"js");
                     ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
@@ -334,7 +337,7 @@ class FunNativas {
         };
     }
 
-    public static ZFunction barGraphic(){
+    public  ZFunction barGraphic(){
 
         return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
 
@@ -359,9 +362,10 @@ class FunNativas {
                 }
 
 
+                var js = ChickenUtils.barGraphic(main,names, h,xLabel, yLabel);
 
                 try {
-                    var js = ChickenUtils.barGraphic(main,names, h,xLabel, yLabel);
+
                     ChickenUtils.writeFile(ChickenUtils.writeHtml(""),"H"+ ChickenUtils.grafiteando,"html");
                     ChickenUtils.writeFile(js, "G"+ChickenUtils.grafiteando,"js");
                     ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
@@ -374,6 +378,56 @@ class FunNativas {
             }
         };
     }
+
+    public  ZFunction plotGraphic(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+
+                if(argumentos.size()!=5){
+                    throw new SemanticException("se esperaban 5 argumentos en la funcion pie");
+                }
+
+                ZProtoObject primero = argumentos.get(0);
+                ZProtoObject segundo = argumentos.get(1);
+                ZProtoObject tercero = argumentos.get(2);
+                ZProtoObject cuarto = argumentos.get(3);
+                ZProtoObject ultimo = argumentos.get(4);
+
+                if(ultimo instanceof ZVector && ChickenUtils.isYLim((ZVector) ultimo)){
+
+
+                    return ZNothing.getInstance();
+                }
+
+
+
+                primero = ChickenUtils.obtenerUnVector(primero);
+                segundo = ChickenUtils.obtenerUnPrimitivo(segundo);
+                tercero = ChickenUtils.obtenerUnPrimitivo(tercero);
+                cuarto = ChickenUtils.obtenerUnPrimitivo(cuarto);
+                ultimo = ChickenUtils.obtenerUnPrimitivo(ultimo);
+
+                var js = ChickenUtils.lineGraphic(primero, segundo, tercero, cuarto, ultimo);
+
+                try {
+
+                    ChickenUtils.writeFile(ChickenUtils.writeHtml(""),"H"+ ChickenUtils.grafiteando,"html");
+                    ChickenUtils.writeFile(js, "G"+ChickenUtils.grafiteando,"js");
+                    ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                return ZNothing.getInstance();
+            }
+        };
+    }
+
+
 
 
 }

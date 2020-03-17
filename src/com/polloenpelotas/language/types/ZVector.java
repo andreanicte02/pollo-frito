@@ -742,9 +742,18 @@ public class ZVector extends ZProtoObject {
     }
 
 
+    public String mapGraphicLine(){
 
+        String out ="[";
+        for (int x=0 , cont = 1; x<list.size(); x++, cont++ ){
+            out+=cont+",";
+        }
 
+        out = out.substring(0,out.length()-1);
+        out +="]";
 
+        return out;
+    }
 
 
     @Override
