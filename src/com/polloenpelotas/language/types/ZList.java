@@ -103,6 +103,13 @@ public class ZList extends ZProtoObject {
 
     }
 
+    public ZInteger length (){
+
+        return new ZInteger(list.size());
+
+    }
+
+
     public ZProtoObject access2Left(ZVector index) throws SemanticException {
 
        ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index.getList());
@@ -110,12 +117,6 @@ public class ZList extends ZProtoObject {
        return this.executeOperation("access2Left", " exp[[exp]] left ", aux);
 
     }
-
-
-
-
-
-
 
 
 

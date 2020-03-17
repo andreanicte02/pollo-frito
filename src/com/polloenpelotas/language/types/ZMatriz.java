@@ -578,6 +578,12 @@ public class ZMatriz extends ZProtoObject {
         return cad;
     }
 
+    public ZInteger length (){
+
+        return new ZInteger(col*row);
+
+    }
+
     @Override
     public String toChickenString() {
         String cad="";

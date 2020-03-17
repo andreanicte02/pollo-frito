@@ -112,5 +112,4 @@ fabric.properties
 hs_err_pid*
 
 .idea/vcs.xml
-Instructions/
-/src/com/polloenpelotas/Graficas/
+Graficas/
