@@ -12,10 +12,7 @@ import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.*;
 import java_cup.runtime.Symbol;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,17 +27,7 @@ Utils {
             List<AstNode> ins = parser.analizar();
 
             ZAmbit aux = new ZAmbit(null);
-            aux.functions.put("print",fn.zfuncionPrint());
-            aux.functions.put("c",fn.zfuncionC());
-            aux.functions.put("list",fn.zfuncionList());
-            aux.functions.put("length",fn.zLength());
-            aux.functions.put("stringlength",fn.zStringLength());
-            aux.functions.put("remove",fn.zRemove());
-            aux.functions.put("tolowercase",fn.zToLower());
-            aux.functions.put("touppercase",fn.zToUpper());
-            aux.functions.put("trunk",fn.zTrunk());
-            aux.functions.put("round",fn.zRound());
-            aux.functions.put("matrix",fn.zfunctionMat());
+            chargeFunctions(aux);
 
 
 
@@ -76,17 +63,7 @@ Utils {
             List<AstNode> ins = (List<AstNode>)symbol.value;
 
             ZAmbit aux = new ZAmbit(null);
-            aux.functions.put("print",fn.zfuncionPrint());
-            aux.functions.put("c",fn.zfuncionC());
-            aux.functions.put("list",fn.zfuncionList());
-            aux.functions.put("length",fn.zLength());
-            aux.functions.put("stringlength",fn.zStringLength());
-            aux.functions.put("remove",fn.zRemove());
-            aux.functions.put("tolowercase",fn.zToLower());
-            aux.functions.put("touppercase",fn.zToUpper());
-            aux.functions.put("trunk",fn.zTrunk());
-            aux.functions.put("round",fn.zRound());
-            aux.functions.put("matrix",fn.zfunctionMat());
+            chargeFunctions(aux);
 
             for (AstNode intruccion: ins){
                 intruccion.execute(aux);
@@ -99,6 +76,23 @@ Utils {
             e.printStackTrace();
         }
 
+    }
+
+    public static void chargeFunctions(ZAmbit aux){
+
+        aux.functions.put("print",fn.zfuncionPrint());
+        aux.functions.put("c",fn.zfuncionC());
+        aux.functions.put("list",fn.zfuncionList());
+        aux.functions.put("length",fn.zLength());
+        aux.functions.put("stringlength",fn.zStringLength());
+        aux.functions.put("remove",fn.zRemove());
+        aux.functions.put("tolowercase",fn.zToLower());
+        aux.functions.put("touppercase",fn.zToUpper());
+        aux.functions.put("trunk",fn.zTrunk());
+        aux.functions.put("round",fn.zRound());
+        aux.functions.put("matrix",fn.zfunctionMat());
+        aux.functions.put("pie", fn.pieGraphic());
+        aux.functions.put("barplot", fn.barGraphic());
     }
 
 
@@ -301,6 +295,84 @@ class FunNativas {
 
         };
 
+    }
+
+    public ZFunction pieGraphic(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+                if(argumentos.size()!=3){
+                    throw new SemanticException("Se esperaban 3 argumentos en la funcion pie");
+                }
+
+                ZProtoObject values = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                ZProtoObject labels = ChickenUtils.obtenerUnVector(argumentos.get(1));
+                ZProtoObject title = ChickenUtils.obtenerUnPrimitivo(argumentos.get(2));
+
+
+
+                if (!(values instanceof  ZVector) || !(labels instanceof  ZVector)){
+                    throw new SemanticException("Se esperava un vector o un dato primitivo, funcion pie");
+                }
+
+
+
+                try {
+                    var js = ChickenUtils.writePie(title, values, labels);
+                    ChickenUtils.writeFile(ChickenUtils.writeHtml(""),"H"+ ChickenUtils.grafiteando,"html");
+                    ChickenUtils.writeFile(js, "G"+ChickenUtils.grafiteando,"js");
+                    ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return ZNothing.getInstance();
+
+
+            }
+        };
+    }
+
+    public static ZFunction barGraphic(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+
+                if(argumentos.size()!=5){
+                    throw new SemanticException("se esperaban 5 argumentos en la funcion pie");
+                }
+
+                ZProtoObject h = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                ZProtoObject xLabel = ChickenUtils.obtenerUnPrimitivo(argumentos.get(1));
+                ZProtoObject yLabel = ChickenUtils.obtenerUnPrimitivo(argumentos.get(2));
+
+                ZProtoObject main = ChickenUtils.obtenerUnPrimitivo(argumentos.get(3)); //titulomai
+                ZProtoObject names = ChickenUtils.obtenerUnVector(argumentos.get(4));
+
+
+
+                if (!(names instanceof  ZVector) || !(h instanceof  ZVector)){
+                    throw new SemanticException("Se esperava un vector o un dato primitivo, funcion pie");
+                }
+
+
+
+                try {
+                    var js = ChickenUtils.barGraphic(main,names, h,xLabel, yLabel);
+                    ChickenUtils.writeFile(ChickenUtils.writeHtml(""),"H"+ ChickenUtils.grafiteando,"html");
+                    ChickenUtils.writeFile(js, "G"+ChickenUtils.grafiteando,"js");
+                    ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+                return ZNothing.getInstance();
+            }
+        };
     }
 
 

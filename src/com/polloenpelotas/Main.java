@@ -1,9 +1,13 @@
 package com.polloenpelotas;
 
+import com.polloenpelotas.language.ChickenUtils;
+
 public class Main {
 
     public static void main(String[] args) {
 	// write your code here
+
+        ChickenUtils.grafiteando = 0;
         System.out.println("xD");
 
 

@@ -7,8 +7,12 @@ import com.polloenpelotas.language.types.TransferTypes.ZContinue;
 import com.polloenpelotas.language.types.TransferTypes.ZRetorno;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public final class ChickenUtils {
 
@@ -359,7 +363,7 @@ public final class ChickenUtils {
 
     }
 
-    /***/
+    /**solo de tamaño 1*/
 
     public static ZProtoObject ifOnlyOneDataInVector(List<ZVar> data,String messError) throws SemanticException {
 
@@ -370,6 +374,120 @@ public final class ChickenUtils {
         return  unwrap(data.get(0));
 
     }
+
+    public static ZProtoObject obtenerUnVector(ZProtoObject ob){
+
+        if(isPrimitive(ob)){
+            return new ZVector(new ZVar(ob));
+        }
+
+        return ob;
+
+    }
+
+    public static ZProtoObject obtenerUnPrimitivo(ZProtoObject ob) throws SemanticException {
+        if(ob instanceof ZVector){
+            return getFirstDataUnwrap(((ZVector) ob).getList());
+        }
+        return  ob;
+    }
+
+
+
+    /**graficas*/
+    public static int grafiteando=0;
+
+    public static void openHtml(String name) throws IOException {
+        String ruta = "src/com/polloenpelotas/Graficas/";
+        String cmd2 = "gnome-open " + ruta+name + ".html"; //Comando de apagado en linux
+        Runtime.getRuntime().exec(cmd2);
+        grafiteando++;
+    }
+
+    public static void writeFile(String texto, String name, String extension) throws IOException {
+
+        String ruta = "src/com/polloenpelotas/Graficas/";
+        FileWriter fichero = new FileWriter(ruta+name+"."+extension);
+        PrintWriter pw = new PrintWriter(fichero);
+        pw.println(texto);
+        fichero.close();
+
+    }
+
+    public static String writeHtml(String extra){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("<!DOCTYPE html>" + "<html> " + "\n");
+        buffer.append("<head>   </head> " + "\n");
+        buffer.append("<body>" + "\n");
+        buffer.append(extra + "\n");
+        buffer.append("<div id=" + "'G"+grafiteando+"'> </div> \n");
+        buffer.append("<script src='https://cdn.plot.ly/plotly-latest.min.js'></script> \n");
+        buffer.append("<script src='G"+grafiteando+".js'>" +"</script> \n");
+
+        buffer.append("</body> \n");
+        buffer.append("</html> \n");
+
+        return buffer.toString();
+
+    }
+
+    public static String writePie(ZProtoObject title,ZProtoObject values, ZProtoObject labels){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("var data = [{\n");
+        buffer.append("title: " + title.toChickenString()+","+ "\n");
+        buffer.append("values: " +values.toChickenString() + "," +"\n");
+        buffer.append("labels: " + labels.toChickenString() +"," +"\n");
+        buffer.append("type: 'pie' \n");
+
+        buffer.append("}];  \n \n");
+
+        buffer.append("var layout = { \n");
+        buffer.append("height: 600, \n");
+        buffer.append("width: 600 \n");
+        buffer.append("}; \n \n");
+
+        buffer.append("Plotly.newPlot("+"'G"+grafiteando+"', data, layout);");
+        return buffer.toString();
+
+    }
+
+    public static String barGraphic(ZProtoObject title, ZProtoObject  names, ZProtoObject h, ZProtoObject labelX, ZProtoObject labelY){
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("var data = [{\n");
+
+        buffer.append("x: " +names.toChickenString() + "," +"\n");
+        buffer.append("y: " + h.toChickenString() +"," +"\n");
+        buffer.append("type: 'bar' \n");
+
+        buffer.append("}];  \n \n");
+
+
+        buffer.append("var layout = { \n");
+        buffer.append("height: 600, \n");
+        buffer.append("width: 600, \n");
+        buffer.append("title: "+title.toChickenString() +",\n");
+        buffer.append("xaxis:  {title: "+labelX.toChickenString()+"},\n");
+        buffer.append("yaxis:  {title: "+labelY.toChickenString()+"},\n");
+
+
+        buffer.append("}; \n \n");
+
+
+
+        buffer.append("Plotly.newPlot("+"'G"+grafiteando+"', data, layout);");
+        return buffer.toString();
+
+
+    }
+
+
+
 
 
 

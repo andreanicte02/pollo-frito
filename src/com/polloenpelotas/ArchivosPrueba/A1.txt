@@ -82,4 +82,7 @@ print("modificacion de matrices")
 m[2,]=c(1,2,3,4);
 print(m+m*1)
 
-
+x = c(19, 26, 55)
+labels = c("prueba1","prueba2","prueba3")
+#pie(x,labels,"salida deseada")
+#barplot(c(20, 14, 23),"etiquetax", c("etiquetay"), "titulo",c("gato","baca", "idiota"))
