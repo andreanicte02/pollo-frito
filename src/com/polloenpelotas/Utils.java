@@ -329,6 +329,7 @@ class FunNativas {
                     ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new SemanticException(e.getMessage());
                 }
 
                 return ZNothing.getInstance();
@@ -372,6 +373,7 @@ class FunNativas {
                     ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new SemanticException(e.getMessage());
                 }
 
 
@@ -398,6 +400,29 @@ class FunNativas {
 
                 if(ultimo instanceof ZVector && ChickenUtils.isYLim((ZVector) ultimo)){
 
+                    primero = ChickenUtils.obtenerUnVector(primero);
+                    segundo = ChickenUtils.obtenerUnPrimitivo(segundo);
+                    tercero = ChickenUtils.obtenerUnPrimitivo(tercero);
+                    cuarto = ChickenUtils.obtenerUnPrimitivo(cuarto);
+
+
+
+                    var js = ChickenUtils.lineGraphic(primero, ZNothing.getInstance() ,segundo, tercero, cuarto);
+                    var extra = "<div> YLim: "+ultimo.toChickenString()+" </div> \n";
+
+
+                    try {
+
+                        ChickenUtils.writeFile(ChickenUtils.writeHtml(extra),"H"+ ChickenUtils.grafiteando,"html");
+                        ChickenUtils.writeFile(js, "G"+ChickenUtils.grafiteando,"js");
+                        ChickenUtils.openHtml("H"+ChickenUtils.grafiteando);
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        throw new SemanticException(e.getMessage());
+                    }
+
+
 
                     return ZNothing.getInstance();
                 }
@@ -420,6 +445,7 @@ class FunNativas {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new SemanticException(e.getMessage());
                 }
 
 
@@ -458,6 +484,7 @@ class FunNativas {
 
                 } catch (IOException e) {
                     e.printStackTrace();
+                    throw new SemanticException(e.getMessage());
                 }
 
 

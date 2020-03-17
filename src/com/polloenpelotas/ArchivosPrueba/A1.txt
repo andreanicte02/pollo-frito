@@ -89,7 +89,8 @@ labels = c("prueba1","prueba2","prueba3")
 
 print(m)
 m[,3]=c(1.0)
-#plot(m[2,]s,"l",c("etiquetax"),c("etiquetay"), c("titulo","as"))
+#plot(m[2,],"l",c("etiquetax"),c("etiquetay"), c("titulo","as"))
 #hist(m[,3],c("ejey"), c("titulo")[1][1]);
 #print(m[,3])
 #print(m)
+#plot(m, "ejex", "ejey","titulo",c(1.0,1))

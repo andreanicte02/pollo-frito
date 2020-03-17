@@ -1,15 +1,10 @@
-var data = [{
-x: ["gato", "baca", "idiota"],
-y: [20, 14, 23],
-type: 'bar' 
-}];  
- 
-var layout = { 
-height: 600, 
-width: 600, 
-title: "titulo",
-xaxis:  {title: "etiquetax"},
-yaxis:  {title: "etiquetay"},
+var trace1 = { 
+x: [1.0, 1.0, 1.0, 1.0, 1.0],
+type: 'histogram', 
 }; 
- 
+var layout = { 
+title: "titulo",
+xaxis:  {title: "ejey"},
+}; 
+var data = [trace1]; 
 Plotly.newPlot('G3', data, layout);
