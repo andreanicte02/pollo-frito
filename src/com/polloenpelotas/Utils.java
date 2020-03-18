@@ -381,8 +381,22 @@ class FunNativas {
                             ChickenUtils.burbuja1(((ZVector) aux).getList()));
                 }
 
+                if(argumentos.size() ==2){
+                    ZProtoObject aux = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                    ZProtoObject aux2 = ChickenUtils.obtenerUnPrimitivo(argumentos.get(1));
 
-                return ZNothing.getInstance();
+                    if(!(aux instanceof ZVector)){
+                        throw new SemanticException("Se esperaba, un vector o primitivo en la funcion mode");
+                    }
+
+                    return ChickenUtils.moda(
+                            ChickenUtils.burbuja1(((ZVector) aux).getList()), aux2
+                    );
+
+                }
+
+
+                throw new SemanticException("Se esperaba, uno o dos argumentos en la funcion mode");
             }
         };
     }

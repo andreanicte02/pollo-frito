@@ -645,6 +645,54 @@ public final class ChickenUtils {
 
     }
 
+    public static ZProtoObject moda(List<ZVar> array, ZProtoObject trim) throws SemanticException {
+
+        if(array.size()==0){
+            return ZNothing.getInstance();
+        }
+
+        ZProtoObject mode = unwrap(array.get(0));
+        int maxCount = 0;
+
+        for(int i=0; i<array.size(); i++){
+
+            ZProtoObject value = unwrap(array.get(i));
+            ZProtoObject aux = value.executeOperation("menor","<",trim);
+
+            if(aux instanceof ZBoolean && ((ZBoolean) aux).getValue()){
+                continue;
+            }
+
+            int count = 0;
+
+
+
+            for(int j = 0; j<array.size(); j++){
+
+                ZProtoObject value2= unwrap(array.get(j));
+                ZProtoObject cond = value2.executeOperation("equalTo","==",value);
+
+                if(cond instanceof ZBoolean && ((ZBoolean) cond).getValue()){
+                    count++;
+                }
+
+                if(count> maxCount){
+                    mode = value;
+                    maxCount = count;
+                }
+
+            }
+
+        }
+
+        if(maxCount>1){
+            return mode;
+        }
+
+        return new ZInteger(0);
+
+    }
+
 
 
 
