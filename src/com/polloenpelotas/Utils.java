@@ -96,6 +96,8 @@ Utils {
         aux.functions.put("plot", fn.plotGraphic());
         aux.functions.put("hist", fn.histGraphic());
         aux.functions.put("typeof", fn.zTypeOf());
+        aux.functions.put("ncol", fn.zCol());
+        aux.functions.put("nrow", fn.zRow());
 
     }
 
@@ -315,6 +317,45 @@ class FunNativas {
 
 
                 return aux.executeOperation("typeof","typeof");
+
+            }
+        };
+    }
+
+    public ZFunction zCol(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+
+                if(argumentos.size()!=1){
+                    throw new SemanticException("Se esperaba 1 argumento en la funcion nCol");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+
+
+                return aux.executeOperation("nCol","nCol");
+
+            }
+        };
+    }
+
+
+    public ZFunction zRow(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+
+                if(argumentos.size()!=1){
+                    throw new SemanticException("Se esperaba 1 argumento en la funcion nRow");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+
+
+                return aux.executeOperation("nRow","nRow");
 
             }
         };

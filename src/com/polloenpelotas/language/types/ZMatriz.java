@@ -598,6 +598,18 @@ public class ZMatriz extends ZProtoObject {
 
     }
 
+    public ZProtoObject nCol(){
+
+        return new ZInteger(col);
+
+    }
+
+    public ZProtoObject nRow(){
+
+        return new ZInteger(row);
+
+    }
+
 
     /***/
 
@@ -614,7 +626,7 @@ public class ZMatriz extends ZProtoObject {
             cad+="\n";
         }
 
-        return"["+cad.substring(0,cad.length()-1)+"]";
+        return"["+cad.substring(0,cad.length()-1)+"]\n";
 
     }
 
