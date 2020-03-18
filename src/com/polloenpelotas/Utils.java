@@ -95,6 +95,8 @@ Utils {
         aux.functions.put("barplot", fn.barGraphic());
         aux.functions.put("plot", fn.plotGraphic());
         aux.functions.put("hist", fn.histGraphic());
+        aux.functions.put("typeof", fn.zTypeOf());
+
     }
 
 
@@ -171,7 +173,7 @@ class FunNativas {
 
         return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
             @Override
-            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
 
                 if(argumentos.size() == 0){
                     throw new SemanticException("Se esperaba un argumento en la funcion zStringLength");
@@ -298,6 +300,26 @@ class FunNativas {
         };
 
     }
+
+    public ZFunction zTypeOf(){
+
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+
+                if(argumentos.size()!=1){
+                    throw new SemanticException("Se esperaba 1 argumento en la funcion typeof");
+                }
+
+                ZProtoObject aux = argumentos.get(0);
+
+
+                return aux.executeOperation("typeof","typeof");
+
+            }
+        };
+    }
+
 
     public ZFunction pieGraphic(){
 

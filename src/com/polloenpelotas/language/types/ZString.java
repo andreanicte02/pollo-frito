@@ -257,9 +257,13 @@ public class ZString extends ZProtoObject {
 
     }
 
+    /**typeof*/
 
+    public ZString typeof(){
 
+        return new ZString("string");
 
+    }
 
 
     @Override

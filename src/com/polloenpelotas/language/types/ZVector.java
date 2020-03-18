@@ -741,18 +741,20 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    /**typeof*/
 
-    public String mapGraphicLine(){
+    public ZProtoObject typeof() throws SemanticException {
 
-        String out ="[";
-        for (int x=0 , cont = 1; x<list.size(); x++, cont++ ){
-            out+=cont+",";
+        if(list.size() ==0){
+
+            return new ZString("null");
+
         }
 
-        out = out.substring(0,out.length()-1);
-        out +="]";
+        ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(list);
 
-        return out;
+        return aux.executeOperation("typeof","typeof");
+
     }
 
 
@@ -765,5 +767,18 @@ public class ZVector extends ZProtoObject {
 //        var a = this.list.stream().map(zProtoObject -> zProtoObject.toChickenString()).collect(Collectors.toList());
 
         return '[' + String.join(", ", strings) + ']';
+    }
+
+    public String mapGraphicLine(){
+
+        String out ="[";
+        for (int x=0 , cont = 1; x<list.size(); x++, cont++ ){
+            out+=cont+",";
+        }
+
+        out = out.substring(0,out.length()-1);
+        out +="]";
+
+        return out;
     }
 }

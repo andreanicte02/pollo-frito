@@ -370,6 +370,15 @@ public class ZInteger extends ZProtoObject {
 
 
 
+    /**typeof*/
+
+    public ZString typeof(){
+
+        return new ZString("integer");
+
+    }
+
+
 
 
 

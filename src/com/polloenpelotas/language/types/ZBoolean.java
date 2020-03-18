@@ -172,6 +172,14 @@ public class ZBoolean extends ZProtoObject {
         return this;
     }
 
+    /**typeof*/
+
+    public ZString typeof(){
+
+        return new ZString("boolean");
+
+    }
+
 
     @Override
     public String toChickenString() {

@@ -578,11 +578,28 @@ public class ZMatriz extends ZProtoObject {
         return cad;
     }
 
+    /***length*/
     public ZInteger length (){
 
         return new ZInteger(col*row);
 
     }
+
+
+    public ZProtoObject typeof() throws SemanticException {
+
+        if(col ==0 || row ==0){
+            return new ZString("null");
+        }
+
+        ZProtoObject aux = ChickenUtils.unwrap(mat[0][0]);
+
+        return aux.executeOperation("typeof","typeof");
+
+    }
+
+
+    /***/
 
     @Override
     public String toChickenString() {
@@ -591,13 +608,13 @@ public class ZMatriz extends ZProtoObject {
 
             for (int j=0; j<col; j++){
 
-                cad+=ChickenUtils.unwrap(mat[i][j]).toChickenString() + " ";
+                cad+=" "+ChickenUtils.unwrap(mat[i][j]).toChickenString() + " ";
 
             }
             cad+="\n";
         }
 
-        return "------------------\nMatrix:\n"+ cad+"------------------";
+        return"["+cad.substring(0,cad.length()-1)+"]";
 
     }
 

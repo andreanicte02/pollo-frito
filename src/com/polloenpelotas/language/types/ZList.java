@@ -103,18 +103,26 @@ public class ZList extends ZProtoObject {
 
     }
 
-    public ZInteger length (){
-
-        return new ZInteger(list.size());
-
-    }
-
 
     public ZProtoObject access2Left(ZVector index) throws SemanticException {
 
        ZProtoObject aux = ChickenUtils.getFirstDataUnwrap(index.getList());
 
        return this.executeOperation("access2Left", " exp[[exp]] left ", aux);
+
+    }
+
+    /**length**/
+    public ZInteger length (){
+
+        return new ZInteger(list.size());
+
+    }
+
+    /**typeof*/
+    public ZString typeof(){
+
+        return new ZString("list");
 
     }
 

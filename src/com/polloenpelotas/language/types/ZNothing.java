@@ -212,6 +212,15 @@ public class ZNothing extends ZProtoObject {
 
     }
 
+    /**typeof*/
+
+    public ZString typeof(){
+
+        return new ZString("null");
+
+    }
+
+
 
 
     //TODO agregar el igual igual
