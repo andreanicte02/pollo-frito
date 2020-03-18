@@ -93,6 +93,10 @@ m[,3]=c(1.0)
 #hist(m[,3],c("ejey"), c("titulo")[1][1]);
 #print(m[,3])
 
-#plot(m, "ejex", "ejey","titulo",c(1.0,1))
 print(m)
 print( typeof( m+c("1") ))
+
+primero = 1;
+print(primero)
+
+plot(primero, "ejex", "ejey","titulo",c(1.0,1))

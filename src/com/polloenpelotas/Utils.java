@@ -463,14 +463,14 @@ class FunNativas {
 
                 if(ultimo instanceof ZVector && ChickenUtils.isYLim((ZVector) ultimo)){
 
-                    primero = ChickenUtils.obtenerUnVector(primero);
-                    segundo = ChickenUtils.obtenerUnPrimitivo(segundo);
-                    tercero = ChickenUtils.obtenerUnPrimitivo(tercero);
-                    cuarto = ChickenUtils.obtenerUnPrimitivo(cuarto);
+                    ZProtoObject primero1 = ChickenUtils.obtenerUnVector(primero);
+                    ZProtoObject segundo1 = ChickenUtils.obtenerUnPrimitivo(segundo);
+                    ZProtoObject tercero1 = ChickenUtils.obtenerUnPrimitivo(tercero);
+                    ZProtoObject cuarto1 = ChickenUtils.obtenerUnPrimitivo(cuarto);
 
 
 
-                    var js = ChickenUtils.lineGraphic(primero, ZNothing.getInstance() ,segundo, tercero, cuarto);
+                    var js = ChickenUtils.lineGraphic(primero1, ZNothing.getInstance() ,segundo1, tercero1, cuarto1);
                     var extra = "<div> YLim: "+ultimo.toChickenString()+" </div> \n";
 
 
@@ -492,13 +492,13 @@ class FunNativas {
 
 
 
-                primero = ChickenUtils.obtenerUnVector(primero);
-                segundo = ChickenUtils.obtenerUnPrimitivo(segundo);
-                tercero = ChickenUtils.obtenerUnPrimitivo(tercero);
-                cuarto = ChickenUtils.obtenerUnPrimitivo(cuarto);
-                ultimo = ChickenUtils.obtenerUnPrimitivo(ultimo);
+                ZProtoObject primero1 = ChickenUtils.obtenerUnVector(primero);
+                ZProtoObject segundo1 = ChickenUtils.obtenerUnPrimitivo(segundo);
+                ZProtoObject tercero1 = ChickenUtils.obtenerUnPrimitivo(tercero);
+                ZProtoObject cuarto1 = ChickenUtils.obtenerUnPrimitivo(cuarto);
+                ZProtoObject ultimo1 = ChickenUtils.obtenerUnPrimitivo(ultimo);
 
-                var js = ChickenUtils.lineGraphic(primero, segundo, tercero, cuarto, ultimo);
+                var js = ChickenUtils.lineGraphic(primero1, segundo1, tercero1, cuarto1, ultimo1);
 
                 try {
 
