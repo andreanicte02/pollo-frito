@@ -98,7 +98,7 @@ Utils {
         aux.functions.put("typeof", fn.zTypeOf());
         aux.functions.put("ncol", fn.zCol());
         aux.functions.put("nrow", fn.zRow());
-
+        aux.functions.put("mode", fn.zMode());
     }
 
 
@@ -357,6 +357,32 @@ class FunNativas {
 
                 return aux.executeOperation("nRow","nRow");
 
+            }
+        };
+    }
+
+    public ZFunction zMode(){
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
+
+                if(argumentos.size() ==0 ){
+                    throw new SemanticException("Se esperaba, uno o dos argumentos en la funcion mode");
+                }
+
+                if(argumentos.size() ==1){
+                    ZProtoObject aux = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                    if(!(aux instanceof ZVector)){
+                        throw new SemanticException("Se esperaba, un vector o primitivo en la funcion mode");
+                    }
+
+
+                    return ChickenUtils.moda(
+                            ChickenUtils.burbuja1(((ZVector) aux).getList()));
+                }
+
+
+                return ZNothing.getInstance();
             }
         };
     }

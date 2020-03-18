@@ -101,3 +101,23 @@ print(primero)
 
 #plot(primero, "ejex", "ejey","titulo",c(1.0,1))
 print(round(c(5)))
+vec = c(1,2,3,1,2,3,3,3);
+dato2= mode(vec);
+
+dato2 = 100;
+
+print(vec);
+
+probando = 12;
+
+
+fun = function(a){
+    print(a)
+    a="hola mundo";
+    print(a);
+}
+
+
+fun(probando);
+
+print(probando);
