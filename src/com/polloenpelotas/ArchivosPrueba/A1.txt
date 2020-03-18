@@ -99,4 +99,5 @@ print( typeof( m+c("1") ))
 primero = 1;
 print(primero)
 
-plot(primero, "ejex", "ejey","titulo",c(1.0,1))
+#plot(primero, "ejex", "ejey","titulo",c(1.0,1))
+print(round(c(5)))

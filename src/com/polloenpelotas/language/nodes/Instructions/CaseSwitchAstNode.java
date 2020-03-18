@@ -35,7 +35,11 @@ public class CaseSwitchAstNode extends ProAstNode {
         ZProtoObject valSwi = ChickenUtils.unwrap(this.valSwitch);
         ZProtoObject valCase = ChickenUtils.unwrap(this.val.execute(ambit));
 
-        ZProtoObject result=valSwi.executeOperation("equalTo","==",valCase);
+        //se obtienen los primeros de un vector o se deja solo el primitivo
+        ZProtoObject aux1 = ChickenUtils.obtenerUnPrimitivo(valSwi);
+        ZProtoObject aux2 = ChickenUtils.obtenerUnPrimitivo(valCase);
+
+        ZProtoObject result=aux1.executeOperation("equalTo","==",aux2);
 
         ZProtoObject local = new ZAmbit(ambit);
 
