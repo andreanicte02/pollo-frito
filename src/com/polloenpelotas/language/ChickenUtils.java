@@ -789,13 +789,57 @@ public final class ChickenUtils {
 
     }
 
+    public static String reporteTablaSimbolos(ZProtoObject ambit){
+
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("<!DOCTYPE html>" + "<html> " + "\n");
+        buffer.append("<head>   </head> " + "\n");
+        buffer.append("<body>" + "\n");
+
+        buffer.append("<table border=\"2px\"> \n");
+
+        buffer.append("<tr>\n");
+        buffer.append("<td>ID</td>\n");
+        buffer.append("<td>Tipo</td>\n");
+        buffer.append("<td>Valor</td>\n");
+        buffer.append("<td>Rol</td>\n");
+        buffer.append("</tr>\n");
+
+        ambit.functions.forEach((k,v)->{
+            buffer.append("<tr>\n");
+            buffer.append("<td>"  +k + "</td>\n");
+            buffer.append("<td>" +"</td>\n");
+            buffer.append("<td>" +"</td>\n");
+            buffer.append("<td> function </td>\n");
+            buffer.append("</tr>\n");
+        });
+
+        ambit.members.forEach((k,v)->{
+
+            buffer.append("<tr>\n");
+            buffer.append("<td>"  +k + "</td>\n");
+            buffer.append("<td>" + unwrap(v).toChickenString()+"</td>\n");
+            try {
+                buffer.append("<td>" + unwrap(v).executeOperation("typeof","typeof").toChickenString()+"</td>\n");
+            } catch (SemanticException e) {
+                e.printStackTrace();
+            }
+            buffer.append("<td> variable </td>\n");
+            buffer.append("</tr>\n");
+        });
 
 
 
+        buffer.append("</table>\n");
+        buffer.append("</body> \n");
+        buffer.append("</html> \n");
+
+        return buffer.toString();
 
 
 
-
-
+    }
 
 }

@@ -736,7 +736,7 @@ public class ZVector extends ZProtoObject {
 
         if(list.size() ==0){
 
-            return new ZString("null");
+            return  ZNothing.getInstance();
 
         }
 

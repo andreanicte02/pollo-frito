@@ -589,7 +589,7 @@ public class ZMatriz extends ZProtoObject {
     public ZProtoObject typeof() throws SemanticException {
 
         if(col ==0 || row ==0){
-            return new ZString("null");
+            return ZNothing.getInstance();
         }
 
         ZProtoObject aux = ChickenUtils.unwrap(mat[0][0]);
