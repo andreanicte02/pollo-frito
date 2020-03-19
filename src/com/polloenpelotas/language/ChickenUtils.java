@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -596,8 +597,8 @@ public final class ChickenUtils {
 
                 if(op instanceof ZBoolean && ((ZBoolean) op).getValue()){
                     ZVar temp = l.get(i+1);
-                    a.set(i+1, a.get(i));
-                    a.set(i,temp);
+                    l.set(i+1, l.get(i));
+                    l.set(i,temp);
                 }
 
             }
@@ -729,10 +730,53 @@ public final class ChickenUtils {
 
     }
 
-    public static ZProtoObject mean(){
-        return null;
+    public static ZProtoObject median(List<ZVar> array) throws SemanticException {
+
+        if(array.size()==0){
+            return ZNothing.getInstance();
+        }
+
+        if(array.size() %2 ==0){
+
+            ZProtoObject aux = unwrap(array.get(array.size()/2));
+            ZProtoObject aux2 = unwrap(array.get((array.size()/2 )-1));
+            ZProtoObject sumMedios= aux.executeOperation("add","median",aux2);
+            return sumMedios.executeOperation("div","median", new ZNumeric(2.0));
+
+        }
+
+        return  unwrap(array.get(array.size()/2));
+
     }
 
+
+    public static ZProtoObject median(List<ZVar> array0, ZProtoObject trim) throws SemanticException {
+
+        List<ZVar> array = new ArrayList<>();
+
+        for (ZVar node:
+             array0) {
+
+            ZProtoObject cond= unwrap(node).executeOperation("menor","mean",trim);
+            if(cond instanceof ZBoolean && ((ZBoolean) cond).getValue()){
+                continue;
+            }
+            array.add(node);
+        }
+
+
+        if(array.size() %2 ==0){
+
+            ZProtoObject aux = unwrap(array.get(array.size()/2));
+            ZProtoObject aux2 = unwrap(array.get(array.size()/2-1));
+            ZProtoObject sumMedios= aux.executeOperation("add","median",aux2);
+            return sumMedios.executeOperation("div","median", new ZNumeric(2.0));
+
+        }
+
+        return  unwrap(array.get(array.size()/2));
+
+    }
 
 
 

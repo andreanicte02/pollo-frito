@@ -100,6 +100,7 @@ Utils {
         aux.functions.put("nrow", fn.zRow());
         aux.functions.put("mode", fn.zMode());
         aux.functions.put("mean", fn.zMean());
+        aux.functions.put("median", fn.zMedian());
     }
 
 
@@ -405,7 +406,7 @@ class FunNativas {
     public ZFunction zMean(){
         return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
             @Override
-            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
 
                 if (argumentos.size() == 1){
                     ZProtoObject aux = ChickenUtils.obtenerUnVector(argumentos.get(0));
@@ -426,6 +427,40 @@ class FunNativas {
                 }
 
                 throw new SemanticException("Se esperaba, uno o dos argumentos en la funcion mode");
+            }
+        };
+    }
+
+    public ZFunction zMedian(){
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+
+
+                if (argumentos.size() == 1){
+                    ZProtoObject aux = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                    if(!(aux instanceof ZVector)){
+                        throw new SemanticException("Se esperaba, un vector o primitivo en la funcion mode");
+                    }
+                    List<ZVar> ordeanda = ChickenUtils.burbuja1(((ZVector) aux).getList());
+                    return ChickenUtils.median(ordeanda);
+                }
+
+                if(argumentos.size()==2){
+                    ZProtoObject aux = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                    ZProtoObject aux2 = ChickenUtils.obtenerUnPrimitivo(argumentos.get(1));
+
+                    if(!(aux instanceof ZVector)){
+                        throw new SemanticException("Se esperaba, un vector o primitivo en la funcion mode");
+                    }
+
+                    return ChickenUtils.median(
+                            ChickenUtils.burbuja1(((ZVector) aux).getList()), aux2);
+                }
+
+                throw new SemanticException("Se esperaba, uno o dos argumentos en la funcion mode");
+
             }
         };
     }

@@ -108,6 +108,6 @@ print(length(Vector))
 print(12+13+15+16+24+15+17+19+17+15)
 print(163/10)
 print(mean(Vector,c(14)))
-
+print(Median(Vector));
 
 
