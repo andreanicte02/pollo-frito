@@ -99,6 +99,7 @@ Utils {
         aux.functions.put("ncol", fn.zCol());
         aux.functions.put("nrow", fn.zRow());
         aux.functions.put("mode", fn.zMode());
+        aux.functions.put("mean", fn.zMean());
     }
 
 
@@ -291,9 +292,14 @@ class FunNativas {
                     throw new SemanticException("Se esperaban 3 argumentos en la funzion Matrix");
                 }
 
-                ZInteger auxF = (ZInteger) argumentos.get(1).executeOperation("getInt","buscando int first");
-                ZInteger auxC = (ZInteger) argumentos.get(2).executeOperation("getInt","buscando int first");
-                ZMatriz mat = new ZMatriz(auxF, auxC);
+                ZProtoObject auxF =  ChickenUtils.obtenerUnPrimitivo(argumentos.get(1));
+                ZProtoObject auxC = ChickenUtils.obtenerUnPrimitivo(argumentos.get(2));
+
+                if(!(auxF instanceof ZInteger) || !(auxC instanceof ZInteger)){
+                    throw new SemanticException("Se esperaba un integer o un vector de integer para las filas || columnas");
+                }
+
+                ZMatriz mat = new ZMatriz((ZInteger) auxF,(ZInteger) auxC);
                 mat.setData(argumentos.get(0));
 
                 return mat;
@@ -366,9 +372,6 @@ class FunNativas {
             @Override
             public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException {
 
-                if(argumentos.size() ==0 ){
-                    throw new SemanticException("Se esperaba, uno o dos argumentos en la funcion mode");
-                }
 
                 if(argumentos.size() ==1){
                     ZProtoObject aux = ChickenUtils.obtenerUnVector(argumentos.get(0));
@@ -392,9 +395,35 @@ class FunNativas {
                     return ChickenUtils.moda(
                             ChickenUtils.burbuja1(((ZVector) aux).getList()), aux2
                     );
-
                 }
 
+                throw new SemanticException("Se esperaba, uno o dos argumentos en la funcion mode");
+            }
+        };
+    }
+
+    public ZFunction zMean(){
+        return new ZFunction(new ArrayList<>(),new ArrayList<>(), new ZAmbit(null)){
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+
+                if (argumentos.size() == 1){
+                    ZProtoObject aux = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                    if(!(aux instanceof ZVector)){
+                        throw new SemanticException("Se esperaba, un vector o primitivo en la funcion mode");
+                    }
+                    return ChickenUtils.mean(((ZVector) aux).getList());
+                }
+
+                if(argumentos.size()==2){
+                    ZProtoObject aux = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                    ZProtoObject aux2 = ChickenUtils.obtenerUnPrimitivo(argumentos.get(1));
+
+                    if(!(aux instanceof ZVector)){
+                        throw new SemanticException("Se esperaba, un vector o primitivo en la funcion mode");
+                    }
+                    return ChickenUtils.mean(((ZVector) aux).getList(), aux2);
+                }
 
                 throw new SemanticException("Se esperaba, uno o dos argumentos en la funcion mode");
             }

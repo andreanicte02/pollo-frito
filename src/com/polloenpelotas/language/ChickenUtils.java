@@ -693,6 +693,46 @@ public final class ChickenUtils {
 
     }
 
+    //media
+    public static ZProtoObject mean(List<ZVar> array) throws SemanticException {
+
+        ZProtoObject aux = new ZInteger(0);
+
+        for (ZVar node:
+             array) {
+            aux = aux.executeOperation("add","+",unwrap(node));
+
+        }
+
+        return aux.executeOperation("div","/", new ZNumeric(array.size()));
+
+    }
+
+    public static ZProtoObject mean(List<ZVar> array,ZProtoObject trim) throws SemanticException {
+
+        ZProtoObject aux = new ZInteger(0);
+        int cont = 0;
+        for (ZVar node:
+                array) {
+
+            ZProtoObject cond= unwrap(node).executeOperation("menor","mean",trim);
+            if(cond instanceof ZBoolean && ((ZBoolean) cond).getValue()){
+                continue;
+            }
+
+            aux = aux.executeOperation("add","mean",unwrap(node));
+            cont++;
+        }
+
+        return aux.executeOperation("div","mean", new ZNumeric(cont));
+
+
+    }
+
+    public static ZProtoObject mean(){
+        return null;
+    }
+
 
 
 

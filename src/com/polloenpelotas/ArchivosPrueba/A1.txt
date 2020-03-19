@@ -104,7 +104,10 @@ print(round(c(5)))
 vec = c(1,2,3,1,2,3,3,3);
 
 Vector = c(12,13,15,16,24,15,17,19,17,15)
-print(mode(Vector))
-print(mode(Vector,16))
+print(length(Vector))
+print(12+13+15+16+24+15+17+19+17+15)
+print(163/10)
+print(mean(Vector,c(14)))
+
 
 
