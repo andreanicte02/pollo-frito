@@ -417,7 +417,7 @@ public final class ChickenUtils {
     public static int grafiteando=0;
 
     public static void openHtml(String name) throws IOException {
-        String ruta = "src/com/polloenpelotas/Graficas/";
+        String ruta = "Graficas/";
         String cmd2 = "gnome-open " + ruta+name + ".html"; //Comando de apagado en linux
         Runtime.getRuntime().exec(cmd2);
         grafiteando++;
@@ -425,7 +425,7 @@ public final class ChickenUtils {
 
     public static void writeFile(String texto, String name, String extension) throws IOException {
 
-        String ruta = "src/com/polloenpelotas/Graficas/";
+        String ruta = "Graficas/";
         FileWriter fichero = new FileWriter(ruta+name+"."+extension);
         PrintWriter pw = new PrintWriter(fichero);
         pw.println(texto);
