@@ -1,0 +1,49 @@
+
+#Archivo de Prueba
+# Declarando variables
+Vec1 = 25;
+Vec2 = c("X", "Y");
+Var2 = (Vec1 * 5) + 15;
+Var3 = Var2/Vec1;
+.Nombre = "Fin del Programa";
+
+
+exponencial = function(n)  {
+
+ result = n*n;
+ return result;
+}
+
+Fn_imprime_cuota = (tasa=3.5, meses=12, monto) => {
+	Resultado = (monto*tasa/100)/meses;
+	PRINT(Resultado);
+}
+
+Fn_retorna_cuota = (tasa=3.5, meses=12, monto) =>{
+	return (monto*tasa/100)/meses;
+}
+
+
+if(Vec1>Var3){
+	print(.Nombre);
+}else{
+	print("Inicio del Programa");
+}
+
+
+print(exponencial(2));
+Fn_imprime_cuota(default, default,5000);
+
+data = c("Luis", "Pedro", "Salazar",trunk(5000.56), TRUE);
+data = c(data, list("Maria", "Cristina", "Lopez", 5000, FALSE));
+data = c(data, list("Julio", "Roberto", toLowerCase("RODRIGUEZ"), 4000, FALSE));
+
+if(length(data)>0){
+	print(data);
+} else {
+	print("No hay datos que mostrar");
+}
+
+Cuota = Fn_retorna_cuota(round(4.2),6,trunk(4500.56));
+print(Cuota);
+
