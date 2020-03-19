@@ -11,11 +11,11 @@ public class Main {
         System.out.println("xD");
 
 
-        System.out.println("----------------------------------------------cup");
-        Utils.probarCup("src/com/polloenpelotas/ArchivosPrueba/A6.txt");
+        //System.out.println("----------------------------------------------cup");
+        //Utils.probarCup("src/com/polloenpelotas/ArchivosPrueba/A6.txt");
 
-       // System.out.println("-----------------------------------------------jcc");
-        //Utils.pruebaJCC("src/com/polloenpelotas/ArchivosPrueba/A6.txt");
+       System.out.println("-----------------------------------------------jcc");
+       Utils.pruebaJCC("src/com/polloenpelotas/ArchivosPrueba/A6.txt");
 
     }
 

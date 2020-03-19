@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -51,6 +52,16 @@ public class DeclararFuncionAstNode extends ProAstNode {
         }
 
         return new ZFunction(lParametros, instructions, ambit);
+
+    }
+
+    @Override
+    public Node createNode() {
+        Node result = new Node("Declarar Funcion");
+        result.add(ChickenUtils.nodeInstructions(parametros,"parametros"));
+        result.add(ChickenUtils.nodeInstructions(instructions,"Instructions"));
+
+        return result;
 
     }
 }

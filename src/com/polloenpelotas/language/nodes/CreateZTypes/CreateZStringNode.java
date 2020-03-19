@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.CreateZTypes;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
@@ -20,5 +21,10 @@ public class CreateZStringNode extends ProAstNode {
     @Override
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
         return new ZString(this.value);
+    }
+
+    @Override
+    public Node createNode() {
+        return new Node("");
     }
 }

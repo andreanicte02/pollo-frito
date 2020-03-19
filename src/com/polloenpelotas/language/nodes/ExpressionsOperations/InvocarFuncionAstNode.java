@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.ExpressionsOperations;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -29,5 +30,17 @@ public class InvocarFuncionAstNode extends ProAstNode {
         List<ZProtoObject> unwrapArguments = ChickenUtils.unwrapListExp(argumentos,ambit);
         ZFunction function = ChickenUtils.getFuncion(id,ambit);
         return function.ejecutarFuncion(unwrapArguments);
+    }
+
+    @Override
+    public Node createNode() {
+
+        Node result = new Node("Invocar Funcion");
+        result.add(new Node(id));
+        result.add(new Node("("));
+        result.add(ChickenUtils.nodeInstructions(argumentos,"Argumentos"));
+        result.add(new Node(")"));
+        return result;
+
     }
 }

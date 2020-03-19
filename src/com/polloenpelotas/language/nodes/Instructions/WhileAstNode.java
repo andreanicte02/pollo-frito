@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -48,5 +49,14 @@ public class WhileAstNode extends ProAstNode {
 
         }
         return ZNothing.getInstance();
+    }
+
+    @Override
+    public Node createNode() {
+        Node result = new Node("while");
+        result.add(new Node("while"));
+        result.add(cond.createNode());
+        result.add(ChickenUtils.nodeInstructions(instructions,"Instructions"));
+        return result;
     }
 }

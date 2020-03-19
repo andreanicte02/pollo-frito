@@ -5,6 +5,8 @@ import com.polloenpelotas.AnalizadorCup.Sintactico;
 import com.polloenpelotas.AnalizadorJCC.Gramatica;
 import com.polloenpelotas.AnalizadorJCC.ParseException;
 import com.polloenpelotas.AnalizadorJCC.TokenMgrError;
+import com.polloenpelotas.Extras.AstGraphic;
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
@@ -69,6 +71,9 @@ Utils {
                 intruccion.execute(aux);
             }
 
+            //Node raiz = ChickenUtils.nodeInstructions(ins,"inicio");
+            //AstGraphic graphic = new AstGraphic();
+            //graphic.armar_Cuerpo_dot(raiz);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();

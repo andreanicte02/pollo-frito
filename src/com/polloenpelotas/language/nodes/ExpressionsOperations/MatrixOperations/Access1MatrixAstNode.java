@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.ExpressionsOperations.MatrixOperations;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -32,5 +33,23 @@ public class Access1MatrixAstNode extends ProAstNode {
 
         return m1.executeOperation("access1","Matrix[exp,exp]",i1,i2);
 
+    }
+
+    @Override
+    public Node createNode() {
+
+        Node result = new Node("MatrixAcces");
+        Node aux1 = mat.createNode();
+        Node aux2 = index1.createNode();
+        Node aux3 = index2.createNode();
+
+        result.add(aux1);
+        result.add(new Node("["));
+        result.add(aux2);
+        result.add(new Node(","));
+        result.add(aux3);
+        result.add(new Node("]"));
+
+        return result;
     }
 }

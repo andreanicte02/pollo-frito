@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.*;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
@@ -80,6 +81,17 @@ public class AssignAstNode extends ProAstNode {
      }
 
 
+    @Override
+    public Node createNode() {
 
+        Node result =new Node("assign");
+        Node aux1 = e.createNode();
+        Node aux2 = e.createNode();
 
+        result.add(aux1);
+        result.add(new Node("="));
+        result.add(aux2);
+
+        return result;
+    }
 }

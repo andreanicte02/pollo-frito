@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -34,4 +35,12 @@ public class BinaryOperationNode extends ProAstNode {
         return r1.executeOperation(this.operationName, this.operationSymbol, r2);
     }
 
+    @Override
+    public Node createNode() {
+        Node result = new Node("exp");
+        result.add(e1.createNode());
+        result.add(new Node(operationSymbol));
+        result.add(e2.createNode());
+        return result;
+    }
 }

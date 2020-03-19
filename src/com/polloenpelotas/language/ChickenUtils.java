@@ -1,5 +1,6 @@
 package com.polloenpelotas.language;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.*;
 import com.polloenpelotas.language.types.TransferTypes.ZBreak;
@@ -775,6 +776,16 @@ public final class ChickenUtils {
         }
 
         return  unwrap(array.get(array.size()/2));
+
+    }
+
+    public static Node nodeInstructions(List<AstNode> instructions, String name){
+        Node result = new Node(name);
+        for (AstNode data:
+             instructions) {
+            result.add(data.createNode());
+        }
+        return result;
 
     }
 

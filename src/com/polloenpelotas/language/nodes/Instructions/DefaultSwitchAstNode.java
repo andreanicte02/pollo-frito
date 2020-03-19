@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -36,5 +37,15 @@ public class DefaultSwitchAstNode extends ProAstNode {
 
         return ChickenUtils.ejecutarSentencias(instructions, local);
 
+    }
+
+    @Override
+    public Node createNode() {
+
+        Node result = new Node("default");
+        result.add(new Node("default"));
+        result.add(ChickenUtils.nodeInstructions(instructions,"Instructions"));
+
+        return result;
     }
 }

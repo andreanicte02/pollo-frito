@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -10,6 +11,8 @@ import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.TransferTypes.ZRetorno;
 import com.polloenpelotas.language.types.ZProtoObject;
 import org.jetbrains.annotations.NotNull;
+
+import javax.xml.transform.Result;
 
 public class ReturnAstNode extends ProAstNode {
 
@@ -27,5 +30,14 @@ public class ReturnAstNode extends ProAstNode {
     @Override
     public @NotNull ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
         return new ZRetorno(ChickenUtils.unwrap(e.execute(ambit)));
+    }
+
+    @Override
+    public Node createNode() {
+
+        Node result = new Node("return");
+        result.add(new Node("return"));
+        result.add(e.createNode());
+        return result;
     }
 }

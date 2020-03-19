@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -95,5 +96,21 @@ public class SwitchAstNode extends ProAstNode {
         }
 
         return ZNothing.getInstance();
+    }
+
+    @Override
+    @NotNull
+    public Node createNode() {
+        Node result = new Node("switch sentence");
+        result.add(new Node("switch"));
+        result.add( expresion.createNode());
+
+        for (CaseSwitchAstNode data:
+             cases) {
+            result.add(data.createNode());
+
+        }
+
+        return result;
     }
 }

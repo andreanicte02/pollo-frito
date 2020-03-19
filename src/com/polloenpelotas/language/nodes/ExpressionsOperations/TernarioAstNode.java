@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.ExpressionsOperations;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -35,6 +36,24 @@ public class TernarioAstNode extends ProAstNode {
 
 
         return ChickenUtils.valueCond("ternario",condicion,ambit)?v:f;
+
+    }
+
+    @Override
+    public Node createNode() {
+
+        Node result = new Node("Ternario");
+        Node aux1=condicion.createNode();
+        Node aux2 = valV.createNode();
+        Node aux3 = valF.createNode();
+
+        result.add(aux1);
+        result.add(new Node(":"));
+        result.add(aux2);
+        result.add(new Node("?"));
+        result.add(aux3);
+
+        return result;
 
     }
 }

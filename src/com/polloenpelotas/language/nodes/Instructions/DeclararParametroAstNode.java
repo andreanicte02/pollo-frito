@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -42,4 +43,15 @@ public class DeclararParametroAstNode extends ProAstNode {
     }
 
 
+    @Override
+    public Node createNode() {
+        Node result = new Node("Declarar Parametro");
+        Node aux = new Node(name);
+        Node aux2 = exp.createNode();
+
+        result.add(aux);
+        result.add(new Node("="));
+        result.add(aux2);
+        return result;
+    }
 }

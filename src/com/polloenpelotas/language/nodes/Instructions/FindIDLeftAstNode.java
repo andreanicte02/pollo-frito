@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -29,5 +30,12 @@ public class FindIDLeftAstNode extends ProAstNode {
 
         return ChickenUtils.getVarLeft(ambit,name);
 
+    }
+
+    @Override
+    public Node createNode() {
+        Node result = new Node("Find id left");
+        result.add(new Node(name));
+        return result;
     }
 }

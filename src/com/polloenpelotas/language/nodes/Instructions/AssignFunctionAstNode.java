@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -36,5 +37,19 @@ public class AssignFunctionAstNode extends ProAstNode {
         ChickenUtils.crearFuncion(name,fun,ambit);
 
         return ZNothing.getInstance();
+    }
+
+    @Override
+    public Node createNode() {
+        Node result = new Node("Asignar Funcion");
+        Node aux1 = var.createNode();
+        Node aux2 = declararFuncion.createNode();
+
+        result.add(aux1);
+        result.add(new Node("="));
+        result.add(aux2);
+
+        return result;
+
     }
 }

@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
@@ -36,5 +37,17 @@ public class IfAstNode extends ProAstNode {
         List<AstNode> sentecias = finalCon? instructionsTrue: instructionsFalse;
         return ChickenUtils.ejecutarSentencias(sentecias,local);
 
+    }
+
+    @Override
+    @NotNull
+    public Node createNode() {
+        Node result = new Node("if sentence");
+        result.add(new Node("if"));
+        result.add(condition.createNode());
+        result.add(ChickenUtils.nodeInstructions(instructionsTrue,"Instructions"));
+        result.add(ChickenUtils.nodeInstructions(instructionsFalse,"Instructions"));
+
+        return result;
     }
 }

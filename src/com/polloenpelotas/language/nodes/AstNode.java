@@ -8,5 +8,6 @@ import org.jetbrains.annotations.NotNull;
 public interface AstNode {
     ZProtoObject execute(@NotNull ZProtoObject ambit) throws LocatedSemanticException;
 
-   
+    @NotNull
+    Node createNode();
 }

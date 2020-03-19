@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
@@ -16,5 +17,10 @@ public class ContinueAstNode extends ProAstNode {
     @Override
     public @NotNull ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
         return ZContinue.getInstance();
+    }
+
+    @Override
+    public Node createNode() {
+        return new Node("continue");
     }
 }
