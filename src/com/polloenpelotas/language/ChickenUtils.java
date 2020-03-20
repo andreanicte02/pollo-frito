@@ -807,15 +807,6 @@ public final class ChickenUtils {
         buffer.append("<td>Rol</td>\n");
         buffer.append("</tr>\n");
 
-        ambit.functions.forEach((k,v)->{
-            buffer.append("<tr>\n");
-            buffer.append("<td>"  +k + "</td>\n");
-            buffer.append("<td>" +"</td>\n");
-            buffer.append("<td>" +"</td>\n");
-            buffer.append("<td> function </td>\n");
-            buffer.append("</tr>\n");
-        });
-
         ambit.members.forEach((k,v)->{
 
             buffer.append("<tr>\n");
@@ -829,6 +820,17 @@ public final class ChickenUtils {
             buffer.append("<td> variable </td>\n");
             buffer.append("</tr>\n");
         });
+
+
+        ambit.functions.forEach((k,v)->{
+            buffer.append("<tr>\n");
+            buffer.append("<td>"  +k + "</td>\n");
+            buffer.append("<td>" +"</td>\n");
+            buffer.append("<td>" +"</td>\n");
+            buffer.append("<td> function </td>\n");
+            buffer.append("</tr>\n");
+        });
+
 
 
 

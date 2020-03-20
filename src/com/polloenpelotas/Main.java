@@ -9,10 +9,14 @@ public class Main {
 
         ChickenUtils.grafiteando = 0;
         System.out.println("xD");
+        GUI2 ls = new GUI2();
+        ls.setVisible(true);
 
 
-        System.out.println("----------------------------------------------cup");
-        Utils.probarCup("src/com/polloenpelotas/ArchivosPrueba/A1.txt");
+
+
+        //System.out.println("----------------------------------------------cup");
+        //Utils.probarCup("src/com/polloenpelotas/ArchivosPrueba/A1.txt");
 
        //System.out.println("-----------------------------------------------jcc");
        //Utils.pruebaJCC("src/com/polloenpelotas/ArchivosPrueba/A6.txt");

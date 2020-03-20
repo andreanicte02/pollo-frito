@@ -71,7 +71,8 @@ Utils {
                 intruccion.execute(aux);
             }
 
-
+            ChickenUtils.writeFile(ChickenUtils.reporteTablaSimbolos(aux),"TS_201404104","html");
+            ChickenUtils.openHtml("TS_201404104");
 
             //Node raiz = ChickenUtils.nodeInstructions(ins,"inicio");
             //AstGraphic graphic = new AstGraphic();
