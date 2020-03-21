@@ -12,7 +12,7 @@ public class AstGraphic {
 
 
 
-    public void armar_Cuerpo_dot(Node raiz) {
+    public void armar_Cuerpo_dot(Node raiz,String tipo) {
         contador = 0;
         StringBuffer buffer = new StringBuffer();
         buffer.append("\ndigraph G {\r\nnode [shape=doublecircle, style=filled, color=khaki1, fontcolor=black];\n");
@@ -22,7 +22,7 @@ public class AstGraphic {
 
         FileWriter archivo;
         try {
-            String nameruta = "Reporte201404104_AST";
+            String nameruta = "Reporte201404104_AST"+tipo;
             archivo = new FileWriter(nameruta + ".dot");
 
             PrintWriter escritura = new PrintWriter(archivo);

@@ -1,12 +1,10 @@
-package com.polloenpelotas;
+package com.polloenpelotas.Extras;
 
 import com.polloenpelotas.AnalizadorCup.Lexico;
 import com.polloenpelotas.AnalizadorCup.Sintactico;
 import com.polloenpelotas.AnalizadorJCC.Gramatica;
 import com.polloenpelotas.AnalizadorJCC.ParseException;
 import com.polloenpelotas.AnalizadorJCC.TokenMgrError;
-import com.polloenpelotas.Extras.AstGraphic;
-import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
@@ -21,6 +19,7 @@ import java.util.List;
 public class
 Utils {
     public static FunNativas fn = new FunNativas();
+
 
     public static void pruebaJCC(String path){
         try {
@@ -71,8 +70,8 @@ Utils {
                 intruccion.execute(aux);
             }
 
-            ChickenUtils.writeFile(ChickenUtils.reporteTablaSimbolos(aux),"TS_201404104","html");
-            ChickenUtils.openHtml("TS_201404104");
+            //ChickenUtils.writeFile(ChickenUtils.reporteTablaSimbolos(aux),"TS_201404104","html");
+            //ChickenUtils.openHtml("TS_201404104");
 
             //Node raiz = ChickenUtils.nodeInstructions(ins,"inicio");
             //AstGraphic graphic = new AstGraphic();
@@ -128,6 +127,7 @@ class FunNativas {
 
                 ZProtoObject val = argumentos.get(0);
                 System.out.println(val.toChickenString());
+                GUI2.console.setText(GUI2.console.getText() +"\n"+ val.toChickenString());
                 return ZNothing.getInstance();
             }
         };
