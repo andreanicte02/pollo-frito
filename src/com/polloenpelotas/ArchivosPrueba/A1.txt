@@ -1,3 +1,118 @@
+vector1 = c(0,0,0,0,0)
+print(vector1)
+vector1[5][1][1] = 1.0;
+print(vector1)
+
+lista = list(1,2, 3, 4, c(5,6), list(1,20))
+print(lista)
+lista[[5]][2]=7
+print(lista)
+lista[5][1]=7
+print(lista)
+lista[[6]][[2]]=list(false, false);
+print(lista)
+lista[[8]]=c(list(1,2))
+print(lista)
+lista[8]= vector1
+print(lista)
+lista[[8]][5]=false;
+print(lista)
+lista[[6]][[3]]= list(c(1,2))
+print(lista)
+
+
+indice=c(1,2,3,c(4,5),c(6))
+print("indice:")
+print(indice)
+
+listaIndice=c(list(1,2),list(3),list(list(4,5),6))
+print("lista indice")
+print(listaIndice)
+
+
+print(listaIndice[[1]][1])
+print(listaIndice[[indice[4]]][[2]][listaIndice[[1]]] )
+
+
+print("imprimir lista otra vez")
+print(lista)
+
+
+vectorSuma= c(1,1,1)+c(2,2,indice[5])-c(1,1,1)
+print("algunas aritmenticas")
+print(vectorSuma*5)
+
+vectorSuma[vectorSuma[1]]="hola"
+print(vectorSuma)
+
+factorial = function(num){
+    if(num==0){
+        return 1
+    }else{
+        return num* factorial(num-1)
+    }
+}
+
+print("factorial de 6:")
+print(factorial(factorial(3)))
+
+ackerman = (m,n) =>{
+    if(m==0){
+        return (n+1)
+    }
+    else if(m>0 & n ==0){
+        return ackerman(m-1,1)
+    }
+    else{
+        return ackerman(m-1, ackerman(m,n-1))
+
+   }
+}
+print("ackerman")
+#print(ackerman(3,6))
+
+print("matrices")
+m=matrix(c(1,2,3,4,5),5,4)
+print(m);
+print("accesos de matrices")
+print(m[5,]);
+print(m[,1]);
+print(m[20]);
+print(m[5,2]);
+print(m[5,][4][1]);
+
+print("modificacion de matrices")
+
+m[2,]=c(1,2,3,4);
+#print(m+m*1)
+
+x = c(19, 26, 55)
+labels = c("prueba1","prueba2","prueba3")
+#pie(x,labels,"salida deseada")
+#barplot(c(20, 14, 23),"etiquetax", c("etiquetay"), "titulo",c("gato","baca", "idiota"))
+
+print(m)
+m[,3]=c(1.0)
+#plot(m[2,],"l",c("etiquetax"),c("etiquetay"), c("titulo","as"))
+#hist(m[,3],c("ejey"), c("titulo")[1][1]);
+#print(m[,3])
+
+print(m)
+print( typeof( m+c("1") ))
+
+primero = 1;
+print(primero)
+
+#plot(primero, "ejex", "ejey","titulo",c(1.0,1))
+print(round(c(5)))
+vec = c(1,2,3,1,2,3,3,3);
+
+Vector = c(12,13,15,16,24,15,17,19,17,15)
+print(length(Vector))
+print(12+13+15+16+24+15+17+19+17+15)
+print(163/10)
+print(mean(Vector,c(14)))
+print(Median(Vector));
 
 
 
