@@ -114,6 +114,10 @@ public final class VectorUtils {
 
             }
 
+            if(a1 instanceof ZVar){
+               return ChickenUtils.unwrap(a1);
+            }
+
             return a1.executeOperation("access1Left","casteo vectores",a2);
 
         }
@@ -132,7 +136,7 @@ public final class VectorUtils {
 
             if(other instanceof ZVar){
 
-                return ((ZVar) other).getValue();
+                return ChickenUtils.unwrap(other);
             }
 
             return other;

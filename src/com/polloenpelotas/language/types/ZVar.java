@@ -82,6 +82,7 @@ public class ZVar extends ZProtoObject {
      * "assign2" lo uso para un acceso de tipo 2 de una lista    *
      * * * * * * * * * * * * * * * * * * * * * * * * *  * * * * **/
 
+    /**tambien para aignacion de listas*/
 
     /*primtivos*/
     public ZProtoObject assign2(@NotNull ZInteger value) {
