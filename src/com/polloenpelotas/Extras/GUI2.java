@@ -101,6 +101,11 @@ public class GUI2 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
+                if(multiTab.getTitleAt(multiTab.getSelectedIndex()).equals("new:")){
+                    saveAsFile();
+
+                }
+
                 String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
                 execute.executeCup(path);
 
@@ -110,6 +115,11 @@ public class GUI2 extends JFrame {
         ejecutarJCCButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+
+                if(multiTab.getTitleAt(multiTab.getSelectedIndex()).equals("new:")){
+                    saveAsFile();
+                }
+
                 String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
                 execute.executeJCC(path);
             }

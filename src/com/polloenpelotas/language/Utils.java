@@ -1,13 +1,11 @@
-package com.polloenpelotas.Extras;
+package com.polloenpelotas.language;
 
 import com.polloenpelotas.AnalizadorCup.Lexico;
 import com.polloenpelotas.AnalizadorCup.Sintactico;
 import com.polloenpelotas.AnalizadorJCC.Gramatica;
 import com.polloenpelotas.AnalizadorJCC.ParseException;
 import com.polloenpelotas.AnalizadorJCC.TokenMgrError;
-import com.polloenpelotas.language.ChickenUtils;
-import com.polloenpelotas.language.LocatedSemanticException;
-import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.Extras.GUI2;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.*;
 import java_cup.runtime.Symbol;
@@ -108,6 +106,7 @@ Utils {
         aux.functions.put("mode", fn.zMode());
         aux.functions.put("mean", fn.zMean());
         aux.functions.put("median", fn.zMedian());
+        aux.functions.put("array", fn.functionArray());
     }
 
 
@@ -127,7 +126,7 @@ class FunNativas {
 
                 ZProtoObject val = argumentos.get(0);
                 System.out.println(val.toChickenString());
-                GUI2.console.setText(GUI2.console.getText() +"\n"+ val.toChickenString());
+//                GUI2.console.setText(GUI2.console.getText() +"\n"+ val.toChickenString());
                 return ZNothing.getInstance();
             }
         };
@@ -670,7 +669,28 @@ class FunNativas {
 
     }
 
+    public ZFunction functionArray() {
 
+        return new ZFunction(new ArrayList<>(), new ArrayList<>(), new ZAmbit(null)) {
+
+            @Override
+            public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
+
+
+                ZProtoObject arg1 = ChickenUtils.obtenerUnVector(argumentos.get(0));
+                ZProtoObject arg2 =  ChickenUtils.obtenerUnVector(argumentos.get(1));
+
+                if(!(arg2 instanceof ZVector)){
+                    throw new SemanticException("se esperaba un vector en el argumento 2 de la funcion Array");
+                }
+
+                List<Integer> sizeList = VectorUtils.obtenerEnteros((ZVector) arg2);
+
+                return new ZArray(arg1,sizeList);
+            }
+        };
+
+    }
 
 
 }

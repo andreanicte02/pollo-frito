@@ -19,6 +19,11 @@ public class ZList extends ZProtoObject {
         this.list = list;
     }
 
+    public ZList(ZVar var){
+        list = new ArrayList<>();
+        list.add(var);
+    }
+
     public List<ZVar> getList() {
         return list;
     }

@@ -22,21 +22,7 @@ public class LeftAccess1AstNode extends BinaryOperationNode {
     public LeftAccess1AstNode(FileLocation fl, AstNode e1, AstNode e2) {
 
         super(fl, "access1Left", "exp[exp] left", e1 instanceof FindIDLeftAstNode? new FindIDAstNode(fl,((FindIDLeftAstNode) e1).getName()):e1, true, e2);
+
     }
-
-
-    /**
-     if(!ChickenUtils.state) {
-     return r1.executeOperation("access1Left", " exp[exp] left ", r2);
-     }
-
-     if(r1 instanceof ZVector){
-     ChickenUtils.changeVector(((ZVector) r1).getList());
-     return ZNothing.getInstance();
-     }
-
-     if(r1 instanceof ZNothing || r2 instanceof ZNothing){
-     return ZNothing.getInstance();
-     }**/
 
 }

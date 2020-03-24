@@ -190,6 +190,26 @@ public final class VectorUtils {
 
     }
 
+    public static List<Integer> obtenerEnteros(ZVector vector) throws SemanticException {
+
+        List<Integer> list =new ArrayList<>();
+
+        for (ZVar var:
+             vector.getList()) {
+
+            ZProtoObject aux = unwrap(var);
+            if(!(aux instanceof ZInteger)){
+                throw new SemanticException("Se esperaba un int, en las dimensiones");
+            }
+
+            list.add(((ZInteger) aux).getValue());
+
+        }
+        return list;
+
+
+    }
+
 
 
 

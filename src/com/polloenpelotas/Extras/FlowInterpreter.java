@@ -4,12 +4,11 @@ import com.polloenpelotas.AnalizadorCup.Lexico;
 import com.polloenpelotas.AnalizadorCup.Sintactico;
 import com.polloenpelotas.AnalizadorJCC.Gramatica;
 import com.polloenpelotas.AnalizadorJCC.ParseException;
-import com.polloenpelotas.AnalizadorJCC.TokenMgrError;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.LocatedSemanticException;
+import com.polloenpelotas.language.Utils;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.ZAmbit;
-import com.polloenpelotas.language.types.ZProtoObject;
 import java_cup.runtime.Symbol;
 
 import java.io.*;

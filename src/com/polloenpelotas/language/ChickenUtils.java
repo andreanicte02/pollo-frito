@@ -14,6 +14,8 @@ import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class ChickenUtils {
@@ -842,6 +844,45 @@ public final class ChickenUtils {
 
 
 
+    }
+
+
+    public static List<Object>  crearDimension(List<Integer> sizeList, int indice, Supplier<ZProtoObject> creadorElemento){
+
+        List<Object> dimension = new ArrayList<>();
+
+
+        int size = sizeList.get(indice);
+
+        for (int x = 0; x<size; x++){
+
+            if(indice == 0){
+
+                dimension.add(creadorElemento.get());
+
+            }else {
+
+                dimension.add(crearDimension(sizeList, indice - 1, creadorElemento));
+            }
+        }
+
+        return dimension;
+
+    }
+
+    public static ZProtoObject obtenerDimension(List<Object> dimension, int index) throws SemanticException {
+
+        if(index == 0 || index > dimension.size()){
+            throw new SemanticException("Se ha accedido a un index fuera de rango en un array");
+        }
+
+        Object o = dimension.get(index-1);
+
+        if(o instanceof ZVar){
+            return (ZProtoObject) o;
+        }
+
+        return new ZArray((List<Object>) o, new ArrayList<>());
     }
 
 }

@@ -72,6 +72,11 @@ public class ZVar extends ZProtoObject {
         return ZNothing.getInstance();
     }
 
+    public ZProtoObject assign(@NotNull ZArray array){
+        value = array;
+        return ZNothing.getInstance();
+    }
+
 
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
      * "assign2" lo uso para un acceso de tipo 2 de una lista    *
