@@ -85,6 +85,8 @@ TOKEN : {
     | <WHILE :"while">
     | <CONTINUE: "continue">
     | <DO: "do">
+    | <FOR: "for">
+    | <IN: "in">
     | <IDENTIFIER: (["a"-"z","A"-"Z"]|["."]["a"-"z","A"-"Z"]) (["a"-"z","A"-"Z", "_", "." ]|["0"-"9"])*>
 
 
@@ -120,6 +122,8 @@ AstNode instruccion() :
   <BREAK>  (<PCOMA>)?                           { return new BreakAstNode( new FileLocation(token.beginColumn, token.beginLine)); }
   |
   <CONTINUE> (<PCOMA>)?                         { return new ContinueAstNode (new FileLocation(token.beginColumn,token.beginLine)); }
+  |
+  e=sentFor()                                   {return e; }
   |
   e=sentWhile()                                 { return e; }
   |
@@ -185,6 +189,16 @@ AstNode sentReturn():
     LOOKAHEAD(2)<RETURN> e=Expresion() {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine),e); }
     |
     LOOKAHEAD(1)<RETURN> {return new ReturnAstNode(new FileLocation(token.beginColumn, token.beginLine));}
+
+}
+
+AstNode sentFor():
+{Token t; AstNode e;  List<AstNode> l = new ArrayList<AstNode>(); }
+{
+    <FOR> <APAR> t=<IDENTIFIER> <IN> e=Expresion() <CPAR> <ALLA> l=listaInstruccion() <CLLA>
+    {
+        return new ForAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image.toLowerCase(), e, l);
+    }
 
 }
 

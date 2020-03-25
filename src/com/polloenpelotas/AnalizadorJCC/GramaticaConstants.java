@@ -99,9 +99,13 @@ public interface GramaticaConstants {
   /** RegularExpression Id. */
   int DO = 48;
   /** RegularExpression Id. */
-  int IDENTIFIER = 49;
+  int FOR = 49;
   /** RegularExpression Id. */
-  int STRING = 52;
+  int IN = 50;
+  /** RegularExpression Id. */
+  int IDENTIFIER = 51;
+  /** RegularExpression Id. */
+  int STRING = 54;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -159,9 +163,11 @@ public interface GramaticaConstants {
     "\"while\"",
     "\"continue\"",
     "\"do\"",
+    "\"for\"",
+    "\"in\"",
     "<IDENTIFIER>",
     "\"\\\"\"",
-    "<token of kind 51>",
+    "<token of kind 53>",
     "\"\\\"\"",
   };
 
