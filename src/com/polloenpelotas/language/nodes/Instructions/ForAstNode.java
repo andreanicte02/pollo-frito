@@ -99,6 +99,14 @@ public class ForAstNode extends ProAstNode {
 
     @Override
     public @NotNull Node createNode() {
-        return null;
+        Node result = new Node("for");
+        result.add(new Node("for"));
+        result.add(new Node(id));
+        result.add(new Node ("in"));
+        result.add(expresion.createNode());
+        result.add(new Node("{"));
+        ChickenUtils.nodeInstructions(instructions,"instructions");
+        result.add(new Node("}"));
+        return result;
     }
 }
