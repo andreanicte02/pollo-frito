@@ -67,6 +67,13 @@ public final class ChickenUtils {
 
         throw new SemanticException("La variable con el nombre id: "+name+", no existe");
     }
+    /**se variable de uso en el for */
+
+    public static  void updateVal(ZAmbit local, ZVar val, String id){
+        ZVar var  = local.members.get(id);
+        var = val;
+
+    }
 
     /**declararparametro*/
 
@@ -533,10 +540,12 @@ public final class ChickenUtils {
 
             if(((ZString) type).getValue().toLowerCase().equals("o")){
                 tipo="'lines+markers'";
-            }else if(((ZString) type).getValue().toLowerCase().equals("p")){
-                tipo="'lines'";
             }else if(((ZString) type).getValue().toLowerCase().equals("l")){
+                tipo="'lines'";
+            }else if(((ZString) type).getValue().toLowerCase().equals("p")){
                 tipo ="'markers'";
+            }else{
+                tipo="'lines+markers'";
             }
 
         }
@@ -884,5 +893,74 @@ public final class ChickenUtils {
 
         return new ZArray((List<Object>) o, new ArrayList<>());
     }
+
+    /**dejar valores implicitos en el for*/
+
+    public static void estructurasFor(List<ZVar> lista) throws SemanticException {
+
+        for(int x =0; x<lista.size();x++){
+            ZProtoObject aux = unwrap(lista.get(x));
+            if(isPrimitive(aux)){
+                continue;
+            }
+
+            if(aux instanceof ZVector && ((ZVector) aux).getList().size()==1){
+                lista.get(x).setValue(obtenerUnPrimitivo(aux));
+            }
+
+        }
+
+    }
+
+    public static List<ZVar>  getListVarMatrix(ZVar[][] matrix, int row, int col){
+
+        List<ZVar> list = new ArrayList<>();
+
+        for (int x= 0; x<col; x++){
+
+            for (int y=0; y<row; y++){
+
+                list.add(matrix[y][x]);
+
+            }
+        }
+
+        return list;
+    }
+
+    public static List<ZVar> getListVarArray(List<Object> superMatrix, List<Integer> sizeList) throws SemanticException {
+        List<ZVar> vars = new ArrayList<>();
+        recorrerDimension(superMatrix, sizeList, sizeList.size()-1, vars);
+        return vars;
+    }
+
+    public static void recorrerDimension(List<Object> superMatrix,List<Integer> sizeList, int indice, List<ZVar> listVar) throws SemanticException {
+
+
+
+        int size = sizeList.get(indice);
+
+        for (int x = 0; x<size; x++){
+
+            if(indice == 0){
+
+
+                ZProtoObject o = obtenerDimension(superMatrix, x+1);
+                if(o instanceof ZVar){
+                    listVar.add((ZVar) o);
+                }
+
+            }else {
+
+                ZProtoObject o = obtenerDimension(superMatrix, x+1);
+                if(o instanceof ZArray) {
+                    recorrerDimension(((ZArray) o).superMatrix, sizeList, indice - 1, listVar);
+                }
+
+            }
+        }
+
+    }
+
 
 }

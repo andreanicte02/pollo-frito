@@ -54,7 +54,8 @@ casee = "case"
 continuee = "continue"
 whilee = "while"
 doo = "do"
-
+forr = "for"
+inn = "in"
 
 //-------> Estados
 %state COMENT_SIMPLE
@@ -157,6 +158,8 @@ doo = "do"
 <YYINITIAL> {continuee}        {  return new Symbol(Simbolos.continuee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {whilee}           {  return new Symbol(Simbolos.whilee, yyline, yycolumn, yytext()); }
 <YYINITIAL> {doo}              {  return new Symbol(Simbolos.doo, yyline, yycolumn, yytext()); }
+<YYINITIAL> {forr}              {  return new Symbol(Simbolos.forr, yyline, yycolumn, yytext()); }
+<YYINITIAL> {inn}              {  return new Symbol(Simbolos.inn, yyline, yycolumn, yytext()); }
 //-------> ER
 
 <YYINITIAL> {identifier}    {   return new Symbol(Simbolos.identifier, yycolumn, yyline, yytext().toLowerCase());}

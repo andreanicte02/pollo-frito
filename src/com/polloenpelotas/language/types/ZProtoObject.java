@@ -15,7 +15,8 @@ public abstract class ZProtoObject {
 
     private ZProtoObject anterior=null;
 
-    public final Map<String, ZProtoObject> members = new HashMap<>();
+    //cambie el zproto x el zvar, xq siempre se guarda el valor envuetlo
+    public final Map<String, ZVar> members = new HashMap<>();
 
     public final Map<String, ZFunction> functions = new HashMap<>();
 

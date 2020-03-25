@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ZArray extends ZProtoObject {
 
-    List<Integer> sizeList;
+    public List<Integer> sizeList;
     public List<Object> superMatrix;
     public List<Integer> auxAcces = new ArrayList<>();
 
