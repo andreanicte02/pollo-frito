@@ -1,10 +1,7 @@
 package com.polloenpelotas.language.nodes.Instructions;
 
 import com.polloenpelotas.Extras.Node;
-import com.polloenpelotas.language.ChickenUtils;
-import com.polloenpelotas.language.FileLocation;
-import com.polloenpelotas.language.LocatedSemanticException;
-import com.polloenpelotas.language.SemanticException;
+import com.polloenpelotas.language.*;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.*;
@@ -41,6 +38,7 @@ public class ForAstNode extends ProAstNode {
 
             ZProtoObject result =  ejecutarFor(local,((ZVector) e).getList());
             ChickenUtils.estructurasFor(((ZVector) e).getList());
+            VectorUtils.changeVector(((ZVector) e).getList());
             return result;
         }
 

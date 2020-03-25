@@ -135,8 +135,10 @@ for(i in 3){
 f = c(1,2,3,4,5,6)
 for(i in f){
 
-    print(i)
-    i =20;
+    if(i==c(6)){
+        i="comida";
+    }
+
 }
 print(f)
 
@@ -157,4 +159,13 @@ for(i in result)
 
 print(result)
 
-# Salida
+f = c(1,2,3,4,5,6)
+for(i in f){
+
+    if(i==6){
+        i="comida";
+    }
+
+}
+
+print(f)
