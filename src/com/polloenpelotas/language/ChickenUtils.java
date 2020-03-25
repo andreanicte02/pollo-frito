@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -928,17 +929,31 @@ public final class ChickenUtils {
         return list;
     }
 
+    public static String stringArray(List<Object> superMatrix, List<Integer> sizeList) throws SemanticException {
+        List<ZVar> vars = new ArrayList<>();
+        List<Integer> auxIndex = new ArrayList<>();
+        StringBuffer cad = new StringBuffer();
+        auxIndex.addAll(sizeList);
+        Collections.reverse(auxIndex);
+        recorrerDimension(superMatrix, sizeList, sizeList.size()-1, vars,cad, auxIndex);
+        return cad.toString();
+    }
+
     public static List<ZVar> getListVarArray(List<Object> superMatrix, List<Integer> sizeList) throws SemanticException {
         List<ZVar> vars = new ArrayList<>();
-        recorrerDimension(superMatrix, sizeList, sizeList.size()-1, vars);
+        List<Integer> auxIndex = new ArrayList<>();
+        auxIndex.addAll(sizeList);
+        Collections.reverse(auxIndex);
+        recorrerDimension(superMatrix, sizeList, sizeList.size()-1, vars,new StringBuffer(),auxIndex);
         return vars;
     }
 
-    public static void recorrerDimension(List<Object> superMatrix,List<Integer> sizeList, int indice, List<ZVar> listVar) throws SemanticException {
+    public static void recorrerDimension(List<Object> superMatrix,List<Integer> sizeList, int indice, List<ZVar> listVar, StringBuffer cad, List<Integer> auxIndex) throws SemanticException {
 
 
 
         int size = sizeList.get(indice);
+        int auxSize = auxIndex.get(indice);
 
         for (int x = 0; x<size; x++){
 
@@ -947,6 +962,8 @@ public final class ChickenUtils {
 
                 ZProtoObject o = obtenerDimension(superMatrix, x+1);
                 if(o instanceof ZVar){
+
+                    cad.append(auxSize+":" +unwrap(o).toChickenString()+"\n");
                     listVar.add((ZVar) o);
                 }
 
@@ -954,7 +971,9 @@ public final class ChickenUtils {
 
                 ZProtoObject o = obtenerDimension(superMatrix, x+1);
                 if(o instanceof ZArray) {
-                    recorrerDimension(((ZArray) o).superMatrix, sizeList, indice - 1, listVar);
+                    cad.append(auxSize+",");
+                    recorrerDimension(((ZArray) o).superMatrix, sizeList, indice - 1, listVar,cad, auxIndex);
+                    cad.append("---------------\n");
                 }
 
             }

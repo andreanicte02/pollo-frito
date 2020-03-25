@@ -109,6 +109,14 @@ public class ZArray extends ZProtoObject {
 
     @Override
     public String toChickenString() {
-        return null;
+
+        try {
+            return ChickenUtils.stringArray(superMatrix, sizeList);
+        } catch (SemanticException e) {
+            e.printStackTrace();
+        }
+
+        return ZNothing.getInstance().toChickenString();
+
     }
 }
