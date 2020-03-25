@@ -160,6 +160,12 @@ public class GUI2 extends JFrame {
                 console.setText(console.getText()+"\n"+"Tabla simbolos jcc");
             }
         });
+        erroresButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                execute.reporteErrores();
+            }
+        });
     }
 
     public void addWindow(){

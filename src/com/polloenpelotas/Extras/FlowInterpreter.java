@@ -16,11 +16,13 @@ import java.util.List;
 public class FlowInterpreter {
 
     AstGraphic graph = new AstGraphic();
+    boolean isCup=false;
 
     public void executeCup(String path){
 
         System.out.println("-----------------------------cup------------------------------");
         GUI2.console.setText("cup:");
+
 
         try {
 
@@ -35,7 +37,7 @@ public class FlowInterpreter {
         } catch (Exception e) {
               e.printStackTrace();
         }
-        ChickenUtils.printErrors(ChickenUtils.lError);
+        ChickenUtils.printErrors(ChickenUtils.lError,true);
 
     }
 
@@ -43,17 +45,28 @@ public class FlowInterpreter {
         System.out.println("-----------------------------jcc------------------------------");
         GUI2.console.setText("jcc");
 
-        List<AstNode> ins= getInstructionsJCC(path);
-
-
-
-        ZAmbit ambit = new ZAmbit(null);
-        Utils.chargeFunctions(ambit);
         try {
+
+            List<AstNode> ins= getInstructionsJCC(path);
+            ZAmbit ambit = new ZAmbit(null);
+            Utils.chargeFunctions(ambit);
+
             ChickenUtils.ejecutarSentencias(ins,ambit);
         } catch (LocatedSemanticException e) {
+            ChickenUtils.lError.add(e);
+            e.printStackTrace();
+        } catch (ParseException e){
+            ChickenUtils.lError.add(new LocatedSemanticException(new FileLocation(-1,-1), new SemanticException(e.getMessage() + e.getLocalizedMessage())));
+
+            e.printStackTrace();
+        } catch ( IOException e ){
+            ChickenUtils.lError.add(new LocatedSemanticException(new FileLocation(-1,-1), new SemanticException(e.getMessage() )));
+
             e.printStackTrace();
         }
+
+        ChickenUtils.printErrors(ChickenUtils.lError, false);
+
 
     }
 
@@ -73,16 +86,27 @@ public class FlowInterpreter {
               e.printStackTrace();
         }
 
-        ChickenUtils.printErrors(ChickenUtils.lError);
+        ChickenUtils.printErrors(ChickenUtils.lError,true);
 
 
     }
 
     public void astJCC(String path){
 
-        List<AstNode> ins= getInstructionsJCC(path);
-        Node root = ChickenUtils.nodeInstructions(ins,"root");
-        graph.armar_Cuerpo_dot(root,"JCC");
+        isCup = false;
+        try {
+
+            List<AstNode>ins = getInstructionsJCC(path);
+            Node root = ChickenUtils.nodeInstructions(ins,"root");
+            graph.armar_Cuerpo_dot(root,"JCC");
+
+        } catch (ParseException e) {
+            ChickenUtils.lError.add(new LocatedSemanticException(new FileLocation(-1,-1), new SemanticException(e.getMessage() + e.getLocalizedMessage())));
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        ChickenUtils.printErrors(ChickenUtils.lError,false);
 
     }
 
@@ -109,31 +133,51 @@ public class FlowInterpreter {
             e.printStackTrace();
         }
 
-        ChickenUtils.printErrors(ChickenUtils.lError);
+        ChickenUtils.printErrors(ChickenUtils.lError,true);
     }
 
     public void tsJCC(String path){
 
 
-        List<AstNode> ins= getInstructionsJCC(path);
-
-        ZAmbit ambit = new ZAmbit(null);
-        Utils.chargeFunctions(ambit);
         try {
+
+            List<AstNode> ins= getInstructionsJCC(path);
+            ZAmbit ambit = new ZAmbit(null);
+            Utils.chargeFunctions(ambit);
             ChickenUtils.ejecutarSentencias(ins,ambit);
             ChickenUtils.writeFile(ChickenUtils.reporteTablaSimbolos(ambit),"TSCup_201404104","html");
             ChickenUtils.openHtml("TSCup_201404104");
 
         } catch (LocatedSemanticException e) {
+            ChickenUtils.lError.add(e);
             e.printStackTrace();
+
+        } catch (ParseException e){
+            ChickenUtils.lError.add(new LocatedSemanticException(new FileLocation(-1,-1), new SemanticException(e.getMessage() + e.getLocalizedMessage())));
+            e.printStackTrace();
+        }
+        catch (IOException e) {
+            ChickenUtils.lError.add(new LocatedSemanticException(new FileLocation(-1,-1), new SemanticException(e.getMessage())));
+
+            e.printStackTrace();
+        }
+        ChickenUtils.printErrors(ChickenUtils.lError,false);
+
+
+    }
+
+    public void reporteErrores(){
+        try {
+            ChickenUtils.writeFile(ChickenUtils.reporteErrores(ChickenUtils.lError,isCup),"ReporteError","html");
+            ChickenUtils.openHtml("ReporteError");
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public List<AstNode> getInstructionsCup(String path) throws Exception {
 
+        isCup=true;
 
         ChickenUtils.lError = new ArrayList<>();
         Lexico lex = new Lexico(new FileInputStream(path));
@@ -147,19 +191,11 @@ public class FlowInterpreter {
 
 
 
-    public List<AstNode> getInstructionsJCC(String path){
-
-        try {
-
-            Gramatica parser = new Gramatica(new BufferedReader(new FileReader(path)));
-            return  parser.analizar();
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public List<AstNode> getInstructionsJCC(String path) throws ParseException, FileNotFoundException {
+        isCup=false;
+        ChickenUtils.lError = new ArrayList<>();
+        Gramatica parser = new Gramatica(new BufferedReader(new FileReader(path)));
+        return  parser.analizar();
 
 
     }

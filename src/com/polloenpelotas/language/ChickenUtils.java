@@ -1016,7 +1016,7 @@ public final class ChickenUtils {
 
     public static List<LocatedSemanticException> lError = new ArrayList<>();
 
-    public static void printErrors(List<LocatedSemanticException> lError){
+    public static void printErrors(List<LocatedSemanticException> lError, boolean isCup){
         if(lError.size()== 0){
             return;
         }
@@ -1027,10 +1027,79 @@ public final class ChickenUtils {
              lError) {
 
             GUI2.console.setText(GUI2.console.getText() +"\n");
+
+            if(isCup){
+                GUI2.console.setText(
+                        GUI2.console.getText() +"Fila: " +(error.getFileLocation().getY()+1) +
+                                " Columna: " + (error.getFileLocation().getX()+1 )+ "\n" + "Mensaje: " + error.getSemanticException().getMessage());
+
+                continue;
+            }
+
             GUI2.console.setText(
                     GUI2.console.getText() +"Fila: " +error.getFileLocation().getY() +
                             " Columna: " + error.getFileLocation().getX() + "\n" + "Mensaje: " + error.getSemanticException().getMessage());
         }
+
+    }
+
+
+    public static String reporteErrores(List <LocatedSemanticException> lError, boolean isCup) {
+
+        if(lError.size()==0){
+            return "";
+        }
+
+        StringBuffer buffer = new StringBuffer();
+
+        buffer.append("<!DOCTYPE html>" + "<html> " + "\n");
+        buffer.append("<head>  Reporte Errores 201404104 </head> " + "\n");
+        buffer.append("<body>" + "\n");
+
+        buffer.append("<table border=\"2px\"> \n");
+
+        buffer.append("<tr>\n");
+        buffer.append("<td>Fila</td>\n");
+        buffer.append("<td>Cilumna</td>\n");
+        buffer.append("<td>Mensaje</td>\n");
+
+        buffer.append("</tr>\n");
+
+
+        for (LocatedSemanticException error:
+             lError) {
+
+
+            if(isCup){
+
+
+                buffer.append("<tr>\n");
+                buffer.append("<td> "+ (error.getFileLocation().getY()+1) +"</td> \n");
+                buffer.append("<td> "+ (error.getFileLocation().getX()+1) +"</td> \n");
+                buffer.append("<td> "+ error.getSemanticException().getMessage() +"</td> \n");
+
+                buffer.append("</tr>\n");
+
+                continue;
+            }
+
+
+            buffer.append("<tr>\n");
+            buffer.append("<td> "+ error.getFileLocation().getY() +"</td> \n");
+            buffer.append("<td> "+ error.getFileLocation().getX() +"</td> \n");
+            buffer.append("<td> "+ error.getSemanticException().getMessage() +"</td> \n");
+
+            buffer.append("</tr>\n");
+        }
+
+
+
+
+        buffer.append("</table>\n");
+        buffer.append("</body> \n");
+        buffer.append("</html> \n");
+
+        return buffer.toString();
 
     }
 
