@@ -5,7 +5,9 @@ import com.polloenpelotas.AnalizadorCup.Sintactico;
 import com.polloenpelotas.AnalizadorJCC.Gramatica;
 import com.polloenpelotas.AnalizadorJCC.ParseException;
 import com.polloenpelotas.AnalizadorJCC.TokenMgrError;
+import com.polloenpelotas.Extras.AstGraphic;
 import com.polloenpelotas.Extras.GUI2;
+import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.*;
 import java_cup.runtime.Symbol;
@@ -64,16 +66,15 @@ Utils {
             ZAmbit aux = new ZAmbit(null);
             chargeFunctions(aux);
 
-            for (AstNode intruccion: ins){
-                intruccion.execute(aux);
-            }
+            ChickenUtils.recogerFunciones(ins, aux);
+            ChickenUtils.ejecutarGlobal(ins, aux);
 
             //ChickenUtils.writeFile(ChickenUtils.reporteTablaSimbolos(aux),"TS_201404104","html");
             //ChickenUtils.openHtml("TS_201404104");
 
             //Node raiz = ChickenUtils.nodeInstructions(ins,"inicio");
             //AstGraphic graphic = new AstGraphic();
-            //graphic.armar_Cuerpo_dot(raiz);
+            //graphic.armar_Cuerpo_dot(raiz,"CUP");
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -126,7 +127,7 @@ class FunNativas {
 
                 ZProtoObject val = argumentos.get(0);
                 System.out.println(val.toChickenString());
-//                GUI2.console.setText(GUI2.console.getText() +"\n"+ val.toChickenString());
+                GUI2.console.setText(GUI2.console.getText() +"\n"+ val.toChickenString());
                 return ZNothing.getInstance();
             }
         };

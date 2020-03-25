@@ -4,7 +4,12 @@
 
 //-------> Paquete, importaciones
 package com.polloenpelotas.AnalizadorCup;
+import com.polloenpelotas.language.ChickenUtils;
+import com.polloenpelotas.language.FileLocation;
+import com.polloenpelotas.language.LocatedSemanticException;
+import com.polloenpelotas.language.SemanticException;
 import java_cup.runtime.*;
+
 
 %%
 /*----------------------------------------------------------------------------
@@ -173,4 +178,10 @@ inn = "in"
 [ \t\r\n\f]                 {/* Espacios en blanco, se ignoran */ }
 
 //-------> Errores Lexicos
-.                           {   System.out.println("Error Lexico: <<"+yytext()+">> Linea: "+yyline+" ,Columna: "+yycolumn);}
+.                           {
+
+                                ChickenUtils.lError.add(new LocatedSemanticException(new FileLocation(yycolumn,yyline),
+                                    new SemanticException("Error lexico: "+ yytext())));
+                                System.out.println("Error Lexico: <<"+yytext()+">> Linea: "+yyline+" ,Columna: "+yycolumn);
+
+                            }

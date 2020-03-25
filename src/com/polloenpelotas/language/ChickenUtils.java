@@ -1,7 +1,11 @@
 package com.polloenpelotas.language;
 
+import com.polloenpelotas.Extras.GUI2;
 import com.polloenpelotas.Extras.Node;
 import com.polloenpelotas.language.nodes.AstNode;
+import com.polloenpelotas.language.nodes.Instructions.AssignAstNode;
+import com.polloenpelotas.language.nodes.Instructions.AssignFunctionAstNode;
+import com.polloenpelotas.language.nodes.Instructions.DeclararFuncionAstNode;
 import com.polloenpelotas.language.types.*;
 import com.polloenpelotas.language.types.TransferTypes.ZBreak;
 import com.polloenpelotas.language.types.TransferTypes.ZContinue;
@@ -20,6 +24,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 public final class ChickenUtils {
+
 
 
     /**maneja las variables*/
@@ -978,6 +983,53 @@ public final class ChickenUtils {
                 }
 
             }
+        }
+
+    }
+
+    public static void recogerFunciones(List<AstNode> lInstructions, ZProtoObject ambit) throws LocatedSemanticException {
+
+        for (AstNode node:lInstructions) {
+
+
+            if(node instanceof AssignFunctionAstNode){
+                node.execute(ambit);
+            }
+
+        }
+
+    }
+
+    public static void ejecutarGlobal(List<AstNode> lInstructions, ZProtoObject ambit) throws LocatedSemanticException {
+        for (AstNode node: lInstructions) {
+
+            if(node instanceof AssignFunctionAstNode){
+                continue;
+            }
+
+            node.execute(ambit);
+
+
+        }
+
+    }
+
+    public static List<LocatedSemanticException> lError = new ArrayList<>();
+
+    public static void printErrors(List<LocatedSemanticException> lError){
+        if(lError.size()== 0){
+            return;
+        }
+
+        GUI2.console.setText(GUI2.console.getText() +"\n" + "errores:");
+
+        for (LocatedSemanticException error:
+             lError) {
+
+            GUI2.console.setText(GUI2.console.getText() +"\n");
+            GUI2.console.setText(
+                    GUI2.console.getText() +"Fila: " +error.getFileLocation().getY() +
+                            " Columna: " + error.getFileLocation().getX() + "\n" + "Mensaje: " + error.getSemanticException().getMessage());
         }
 
     }

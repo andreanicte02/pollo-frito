@@ -4,17 +4,17 @@ import com.polloenpelotas.AnalizadorCup.Lexico;
 import com.polloenpelotas.AnalizadorCup.Sintactico;
 import com.polloenpelotas.AnalizadorJCC.Gramatica;
 import com.polloenpelotas.AnalizadorJCC.ParseException;
-import com.polloenpelotas.language.ChickenUtils;
-import com.polloenpelotas.language.LocatedSemanticException;
-import com.polloenpelotas.language.Utils;
+import com.polloenpelotas.language.*;
 import com.polloenpelotas.language.nodes.AstNode;
 import com.polloenpelotas.language.types.ZAmbit;
 import java_cup.runtime.Symbol;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FlowInterpreter {
+
     AstGraphic graph = new AstGraphic();
 
     public void executeCup(String path){
@@ -22,16 +22,20 @@ public class FlowInterpreter {
         System.out.println("-----------------------------cup------------------------------");
         GUI2.console.setText("cup:");
 
-        List<AstNode> ins= executeParserCup(path);
-
-
-        ZAmbit ambit = new ZAmbit(null);
-        Utils.chargeFunctions(ambit);
         try {
+
+            List<AstNode> ins= getInstructionsCup(path);
+            ZAmbit ambit = new ZAmbit(null);
+            Utils.chargeFunctions(ambit);
             ChickenUtils.ejecutarSentencias(ins,ambit);
+
         } catch (LocatedSemanticException e) {
+            ChickenUtils.lError.add(e);
             e.printStackTrace();
+        } catch (Exception e) {
+              e.printStackTrace();
         }
+        ChickenUtils.printErrors(ChickenUtils.lError);
 
     }
 
@@ -39,7 +43,7 @@ public class FlowInterpreter {
         System.out.println("-----------------------------jcc------------------------------");
         GUI2.console.setText("jcc");
 
-        List<AstNode> ins= executeParserJCC(path);
+        List<AstNode> ins= getInstructionsJCC(path);
 
 
 
@@ -55,15 +59,28 @@ public class FlowInterpreter {
 
     public void astCup(String path){
 
-        List<AstNode> ins= executeParserCup(path);
-        Node root=ChickenUtils.nodeInstructions(ins,"root");
-        graph.armar_Cuerpo_dot(root,"CUP");
+
+        try {
+            List<AstNode> ins = getInstructionsCup(path);
+            Node root=ChickenUtils.nodeInstructions(ins,"root");
+            graph.armar_Cuerpo_dot(root,"CUP");
+        }
+        catch (LocatedSemanticException e){
+            ChickenUtils.lError.add(e);
+        }
+        catch (Exception e) {
+
+              e.printStackTrace();
+        }
+
+        ChickenUtils.printErrors(ChickenUtils.lError);
+
 
     }
 
     public void astJCC(String path){
 
-        List<AstNode> ins= executeParserJCC(path);
+        List<AstNode> ins= getInstructionsJCC(path);
         Node root = ChickenUtils.nodeInstructions(ins,"root");
         graph.armar_Cuerpo_dot(root,"JCC");
 
@@ -72,27 +89,33 @@ public class FlowInterpreter {
     public void tsCup(String path){
 
 
-        List<AstNode> ins= executeParserCup(path);
-
-
-        ZAmbit ambit = new ZAmbit(null);
-        Utils.chargeFunctions(ambit);
         try {
+            List<AstNode> ins= getInstructionsCup(path);
+
+            ZAmbit ambit = new ZAmbit(null);
+
+            Utils.chargeFunctions(ambit);
             ChickenUtils.ejecutarSentencias(ins,ambit);
             ChickenUtils.writeFile(ChickenUtils.reporteTablaSimbolos(ambit),"TSCup_201404104","html");
             ChickenUtils.openHtml("TSCup_201404104");
 
         } catch (LocatedSemanticException e) {
+            ChickenUtils.lError.add(e);
             e.printStackTrace();
         } catch (IOException e) {
+            ChickenUtils.lError.add(new LocatedSemanticException(new FileLocation(-1,-1), new SemanticException(e.getMessage())));
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+        ChickenUtils.printErrors(ChickenUtils.lError);
     }
 
     public void tsJCC(String path){
 
 
-        List<AstNode> ins= executeParserJCC(path);
+        List<AstNode> ins= getInstructionsJCC(path);
 
         ZAmbit ambit = new ZAmbit(null);
         Utils.chargeFunctions(ambit);
@@ -109,39 +132,27 @@ public class FlowInterpreter {
 
     }
 
-    public List<AstNode> executeParserCup(String path){
+    public List<AstNode> getInstructionsCup(String path) throws Exception {
 
-        Sintactico parse = null;
-        Lexico lex = null;
 
-        try {
+        ChickenUtils.lError = new ArrayList<>();
+        Lexico lex = new Lexico(new FileInputStream(path));
+        Sintactico parse = new Sintactico(lex);
+        Symbol symbol = parse.parse();
+        List<AstNode> ins = (List<AstNode>)symbol.value;
+        return ins;
 
-            lex = new Lexico(new FileInputStream(path));
-            parse = new Sintactico(lex);
 
-            Symbol symbol = parse.parse();
-
-            List<AstNode> ins = (List<AstNode>)symbol.value;
-            return ins;
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 
 
-    public List<AstNode> executeParserJCC(String path){
+    public List<AstNode> getInstructionsJCC(String path){
 
         try {
 
             Gramatica parser = new Gramatica(new BufferedReader(new FileReader(path)));
             return  parser.analizar();
-
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
