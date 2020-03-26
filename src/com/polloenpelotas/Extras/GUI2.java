@@ -257,14 +257,16 @@ public class GUI2 extends JFrame {
         FileWriter fichero = null;
         PrintWriter pw = null;
         try {
-            fichero = new FileWriter(multiTab.getTitleAt(multiTab.getSelectedIndex()));
+            String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
+            fichero = new FileWriter(path);
             pw = new PrintWriter(fichero);
             JPanel ho = (JPanel) multiTab.getSelectedComponent();
             JScrollPane sccodigo = (JScrollPane) ho.getComponent(0);
             JTextArea codigooriginal = (JTextArea) sccodigo.getViewport().getComponent(0);
 
             pw.println(codigooriginal.getText());
-            JOptionPane.showMessageDialog(null, "El archivo se a guardado Exitosamente", "", JOptionPane.INFORMATION_MESSAGE);
+            pw.close();
+            fichero.close();
 
         } catch (IOException ef) {
 
