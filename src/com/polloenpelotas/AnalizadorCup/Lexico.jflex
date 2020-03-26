@@ -91,20 +91,12 @@ inn = "in"
 <cadena1> .      { cadenita+= yytext();}
 
 <cadena2>        {
-            "'"  { cadenita+= "'"; yybegin(cadena1);}
+
             "\"" { cadenita+= "\""; yybegin(cadena1);}
-            "?"  { cadenita+= "?"; yybegin(cadena1);}
             "\\" { cadenita+= "\\"; yybegin(cadena1);}
-            "0"  { cadenita+= '\0'; yybegin(cadena1);}
-            "a"  { yybegin(cadena1); }
-            "b"  { cadenita+= '\b'; yybegin(cadena1);}
-            "f"  { cadenita+= '\f'; yybegin(cadena1);}
             "n"  { cadenita+= "\n"; yybegin(cadena1);}
             "r"  { cadenita+= '\r'; yybegin(cadena1);}
             "t"  { cadenita+= '\t'; yybegin(cadena1);}
-            "v"  { yybegin(cadena1);}
-            "u"  { cadenita+= '\0'; yybegin(cadena1);}
-            "U"  { yybegin(cadena1);}
 
 }
 //-------> Simbolos
