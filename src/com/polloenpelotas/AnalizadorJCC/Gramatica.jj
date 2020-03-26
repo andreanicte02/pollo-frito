@@ -39,7 +39,7 @@ SKIP : {
     | "\r"
     | "\n"
     | <"#" (~["\n", "\r"])*>
-    | <"#*" (~["*"])* "*" ("*" | ~["*","/"] (~["*"])* "*")* "#">
+
 }
 
 TOKEN : {
@@ -116,6 +116,13 @@ List<AstNode>  analizar() :
   (e=instruccion() {l.add(e);})+ <EOF> {return l;}
 }
 
+List<AstNode>  listaInstruccion():
+{ AstNode e; List<AstNode> l = new ArrayList<AstNode>(); }
+{
+    (e=instruccion(){l.add(e);})+    {return l;}
+    |                                {return l;}
+}
+
 
 AstNode instruccion() :
 {AstNode e, e1;}
@@ -136,53 +143,52 @@ AstNode instruccion() :
   |
   e=sentReturn()      (<PCOMA>)?                { return e; }
   |
-  LOOKAHEAD(2)e=invokeFunction()   (<PCOMA>)?   { return e; }
-  |
-  LOOKAHEAD(3)e=funcionNormal()                 { return e;}
-  |
-  LOOKAHEAD(6)e=funcionFlecha()                 { return e;}
-  |
-  LOOKAHEAD(1)e=ExpsLeft() <IGUAL> e1=Expresion() (<PCOMA>)? {return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1); }
-
-
-
-
+  e=assignSomething()                      {return e;}
 }
 
-List<AstNode>  listaInstruccion():
-{ AstNode e; List<AstNode> l = new ArrayList<AstNode>(); }
+AstNode assignSomething():
+{AstNode e, other;}
 {
-    (e=instruccion(){l.add(e);})+    {return l;}
-    |                                {return l;}
-}
-
-AstNode funcionNormal():
-{Token t; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
-{
-    t=<IDENTIFIER> <IGUAL> <FUNCTION> <APAR> lPar=parametros() <CPAR> <ALLA> lSent=listaInstruccion() <CLLA>
+    LOOKAHEAD(2)e=ExpsLeft() <IGUAL> other=assignSomething2(e)
     {
-        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image.toLowerCase() );
-        AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
+        return other;
+    }
+    |
+    e=invokeFunction()   (<PCOMA>)?   { return e; }
+}
 
+AstNode assignSomething2(AstNode e):
+{AstNode e1; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
+{
+    LOOKAHEAD(4)<APAR> lPar=parametros() <CPAR> <ARROW> <ALLA> lSent=listaInstruccion() <CLLA>
 
-        return new AssignFunctionAstNode(new FileLocation(token.beginColumn, token.beginLine), aux1, aux2);
+    {
+
+            AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
+            return new AssignFunctionAstNode(new FileLocation(token.beginColumn, token.beginLine), e, aux2);
 
     }
-}
-
-AstNode funcionFlecha():
-{Token t; List<AstNode> lPar = new ArrayList<AstNode>(); List<AstNode> lSent = new ArrayList<AstNode>(); }
-{
-    t=<IDENTIFIER> <IGUAL> <APAR> lPar=parametros() <CPAR> <ARROW> <ALLA> lSent=listaInstruccion() <CLLA>
+    |
+    <FUNCTION> <APAR> lPar=parametros() <CPAR> <ALLA> lSent=listaInstruccion()  <CLLA>
     {
-        AstNode aux1= new FindIDLeftAstNode(new FileLocation(t.beginColumn, t.beginLine), t.image.toLowerCase() );
-        AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
-
-
-        return new AssignFunctionAstNode(new FileLocation(token.beginColumn, token.beginLine), aux1, aux2);
+            AstNode aux2= new DeclararFuncionAstNode(new FileLocation(token.beginColumn, token.beginLine), lPar, lSent);
+            return new AssignFunctionAstNode(new FileLocation(token.beginColumn, token.beginLine), e, aux2);
 
     }
+    |
+    e1=Expresion() (<PCOMA>)?
+    {
+        return new AssignAstNode(new FileLocation(token.beginColumn, token.beginLine),e, e1);
+    }
+
+
+
 }
+
+
+
+
+
 
 AstNode sentReturn():
 {AstNode e;}

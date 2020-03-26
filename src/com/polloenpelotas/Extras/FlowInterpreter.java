@@ -29,7 +29,8 @@ public class FlowInterpreter {
             List<AstNode> ins= getInstructionsCup(path);
             ZAmbit ambit = new ZAmbit(null);
             Utils.chargeFunctions(ambit);
-            ChickenUtils.ejecutarSentencias(ins,ambit);
+            ChickenUtils.recogerFunciones(ins, ambit);
+            ChickenUtils.ejecutarGlobal(ins, ambit);
 
         } catch (LocatedSemanticException e) {
             ChickenUtils.lError.add(e);
@@ -41,17 +42,19 @@ public class FlowInterpreter {
 
     }
 
-    public void executeJCC(String entrada){
+    public void executeJCC(String path){
         System.out.println("-----------------------------jcc------------------------------");
         GUI2.console.setText("jcc");
 
         try {
 
-            List<AstNode> ins= getInstructionsJCC(entrada);
+            List<AstNode> ins= getInstructionsJCC(path);
             ZAmbit ambit = new ZAmbit(null);
             Utils.chargeFunctions(ambit);
 
-            ChickenUtils.ejecutarSentencias(ins,ambit);
+            ChickenUtils.recogerFunciones(ins, ambit);
+            ChickenUtils.ejecutarGlobal(ins, ambit);
+
         } catch (LocatedSemanticException e) {
             ChickenUtils.lError.add(e);
             e.printStackTrace();
@@ -119,7 +122,10 @@ public class FlowInterpreter {
             ZAmbit ambit = new ZAmbit(null);
 
             Utils.chargeFunctions(ambit);
-            ChickenUtils.ejecutarSentencias(ins,ambit);
+
+            ChickenUtils.recogerFunciones(ins, ambit);
+            ChickenUtils.ejecutarGlobal(ins, ambit);
+
             ChickenUtils.writeFile(ChickenUtils.reporteTablaSimbolos(ambit),"TSCup_201404104","html");
             ChickenUtils.openHtml("TSCup_201404104");
 
@@ -144,7 +150,10 @@ public class FlowInterpreter {
             List<AstNode> ins= getInstructionsJCC(entrada);
             ZAmbit ambit = new ZAmbit(null);
             Utils.chargeFunctions(ambit);
-            ChickenUtils.ejecutarSentencias(ins,ambit);
+
+            ChickenUtils.recogerFunciones(ins, ambit);
+            ChickenUtils.ejecutarGlobal(ins, ambit);
+
             ChickenUtils.writeFile(ChickenUtils.reporteTablaSimbolos(ambit),"TSCup_201404104","html");
             ChickenUtils.openHtml("TSCup_201404104");
 
@@ -191,12 +200,12 @@ public class FlowInterpreter {
 
 
 
-    public List<AstNode> getInstructionsJCC(String entrada) throws ParseException, FileNotFoundException {
+    public List<AstNode> getInstructionsJCC(String path) throws ParseException, FileNotFoundException {
         isCup=false;
         ChickenUtils.lError = new ArrayList<>();
 
-        Gramatica parser = new Gramatica(new BufferedReader(new StringReader(entrada.replace("\\\"","\\$"))));
-        return  parser.analizar();
+        Gramatica parser = new Gramatica(new BufferedReader(new FileReader(path)));
+         return  parser.analizar();
 
 
     }

@@ -116,12 +116,12 @@ public class GUI2 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                JPanel ho = (JPanel) multiTab.getSelectedComponent();
-                JScrollPane sccodigo = (JScrollPane) ho.getComponent(0);
-                JTextArea codigooriginal = (JTextArea) sccodigo.getViewport().getComponent(0);
+                if(multiTab.getTitleAt(multiTab.getSelectedIndex()).equals("new:")){
+                    saveAsFile();
+                }
 
-
-                execute.executeJCC(codigooriginal.getText());
+                String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
+                execute.executeJCC(path);
             }
         });
 
@@ -138,12 +138,8 @@ public class GUI2 extends JFrame {
         astJCCButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-
-                JPanel ho = (JPanel) multiTab.getSelectedComponent();
-                JScrollPane sccodigo = (JScrollPane) ho.getComponent(0);
-                JTextArea codigooriginal = (JTextArea) sccodigo.getViewport().getComponent(0);
-
-                execute.astJCC(codigooriginal.getText());
+                String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
+                execute.astJCC(path);
                 console.setText(console.getText()+"\n"+"Grafica jcc");
             }
         });
@@ -159,11 +155,8 @@ public class GUI2 extends JFrame {
         TSJCCButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                JPanel ho = (JPanel) multiTab.getSelectedComponent();
-                JScrollPane sccodigo = (JScrollPane) ho.getComponent(0);
-                JTextArea codigooriginal = (JTextArea) sccodigo.getViewport().getComponent(0);
-
-                execute.tsJCC(codigooriginal.getText());
+                String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
+                execute.tsJCC(path);
                 console.setText(console.getText()+"\n"+"Tabla simbolos jcc");
             }
         });
