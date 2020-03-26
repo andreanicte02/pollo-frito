@@ -779,7 +779,7 @@ public class Gramatica implements GramaticaConstants {
   }
 
   final public AstNode Primitives() throws ParseException {
- AstNode e; Token t;
+ AstNode e; Token t; String cad;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
     case APAR:
       jj_consume_token(APAR);
@@ -805,7 +805,11 @@ public class Gramatica implements GramaticaConstants {
       break;
     case STRING:
       t = jj_consume_token(STRING);
-                 {if (true) return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) );}
+                     cad = t.image.substring(1,t.image.length()-1);
+                     cad = cad.replace("\u005c\u005c","\u005c\u005c");
+                     cad = cad.replace("\u005c\u005cn","\u005cn");
+                     cad = cad.replace("\u005c\u005ct","\u005ct");
+                     {if (true) return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), cad );}
       break;
     case NOTHING:
       jj_consume_token(NOTHING);
@@ -1190,6 +1194,12 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
+  private boolean jj_3R_16() {
+    if (jj_scan_token(IDENTIFIER)) return true;
+    if (jj_scan_token(APAR)) return true;
+    return false;
+  }
+
   private boolean jj_3_6() {
     if (jj_scan_token(ELSE)) return true;
     if (jj_3R_20()) return true;
@@ -1207,29 +1217,8 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
-  private boolean jj_3R_16() {
-    if (jj_scan_token(IDENTIFIER)) return true;
-    if (jj_scan_token(APAR)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_19() {
-    if (jj_3R_22()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_20() {
-    if (jj_scan_token(IF)) return true;
-    return false;
-  }
-
   private boolean jj_3R_48() {
     if (jj_scan_token(IDENTIFIER)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_32() {
-    if (jj_3R_33()) return true;
     return false;
   }
 
@@ -1238,8 +1227,18 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
+  private boolean jj_3R_19() {
+    if (jj_3R_22()) return true;
+    return false;
+  }
+
   private boolean jj_3R_47() {
     if (jj_scan_token(DEFAULTT)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_20() {
+    if (jj_scan_token(IF)) return true;
     return false;
   }
 
@@ -1253,13 +1252,8 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
-  private boolean jj_3R_45() {
-    if (jj_scan_token(STRING)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_44() {
-    if (jj_scan_token(FALSE)) return true;
+  private boolean jj_3R_32() {
+    if (jj_3R_33()) return true;
     return false;
   }
 
@@ -1280,6 +1274,26 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
+  private boolean jj_3R_45() {
+    if (jj_scan_token(STRING)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_44() {
+    if (jj_scan_token(FALSE)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_27() {
+    if (jj_scan_token(COMA)) return true;
+    if (jj_3R_26()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_24() {
+    return false;
+  }
+
   private boolean jj_3R_43() {
     if (jj_scan_token(TRUE)) return true;
     return false;
@@ -1295,6 +1309,26 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
+  private boolean jj_3R_21() {
+    Token xsp;
+    xsp = jj_scanpos;
+    if (jj_3R_23()) {
+    jj_scanpos = xsp;
+    if (jj_3R_24()) return true;
+    }
+    return false;
+  }
+
+  private boolean jj_3R_23() {
+    if (jj_3R_26()) return true;
+    Token xsp;
+    while (true) {
+      xsp = jj_scanpos;
+      if (jj_3R_27()) { jj_scanpos = xsp; break; }
+    }
+    return false;
+  }
+
   private boolean jj_3R_41() {
     if (jj_scan_token(NUMERO)) return true;
     return false;
@@ -1303,12 +1337,6 @@ public class Gramatica implements GramaticaConstants {
   private boolean jj_3_4() {
     if (jj_scan_token(RETURN)) return true;
     if (jj_3R_19()) return true;
-    return false;
-  }
-
-  private boolean jj_3R_27() {
-    if (jj_scan_token(COMA)) return true;
-    if (jj_3R_26()) return true;
     return false;
   }
 
@@ -1348,30 +1376,6 @@ public class Gramatica implements GramaticaConstants {
 
   private boolean jj_3R_40() {
     if (jj_scan_token(APAR)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_24() {
-    return false;
-  }
-
-  private boolean jj_3R_21() {
-    Token xsp;
-    xsp = jj_scanpos;
-    if (jj_3R_23()) {
-    jj_scanpos = xsp;
-    if (jj_3R_24()) return true;
-    }
-    return false;
-  }
-
-  private boolean jj_3R_23() {
-    if (jj_3R_26()) return true;
-    Token xsp;
-    while (true) {
-      xsp = jj_scanpos;
-      if (jj_3R_27()) { jj_scanpos = xsp; break; }
-    }
     return false;
   }
 

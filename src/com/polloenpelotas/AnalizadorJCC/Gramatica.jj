@@ -469,7 +469,7 @@ AstNode accessArray2(AstNode e, AstNode e1):
 
 
 AstNode Primitives() :
-{AstNode e; Token t;   }
+{AstNode e; Token t; String cad;  }
 {
     <APAR> e = Expresion() <CPAR>   { return e; }
     |
@@ -481,7 +481,14 @@ AstNode Primitives() :
     |
     <FALSE> { return new CreateZBooleanNode(new FileLocation(token.beginColumn, token.beginLine),false); }
     |
-    t=<STRING> { return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), t.image.substring(1,t.image.length()-1) ); }
+    t=<STRING>  {
+                     cad = t.image.substring(1,t.image.length()-1);
+                     cad = cad.replace("\\","\\");
+                     cad = cad.replace("\\n","\n");
+                     cad = cad.replace("\\t","\t");
+                     return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), cad );
+
+                }
     |
     <NOTHING> { return new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine));}
     |
