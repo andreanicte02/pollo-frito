@@ -87,7 +87,7 @@ inn = "in"
 //--------> Caracteres de escape
 <YYINITIAL> "\"" { yybegin (cadena1); cadenita="";}
 <cadena1>   "\\" { yybegin (cadena2); }
-<cadena1>   "\"" { yybegin (YYINITIAL);  return new Symbol(Simbolos.cadena,yyline,yycolumn,cadenita.replace("\"","")); }
+<cadena1>   "\"" { yybegin (YYINITIAL);  return new Symbol(Simbolos.cadena,yyline,yycolumn,cadenita.replace("\"","\"")); }
 <cadena1> .      { cadenita+= yytext();}
 
 <cadena2>        {

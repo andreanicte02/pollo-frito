@@ -809,6 +809,7 @@ public class Gramatica implements GramaticaConstants {
                      cad = cad.replace("\u005c\u005c","\u005c\u005c");
                      cad = cad.replace("\u005c\u005cn","\u005cn");
                      cad = cad.replace("\u005c\u005ct","\u005ct");
+                     cad = cad.replace("\u005c\u005c$", '"' +"");
                      {if (true) return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), cad );}
       break;
     case NOTHING:
@@ -1227,23 +1228,23 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
-  private boolean jj_3R_19() {
-    if (jj_3R_22()) return true;
-    return false;
-  }
-
   private boolean jj_3R_47() {
     if (jj_scan_token(DEFAULTT)) return true;
     return false;
   }
 
-  private boolean jj_3R_20() {
-    if (jj_scan_token(IF)) return true;
+  private boolean jj_3R_19() {
+    if (jj_3R_22()) return true;
     return false;
   }
 
   private boolean jj_3R_46() {
     if (jj_scan_token(NOTHING)) return true;
+    return false;
+  }
+
+  private boolean jj_3R_20() {
+    if (jj_scan_token(IF)) return true;
     return false;
   }
 
@@ -1279,14 +1280,14 @@ public class Gramatica implements GramaticaConstants {
     return false;
   }
 
-  private boolean jj_3R_44() {
-    if (jj_scan_token(FALSE)) return true;
-    return false;
-  }
-
   private boolean jj_3R_27() {
     if (jj_scan_token(COMA)) return true;
     if (jj_3R_26()) return true;
+    return false;
+  }
+
+  private boolean jj_3R_44() {
+    if (jj_scan_token(FALSE)) return true;
     return false;
   }
 
@@ -1301,11 +1302,6 @@ public class Gramatica implements GramaticaConstants {
 
   private boolean jj_3R_42() {
     if (jj_scan_token(DECIMAL)) return true;
-    return false;
-  }
-
-  private boolean jj_3R_31() {
-    if (jj_3R_32()) return true;
     return false;
   }
 
@@ -1326,6 +1322,11 @@ public class Gramatica implements GramaticaConstants {
       xsp = jj_scanpos;
       if (jj_3R_27()) { jj_scanpos = xsp; break; }
     }
+    return false;
+  }
+
+  private boolean jj_3R_31() {
+    if (jj_3R_32()) return true;
     return false;
   }
 

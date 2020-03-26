@@ -486,6 +486,7 @@ AstNode Primitives() :
                      cad = cad.replace("\\","\\");
                      cad = cad.replace("\\n","\n");
                      cad = cad.replace("\\t","\t");
+                     cad = cad.replace("\\$", '"' +"");
                      return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), cad );
 
                 }
