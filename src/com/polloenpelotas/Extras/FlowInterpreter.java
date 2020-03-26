@@ -42,13 +42,13 @@ public class FlowInterpreter {
 
     }
 
-    public void executeJCC(String path){
+    public void executeJCC(String entrada){
         System.out.println("-----------------------------jcc------------------------------");
         GUI2.console.setText("jcc");
 
         try {
 
-            List<AstNode> ins= getInstructionsJCC(path);
+            List<AstNode> ins= getInstructionsJCC(entrada);
             ZAmbit ambit = new ZAmbit(null);
             Utils.chargeFunctions(ambit);
 
@@ -200,12 +200,12 @@ public class FlowInterpreter {
 
 
 
-    public List<AstNode> getInstructionsJCC(String path) throws ParseException, FileNotFoundException {
+    public List<AstNode> getInstructionsJCC(String entrada) throws ParseException, FileNotFoundException {
         isCup=false;
         ChickenUtils.lError = new ArrayList<>();
 
-        Gramatica parser = new Gramatica(new BufferedReader(new FileReader(path)));
-         return  parser.analizar();
+        Gramatica parser = new Gramatica(new BufferedReader(new StringReader(entrada.replace("\\\"","\\$"))));
+        return  parser.analizar();
 
 
     }
