@@ -1,6 +1,6 @@
 package com.polloenpelotas.Extras;
 
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.*;
 import org.fife.ui.rtextarea.RTextScrollPane;
 
 import javax.swing.*;
@@ -177,6 +177,22 @@ public class GUI2 extends JFrame {
         RSyntaxTextArea textArea = new RSyntaxTextArea();
         RTextScrollPane scroll = new RTextScrollPane(textArea);
         textArea.setBorder(null);
+
+        AbstractTokenMakerFactory algo = (AbstractTokenMakerFactory) TokenMakerFactory.getDefaultInstance();
+        algo.putMapping("colors", "com.polloenpelotas.Extras.ExampleTokenMaker");
+        textArea.setSyntaxEditingStyle("colors");
+        textArea.setCodeFoldingEnabled(true);
+        textArea.setCurrentLineHighlightColor(Color.decode("#9f9f9f"));
+        textArea.setFadeCurrentLineHighlight(false);
+
+        SyntaxScheme px = textArea.getSyntaxScheme();
+        px.getStyle(Token.RESERVED_WORD).foreground = Color.BLUE;
+        px.getStyle(Token.LITERAL_STRING_DOUBLE_QUOTE).foreground = Color.decode("#ff8306");
+        px.getStyle(Token.LITERAL_NUMBER_DECIMAL_INT).foreground = Color.decode("#692a79");
+        px.getStyle(Token.COMMENT_EOL).foreground = Color.GRAY;
+        px.getStyle(Token.COMMENT_MULTILINE).foreground = Color.GRAY;
+        px.getStyle(Token.SEPARATOR).foreground = Color.BLACK;
+        px.getStyle(Token.OPERATOR).foreground = Color.BLACK;
 
         textArea.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {

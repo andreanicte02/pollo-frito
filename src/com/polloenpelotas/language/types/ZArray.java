@@ -104,6 +104,21 @@ public class ZArray extends ZProtoObject {
 
     }
 
+    public ZString typeof(){
+
+        return new ZString("array");
+
+    }
+
+    public ZInteger length (){
+
+
+        Integer asdf = sizeList.stream().reduce(1,(x,y)->x*y);
+        return new ZInteger(asdf);
+    }
+
+
+
 
 
 
