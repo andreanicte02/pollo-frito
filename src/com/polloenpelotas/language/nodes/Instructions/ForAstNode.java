@@ -46,7 +46,7 @@ public class ForAstNode extends ProAstNode {
         if(e instanceof ZList){
 
             ZProtoObject result =  ejecutarFor(local, ((ZList) e).getList());
-            ChickenUtils.estructurasFor(((ZVector) e).getList());
+            ChickenUtils.estructurasFor(((ZList) e).getList());
             return result;
         }
 
