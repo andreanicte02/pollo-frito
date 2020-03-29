@@ -6,16 +6,14 @@ import com.polloenpelotas.language.FileLocation;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.nodes.AstNode;
-import com.polloenpelotas.language.nodes.CreateZTypes.CreateZNothingNode;
+import com.polloenpelotas.language.nodes.CreateZTypes.CreateZNothingParameterFunction;
 import com.polloenpelotas.language.nodes.ProAstNode;
 import com.polloenpelotas.language.types.ZFunction;
-import com.polloenpelotas.language.types.ZNothing;
 import com.polloenpelotas.language.types.ZProtoObject;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class DeclararFuncionAstNode extends ProAstNode {
 
@@ -43,7 +41,7 @@ public class DeclararFuncionAstNode extends ProAstNode {
             }
 
             if(node instanceof FindIDAstNode){
-                lParametros.add(new DeclararParametroAstNode(fileLocation ,((FindIDAstNode) node).getName(),new CreateZNothingNode(fileLocation)) );
+                lParametros.add(new DeclararParametroAstNode(fileLocation ,((FindIDAstNode) node).getName(),new CreateZNothingParameterFunction(fileLocation)) );
                 continue;
             }
 

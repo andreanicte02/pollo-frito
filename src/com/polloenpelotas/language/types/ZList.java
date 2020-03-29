@@ -37,6 +37,9 @@ public class ZList extends ZProtoObject {
 
     public ZProtoObject access(ZInteger index) throws SemanticException {
 
+        if(index.getValue()> list.size()){
+            throw new SemanticException("se esta intentado acceder a un posocion fuera de rango");
+        }
 
         ZVar aux = list.get(index.getValue()-1);
         List<ZProtoObject> unwrapList = new ArrayList<>();
@@ -57,7 +60,11 @@ public class ZList extends ZProtoObject {
     }
 
 
-    public ZProtoObject access2(ZInteger index){
+    public ZProtoObject access2(ZInteger index) throws SemanticException {
+        if(index.getValue()> list.size()){
+            throw new SemanticException("se esta intentado acceder a un posocion fuera de rango");
+        }
+
 
         ZVar wrapVar = list.get(index.getValue()-1);
         ZProtoObject unwrapVar = ChickenUtils.unwrap(wrapVar);

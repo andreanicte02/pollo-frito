@@ -24,23 +24,34 @@ public class ZFunction extends ZProtoObject {
     public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
 
 
-        if(argumentos.size()!= declararParametros.size()){
-            throw new SemanticException("La cantidad de argumentos enviados, no coincide con la cantidad de parametros declarados");
+        if(argumentos.size()> declararParametros.size()){
+            throw new SemanticException("La cantidad de argumentos enviados, es mayor con la cantidad de parametros declarados");
         }
+        int contadorArumgentos=0;
 
         ZProtoObject ambitoFuncion = new ZAmbit(ambitoCapturado);
 
-        for (int x = 0;x<argumentos.size(); x++){
+        for (int x = 0;x<declararParametros.size(); x++){
+
             ZVar var = (ZVar) declararParametros.get(x).execute(ambitoFuncion);
 
-            if(argumentos.get(x) instanceof ZDefault){
+            if(var.getValue() instanceof ZNothingParameter){
+                var.executeOperation("assign","=",argumentos.get(contadorArumgentos));
+                contadorArumgentos++;
                 continue;
             }
 
-            var.executeOperation("assign","=",argumentos.get(x));
-
+            if(contadorArumgentos< argumentos.size() && argumentos.get(contadorArumgentos) instanceof ZDefault){
+                contadorArumgentos++;
+                continue;
+            }
 
         }
+
+        if(contadorArumgentos!= argumentos.size()){
+            throw new SemanticException("no se terminaron de declarar todos los argumentos");
+        }
+
 
         var result = ChickenUtils.ejecutarSentencias(instructions,ambitoFuncion);
 

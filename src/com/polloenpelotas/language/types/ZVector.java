@@ -32,7 +32,10 @@ public class ZVector extends ZProtoObject {
      *  access from the right side  *
      * * * * * * * * * * * * * * * */
 
-    public ZVector access(ZInteger index){
+    public ZVector access(ZInteger index) throws SemanticException {
+        if(index.getValue()> list.size()){
+            throw new SemanticException("se esta intentado acceder a un posocion fuera de rango");
+        }
 
         return new ZVector( list.get(index.getValue()-1) ) ;
 

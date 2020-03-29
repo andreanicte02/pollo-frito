@@ -50,6 +50,11 @@ public class ZVar extends ZProtoObject {
         return ZNothing.getInstance();
     }
 
+    public ZProtoObject assign(@NotNull ZNothingParameter nothing ) {
+        value =nothing;
+        return ZNothing.getInstance();
+    }
+
 
 
 
