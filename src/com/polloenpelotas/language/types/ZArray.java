@@ -9,6 +9,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ZArray extends ZProtoObject {
 
@@ -126,7 +127,13 @@ public class ZArray extends ZProtoObject {
     public String toChickenString() {
 
         try {
-            return ChickenUtils.stringArray(superMatrix, sizeList);
+            String cadena ="array: ";
+
+            for (int x =sizeList.size()-1; x>=0;x--){
+                cadena+=sizeList.get(x).toString()+" ";
+            }
+
+            return  cadena  +"\n"+ChickenUtils.stringArray(superMatrix, sizeList);
         } catch (SemanticException e) {
             e.printStackTrace();
         }

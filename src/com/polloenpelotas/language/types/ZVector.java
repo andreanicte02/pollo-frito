@@ -52,8 +52,8 @@ public class ZVector extends ZProtoObject {
 
     public ZProtoObject access1Left(ZInteger index) throws SemanticException {
 
-        if(index.getValue()>list.size()){
-            throw new SemanticException("se intenta acceder a una posicion que esta fuera de rango");
+        if(index.getValue()==0){
+            throw new SemanticException("se intenta asignar a un vector en una posocion 0");
         }
 
         VectorUtils.increaseZSize(list, index.getValue());

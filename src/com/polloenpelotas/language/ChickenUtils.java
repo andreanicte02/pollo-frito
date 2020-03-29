@@ -955,18 +955,19 @@ public final class ChickenUtils {
 
 
 
+
         int size = sizeList.get(indice);
 
 
         for (int x = 0; x<size; x++){
 
-            if(indice == 0){
 
+            if(indice == 0){
 
                 ZProtoObject o = obtenerDimension(superMatrix, x+1);
                 if(o instanceof ZVar){
 
-                    cad.append(x+":" +unwrap(o).toChickenString()+"\n");
+                    cad.append(unwrap(o).toChickenString()+"\n");
                     listVar.add((ZVar) o);
                 }
 
@@ -975,8 +976,6 @@ public final class ChickenUtils {
                 ZProtoObject o = obtenerDimension(superMatrix, x+1);
                 if(o instanceof ZArray) {
 
-                    cad.append("\n-----\n");
-                    cad.append(x+",");
 
                     recorrerDimension(((ZArray) o).superMatrix, sizeList, indice - 1, listVar,cad);
 
