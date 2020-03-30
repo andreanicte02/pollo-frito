@@ -40,6 +40,10 @@ public class ZString extends ZProtoObject {
         return VectorUtils.rightVectorOperation(this,vector,"add","+");
     }
 
+    public ZString add(ZList e){
+        return new ZString(value+e.toChickenString());
+    }
+
     public ZMatriz add(ZMatriz e) throws SemanticException {
         return MatrixUtils.rightMatrixOperation(this,e,"add","+");
     }

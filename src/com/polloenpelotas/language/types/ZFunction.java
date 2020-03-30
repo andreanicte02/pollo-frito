@@ -1,5 +1,6 @@
 package com.polloenpelotas.language.types;
 
+import com.polloenpelotas.Extras.GUI2;
 import com.polloenpelotas.language.ChickenUtils;
 import com.polloenpelotas.language.LocatedSemanticException;
 import com.polloenpelotas.language.SemanticException;
@@ -49,7 +50,8 @@ public class ZFunction extends ZProtoObject {
         }
 
         if(contadorArumgentos!= argumentos.size()){
-            throw new SemanticException("no se terminaron de declarar todos los argumentos");
+            GUI2.console.setText(GUI2.console.getText()+ "\n"+ "no se terminaron de declarar todos los argumentos");
+            System.out.println("no se terminaron de declarar todos los argumentos");
         }
 
 

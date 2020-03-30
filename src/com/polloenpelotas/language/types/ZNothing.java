@@ -53,6 +53,10 @@ public class ZNothing extends ZProtoObject {
         return MatrixUtils.rightMatrixOperation(this, e, "add", "+");
     }
 
+    public ZString add(ZList e){
+        return new ZString("null"+e.toChickenString());
+    }
+
     /**menor*/
     public ZBoolean menor(ZString e) {
 

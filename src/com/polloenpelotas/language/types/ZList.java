@@ -28,12 +28,17 @@ public class ZList extends ZProtoObject {
         return list;
     }
 
+    public ZString add(ZString e){
+        return new ZString(toChickenString()+ e.getValue());
+    }
+
     /* * * * * * * * * * * * * * * *
      *  access from the right side  *
      * * * * * * * * * * * * * * * */
 
     /*acces devuelve el valor en una lista*/
     /*acces2 devuelve el valor indicado como tal*/
+
 
     public ZProtoObject access(ZInteger index) throws SemanticException {
 

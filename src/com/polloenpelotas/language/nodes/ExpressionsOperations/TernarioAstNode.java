@@ -28,14 +28,14 @@ public class TernarioAstNode extends ProAstNode {
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
         //t odo desenvuelto
 
-        ZProtoObject v = ChickenUtils.unwrap(valV.execute(ambit));
-        ZProtoObject f = ChickenUtils.unwrap(valF.execute(ambit));
+        //ZProtoObject v = ChickenUtils.unwrap(valV.execute(ambit));
+       // ZProtoObject f = ChickenUtils.unwrap(valF.execute(ambit));
 
         //--- el resultado de la condcion o es un valor puntual
         //---el resultado de la o es un vector
 
 
-        return ChickenUtils.valueCond("ternario",condicion,ambit)?v:f;
+        return ChickenUtils.valueCond("ternario",condicion,ambit)? ChickenUtils.unwrap(valV.execute(ambit)):ChickenUtils.unwrap(valF.execute(ambit));
 
     }
 
