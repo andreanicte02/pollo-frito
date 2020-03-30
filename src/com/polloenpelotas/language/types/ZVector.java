@@ -191,6 +191,13 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    public ZVector add(ZList e) throws SemanticException {
+        ZString aux = new ZString(e.toChickenString());
+        return VectorUtils.leftVectorOperation(this,aux,"add","+");
+
+    }
+
+
     public ZVector add(ZVector e) throws SemanticException {
 
         return VectorUtils.vectorVectorOperation(this,e,"add","+");

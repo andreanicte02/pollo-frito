@@ -32,6 +32,17 @@ public class ZList extends ZProtoObject {
         return new ZString(toChickenString()+ e.getValue());
     }
 
+    public ZString add(ZNothing e){
+        return new ZString(toChickenString()+ "null");
+    }
+
+    public ZVector add(ZVector e) throws SemanticException {
+
+        ZString aux = new ZString(e.toChickenString());
+        return VectorUtils.rightVectorOperation(aux,e,"add","+");
+
+    }
+
     /* * * * * * * * * * * * * * * *
      *  access from the right side  *
      * * * * * * * * * * * * * * * */
