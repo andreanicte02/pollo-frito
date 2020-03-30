@@ -27,16 +27,15 @@ public class ZFunction extends ZProtoObject {
     public ZProtoObject ejecutarFuncion(List<ZProtoObject> argumentos) throws SemanticException, LocatedSemanticException {
 
 
-        if(argumentos.size()!= declararParametros.size()){
+        if(argumentos.size()< declararParametros.size()){
             return ejecutarConError(argumentos);
         }
 
 
-
         ZProtoObject ambitoFuncion = new ZAmbit(ambitoCapturado);
 
-
         for (int x = 0;x<argumentos.size(); x++){
+
             ZVar var = (ZVar) declararParametros.get(x).execute(ambitoFuncion);
 
             if(argumentos.get(x) instanceof ZDefault){
@@ -44,19 +43,13 @@ public class ZFunction extends ZProtoObject {
                 if(var.getValue() instanceof ZNothingParameter){
                     var.setValue(ZNothing.getInstance());
                 }
-
                 continue;
             }
 
 
             var.executeOperation("assign","=",argumentos.get(x));
 
-
         }
-
-
-
-
 
         var result = ChickenUtils.ejecutarSentencias(instructions,ambitoFuncion);
 
@@ -67,6 +60,7 @@ public class ZFunction extends ZProtoObject {
         //si noretorna nada retorna nullo
         return ZNothing.getInstance();
     }
+
 
     public ZProtoObject ejecutarConError(List<ZProtoObject> argumentos ) throws SemanticException, LocatedSemanticException {
 
