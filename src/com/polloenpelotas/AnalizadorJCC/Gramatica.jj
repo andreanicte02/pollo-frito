@@ -595,7 +595,7 @@ AstNode parametro():
     LOOKAHEAD(1)  t=<IDENTIFIER>
     {
         return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image.toLowerCase(),
-            new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine)));
+            new CreateZNothingParameterFunction(new FileLocation(token.beginColumn, token.beginLine)));
      }
 
 }

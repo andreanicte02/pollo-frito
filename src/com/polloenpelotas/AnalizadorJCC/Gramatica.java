@@ -1032,7 +1032,7 @@ public class Gramatica implements GramaticaConstants {
       case IDENTIFIER:
         t = jj_consume_token(IDENTIFIER);
         {if (true) return new DeclararParametroAstNode(new FileLocation(token.beginColumn, token.beginLine), t.image.toLowerCase(),
-            new CreateZNothingNode(new FileLocation(token.beginColumn, token.beginLine)));}
+            new CreateZNothingParameterFunction(new FileLocation(token.beginColumn, token.beginLine)));}
         break;
       default:
         jj_la1[41] = jj_gen;

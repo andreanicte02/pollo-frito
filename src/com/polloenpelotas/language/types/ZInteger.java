@@ -372,6 +372,11 @@ public class ZInteger extends ZProtoObject {
 
     }
 
+    /**value condition*/
+    public ZBoolean valueCondition(){
+        return value ==0?new ZBoolean(false): new ZBoolean(true);
+    }
+
 
 
 
