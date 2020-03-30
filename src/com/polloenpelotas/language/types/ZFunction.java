@@ -73,16 +73,22 @@ public class ZFunction extends ZProtoObject {
 
             ZVar var = (ZVar) declararParametros.get(x).execute(ambitoFuncion);
 
+            if(contadorArumgentos< argumentos.size() && argumentos.get(contadorArumgentos) instanceof ZDefault){
+
+                if(var.getValue() instanceof ZNothingParameter){
+                    var.setValue(ZNothing.getInstance());
+                }
+
+                contadorArumgentos++;
+                continue;
+            }
+
             if(var.getValue() instanceof ZNothingParameter){
                 var.executeOperation("assign","=",argumentos.get(contadorArumgentos));
                 contadorArumgentos++;
                 continue;
             }
 
-            if(contadorArumgentos< argumentos.size() && argumentos.get(contadorArumgentos) instanceof ZDefault){
-                contadorArumgentos++;
-                continue;
-            }
 
         }
 
