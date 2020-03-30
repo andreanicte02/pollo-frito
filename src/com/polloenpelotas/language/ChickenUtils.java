@@ -744,6 +744,7 @@ public final class ChickenUtils {
         }
 
         if(cont ==0){
+            return new ZInteger(0);
         }
 
         return aux.executeOperation("div","mean", new ZNumeric(cont));

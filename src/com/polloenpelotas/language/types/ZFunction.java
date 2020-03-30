@@ -116,8 +116,6 @@ public class ZFunction extends ZProtoObject {
             }
         }
         ChickenUtils.lError.add(new LocatedSemanticException(aux,new SemanticException("la cantidad de argumentos nocoinicde, con las declaradas en la funcion, posiblemente la funcion no se ejecute de manera correcta")));
-        GUI2.console.setText(GUI2.console.getText()+ "\n fila: "+aux.getY()+" columna:"+aux.getX()+ "la cantidad de argumentos nocoinicde, con las declaradas en la funcion, posiblemente la funcion no se ejecute de manera correcta");
-        System.out.println("\n fila: "+aux.getY()+" columna:"+aux.getX()+"la cantidad de argumentos nocoinicde, con las declaradas en la funcion");
 
     }
 
