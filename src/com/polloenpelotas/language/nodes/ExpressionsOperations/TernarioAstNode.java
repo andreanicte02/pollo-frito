@@ -35,7 +35,12 @@ public class TernarioAstNode extends ProAstNode {
         //---el resultado de la o es un vector
 
 
-        return ChickenUtils.valueCond("ternario",condicion,ambit)? ChickenUtils.unwrap(valV.execute(ambit)):ChickenUtils.unwrap(valF.execute(ambit));
+        //return ChickenUtils.valueCond("ternario",condicion,ambit)? ChickenUtils.unwrap(valV.execute(ambit)):ChickenUtils.unwrap(valF.execute(ambit));
+
+        if(ChickenUtils.valueCond("ternario",condicion,ambit)){
+            return ChickenUtils.unwrap(valV.execute(ambit));
+        }
+        return ChickenUtils.unwrap(valF.execute(ambit));
 
     }
 
