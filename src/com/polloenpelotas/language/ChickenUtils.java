@@ -743,6 +743,9 @@ public final class ChickenUtils {
             cont++;
         }
 
+        if(cont ==0){
+        }
+
         return aux.executeOperation("div","mean", new ZNumeric(cont));
 
 
@@ -759,7 +762,8 @@ public final class ChickenUtils {
             ZProtoObject aux = unwrap(array.get(array.size()/2));
             ZProtoObject aux2 = unwrap(array.get((array.size()/2 )-1));
             ZProtoObject sumMedios= aux.executeOperation("add","median",aux2);
-            return sumMedios.executeOperation("div","median", new ZNumeric(2.0));
+            ZProtoObject other = sumMedios.executeOperation("div","median", new ZNumeric(2.0));
+            return other;
 
         }
 
@@ -784,6 +788,10 @@ public final class ChickenUtils {
 
 
         if(array.size() %2 ==0){
+
+            if(array.size() ==0){
+                return  new ZInteger(0);
+            }
 
             ZProtoObject aux = unwrap(array.get(array.size()/2));
             ZProtoObject aux2 = unwrap(array.get(array.size()/2-1));

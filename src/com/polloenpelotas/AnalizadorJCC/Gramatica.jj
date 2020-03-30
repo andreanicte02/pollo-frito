@@ -489,9 +489,10 @@ AstNode Primitives() :
     |
     t=<STRING>  {
                      cad = t.image.substring(1,t.image.length()-1);
-                     cad = cad.replace("\\","\\");
+                     cad = cad.replace("\\\\","\\");
                      cad = cad.replace("\\n","\n");
                      cad = cad.replace("\\t","\t");
+                     cad = cad.replace("\\r","\r");
                      cad = cad.replace("\\$", '"' +"");
                      return new CreateZStringNode(new FileLocation(token.beginColumn, token.beginLine), cad );
 

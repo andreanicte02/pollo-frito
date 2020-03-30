@@ -458,7 +458,7 @@ class FunNativas {
                     ZProtoObject aux2 = ChickenUtils.obtenerUnPrimitivo(argumentos.get(1));
 
                     if(!(aux instanceof ZVector)){
-                        throw new SemanticException("Se esperaba, un vector o primitivo en la funcion mode");
+                        throw new SemanticException("Se esperaba, un vector o primitivo en la funcion median");
                     }
 
                     return ChickenUtils.median(
