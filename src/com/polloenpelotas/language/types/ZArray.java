@@ -128,11 +128,52 @@ public class ZArray extends ZProtoObject {
 
 
     public ZBoolean equalTo(ZNothing e){
+
         return new ZBoolean(false);
+
+    }
+
+
+    public ZBoolean equalTo (ZVector e)  {
+
+        return new ZBoolean(false);
+
+    }
+
+    public ZBoolean equalTo (ZList e)  {
+
+        return new ZBoolean(false);
+
+    }
+
+    public ZBoolean equalTo (ZMatriz e)  {
+
+        return new ZBoolean(false);
+
+    }
+
+
+    public ZBoolean notEqualTo(ZVector e){
+
+        return new ZBoolean(true);
+
+    }
+
+    public ZBoolean notEqualTo(ZList e){
+
+        return new ZBoolean(true);
+    }
+
+    public ZBoolean notEqualTo (ZMatriz e) {
+
+        return new ZBoolean(true);
+
     }
 
     public ZBoolean notEqualTo(ZNothing e){
+
         return new ZBoolean(true);
+
     }
 
 

@@ -470,6 +470,19 @@ public class ZMatriz extends ZProtoObject {
         return MatrixUtils.matrixMatrixOperation(this, e, "equalTo", "==");
     }
 
+
+    public ZBoolean equalTo (ZList e)  {
+
+        return new ZBoolean(false);
+
+    }
+
+    public ZBoolean equalTo (ZArray e)  {
+
+        return new ZBoolean(false);
+
+    }
+
     /**not equalto*/
 
     public ZMatriz notEqualTo(ZInteger e) throws SemanticException {
@@ -496,6 +509,20 @@ public class ZMatriz extends ZProtoObject {
     public ZMatriz notEqualTo(ZMatriz e) throws SemanticException {
         return MatrixUtils.matrixMatrixOperation(this, e, "notEqualTo", "!=");
     }
+
+
+    public ZBoolean notEqualTo (ZList e)  {
+
+        return new ZBoolean(true);
+
+    }
+
+    public ZBoolean notEqualTo (ZArray e)  {
+
+        return new ZBoolean(true);
+
+    }
+
 
     /**and*/
 

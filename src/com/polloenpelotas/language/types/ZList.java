@@ -48,9 +48,43 @@ public class ZList extends ZProtoObject {
         return new ZBoolean(false);
     }
 
+    public ZBoolean equalTo (ZVector e) throws SemanticException {
+
+        return new ZBoolean(false);
+
+    }
+
+    public ZBoolean equalTo (ZArray e) throws SemanticException {
+
+        return new ZBoolean(false);
+
+    }
+
+    public ZBoolean equalTo (ZMatriz e) throws SemanticException {
+
+        return new ZBoolean(false);
+
+    }
+
+
     public ZBoolean notEqualTo(ZNothing e){
         return new ZBoolean(true);
     }
+
+    public ZBoolean notEqualTo(ZVector e){
+        return new ZBoolean(true);
+    }
+
+    public ZBoolean notEqualTo(ZArray e){
+        return new ZBoolean(true);
+    }
+
+    public ZBoolean notEqualTo (ZMatriz e) {
+
+        return new ZBoolean(true);
+
+    }
+
 
 
     /* * * * * * * * * * * * * * * *

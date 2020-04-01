@@ -17,11 +17,11 @@ public class OrAstNode extends BinaryOperationNode {
 
     public ZProtoObject safeExecute(@NotNull ZProtoObject ambit) throws LocatedSemanticException, SemanticException {
 
-        if(ChickenUtils.valueCond("Condicion en and",e1,ambit)){
+        if(ChickenUtils.valueCond("Condicion en or",e1,ambit)){
             return new ZBoolean(true);
         }
 
-        if(ChickenUtils.valueCond("Condicion en and",e2,ambit)){
+        if(ChickenUtils.valueCond("Condicion en or",e2,ambit)){
             return new ZBoolean(true);
         }
 
