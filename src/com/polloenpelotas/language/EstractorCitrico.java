@@ -27,6 +27,11 @@ public class EstractorCitrico {
 
     }
 
+    public EstractorCitrico(List<ZVar> listData){
+        this.isList = false;
+        this.listData = listData;
+    }
+
 
 
     public ZVar get(){

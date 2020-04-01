@@ -1,7 +1,10 @@
 package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
+import com.polloenpelotas.language.SemanticException;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class ZVar extends ZProtoObject {
 
@@ -72,13 +75,24 @@ public class ZVar extends ZProtoObject {
         return ZNothing.getInstance();
     }
 
-    public ZProtoObject assign(@NotNull ZMatriz zmat ) {
-        value =zmat;
+    public ZProtoObject assign(@NotNull ZMatriz zmat ) throws SemanticException {
+
+        List<ZVar> list = ChickenUtils.getListVarMatrix(zmat.mat,zmat.getRow(), zmat.getCol());
+
+        value = new ZMatriz(new ZInteger(zmat.getRow()), new ZInteger(zmat.getCol()));
+
+        ((ZMatriz) value).setData(new ZVector(ChickenUtils.copiaPorValor(list)));
+
         return ZNothing.getInstance();
     }
 
-    public ZProtoObject assign(@NotNull ZArray array){
-        value = array;
+    public ZProtoObject assign(@NotNull ZArray array) throws SemanticException {
+
+        List<ZVar> list = ChickenUtils.getListVarArray(array.superMatrix,array.sizeList);
+
+        value = new ZArray(0,ChickenUtils.copiaPorValor(list),array.sizeList);
+
+
         return ZNothing.getInstance();
     }
 

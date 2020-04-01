@@ -1,0 +1,166 @@
+****************************************
+**  Andrea Nicte Vicente Campos       **
+**  201404104                         **
+**  OLC2 - SECCION C                  **
+****************************************
+
+
+start with inicio
+
+
+inicio::= sentencias
+
+
+listaSentencia::= sentencias 
+                |              
+                
+
+
+sentencias::= sentencias sentencia
+            | sentencia             
+            
+
+sentencia::=  asignacion     endSent     
+            | invocarFuncion endSent     
+            | asignarFuncion              
+            | sentReturn                 
+            | sentIf                      
+            | breakk endSent              
+            | sentSwitch                  
+            | continuee endSent           
+            | sentDoWhile endSent         
+            | sentFor                     
+            
+
+
+sentFor::= forr apar identifier inn exp cpar alla listaSentencia clla
+           
+            
+
+asignacion::=nexpLeft igual exp              
+        
+
+asignarFuncion::= expLeft igual declararFuncion 
+        
+
+
+sentReturn::=  returnn exp  endSent             
+            |  returnn  pComa                     
+            
+
+
+
+declararFuncion::= function apar listExp cpar alla listaSentencia clla
+                | apar exp cpar arrow  alla  listaSentencia clla
+                | apar exp coma exps cpar arrow alla listaSentencia clla
+                | apar cpar arrow:o alla listaSentencia clla
+                
+
+
+
+
+expLeft ::= identifier                      
+           | expLeft abra exp cbra       
+           | expLeft abra abra exp cbra cbra    
+           | expLeft abra exp coma exp2 cbra  
+           | expLeft abra exp coma cbra         
+           | expLeft abra coma exp cbra         
+        
+
+endSent::= pComa
+        |
+        
+
+sentIf::=iff apar exp cpar bodyIf                  
+        |iff apar exp cpar bodyIf elsee bodyIf2   
+        |iff apar exp cpar bodyIf elsee sentIf2   
+        
+
+bodyIf::= alla listaSentencia clla 
+
+sentSwitch::= switchh apar exp cpar alla clla                           
+            | switchh apar exp cpar alla listCases clla                
+            | switchh apar exp cpar alla listCases sentDefault clla  
+            | switchh apar exp cpar alla sentDefault clla             
+            
+
+
+listCases::= listCases sentCase          
+            |sentCase                      
+            
+
+sentCase::= casee  exp  dosp listaSentencia   
+            
+
+sentDefault::= defaultt dosp listaSentencia      
+
+sentWhile::= whilee apar exp cpar alla listaSentencia clla
+            
+
+sentDoWhile::= doo alla listaSentencia clla whilee apar exp cpar 
+            
+
+exp::= exp mas exp            
+
+    | exp menos exp             
+
+    | exp modulo exp            
+    | exp por exp               
+    | exp dividir exp          
+
+    | exp potenciar exp         
+
+    | exp igualQue exp          
+    | exp difQue exp           
+
+    | exp menorIgualQue exp    
+    | exp mayorQue exp          
+    | exp menorQue exp          
+
+    | exp and exp               
+    | exp or exp                
+    | exp tern exp dosp exp:c      
+
+    | apar exp cpar               
+
+
+    | not exp                     
+    | menos exp                  
+
+    | cadena                      
+    | decimal                    
+    | numero                      
+
+    | truee                       
+    | falsee                      
+
+
+    | exp abra exp cbra             
+    | exp abra abra exp cbra cbra  %prec abra2
+
+    | exp abra exp coma exp:c cbra       
+    | exp abra exp coma cbra             
+    | exp abra coma exp cbra             
+
+    | nothing                        
+    | identifier igual exp          
+    | defaultt                       
+
+
+    | identifier                      
+
+    
+
+
+invocarFuncion::= identifier apar listExp cpar  %prec invokeFun
+                
+
+
+listExp::= exps          
+                |         
+                
+
+exps::= exps coma exp   
+            | exp        
+            
+

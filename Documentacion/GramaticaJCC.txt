@@ -1,0 +1,353 @@
+
+****************************************
+**  Andrea Nicte Vicente Campos       **
+**  201404104                         **
+**  OLC2 - SECCION C                  **
+****************************************
+
+Inicio: (instruccion)+ 
+
+
+listaInstruccion: (instruccion)+   
+                  |                               
+
+
+ instruccion : 
+
+  <BREAK>  (<PCOMA>)?                           
+  |
+  <CONTINUE> (<PCOMA>)?                         
+  |
+  sentFor                                  
+  |
+  sentWhile                                
+  |
+  sentDoWhile (<PCOMA>)?                   
+  |
+  sentIf                                   
+  |
+  sentSwitch                                
+  |
+  sentReturn      (<PCOMA>)?                
+  |
+  assignSomething                      
+
+
+ assignSomething:
+
+    LOOKAHEAD(2)ExpsLeft <IGUAL> assignSomething2
+    |
+    invokeFunction   (<PCOMA>)?   
+
+
+ assignSomething2:
+
+    LOOKAHEAD(4)<APAR> parametros <CPAR> <ARROW> <ALLA> listaInstruccion <CLLA>
+    |
+    <FUNCTION> <APAR> parametros <CPAR> <ALLA> listaInstruccion  <CLLA>
+    |
+    Expresion (<PCOMA>)?
+   
+
+
+ sentReturn:
+
+    LOOKAHEAD(2)<RETURN> Expresion 
+    |
+    LOOKAHEAD(1)<RETURN>
+
+
+ sentFor:
+
+    <FOR> <APAR> <IDENTIFIER> <IN> Expresion <CPAR> <ALLA> listaInstruccion <CLLA>
+   
+
+
+ sentIf:
+    <IF> <APAR> Expresion <CPAR>  <ALLA> listaInstruccion <CLLA> sentIf2
+    
+
+
+sentIf2:
+    LOOKAHEAD(2) <ELSE> <ALLA> listaInstruccion <CLLA> 
+    |
+
+    LOOKAHEAD(2) <ELSE> sentIf                         
+    |
+    
+
+
+
+ sentSwitch:
+
+
+    <SWITCH> <APAR> Expresion <CPAR> <ALLA> sentSwitch2(e) <CLLA>
+    
+
+sentSwitch2:
+
+    sentDefault
+    |
+    listCases sentSwitch3
+    |
+
+
+
+ sentSwitch3 :
+
+    sentDefault
+    |
+
+
+
+
+listCases:
+
+    sentCase  ( sentCase  )*
+
+
+
+sentCase:
+
+    <CASE> Expresion <DOSP> listaInstruccion 
+
+
+ sentDefault:
+
+    <DEFAULTT> <DOSP>  listaInstruccion 
+
+
+ sentWhile:
+
+
+    <WHILE> <APAR> Expresion <CPAR> <ALLA>  listaInstruccion  <CLLA>
+
+ sentDoWhile:
+
+    <DO> <ALLA> listaInstruccion <CLLA> <WHILE> <APAR> Expresion <CPAR>
+    
+
+ Expresion:
+
+    ExpresionOr ( <TERN> ExpresionOr <DOSP> ExpresionOr )*
+ 
+
+
+ ExpresionOr:
+
+
+    ExpresionAnd ( <OR> ExpresionAnd  )*
+ 
+
+
+
+
+ ExpresionAnd:
+
+
+    ExpresionIgualdad (    <AND> ExpresionIgualdad )*
+
+
+
+
+
+ ExpresionIgualdad:
+
+
+    ExpresionRelacional
+    (
+        <IGUALACION> ExpresionRelacional
+        |
+        <DIFERENCIACION> ExpresionRelacional 
+
+    )*
+   
+
+
+
+ ExpresionRelacional:
+
+
+
+    ExpresionSuma
+    (
+        <MAYORQUE> ExpresionSuma 
+        |
+        <MENORQUE> ExpresionSuma 
+        |
+        <MAYORIGUAL> ExpresionSuma 
+        |
+        <MENORIGUAL> ExpresionSuma 
+
+
+    )*
+   
+
+ ExpresionSuma :
+
+    ExpresionMultiplicativa
+    (
+        <MAS> ExpresionMultiplicativa 
+        |
+        <MENOS> ExpresionMultiplicativa
+
+    )*
+ 
+
+
+ ExpresionMultiplicativa :
+
+
+    ExpPotencia
+    (
+        <POR> ExpPotencia 
+        |
+        <DIV> ExpPotencia 
+        |
+        <MODULAR> ExpPotencia 
+
+
+    )*
+
+
+
+ ExpPotencia:
+
+
+    ExpresionUnaria
+    (
+        <POT>  ExpresionUnaria 
+
+    )*
+
+
+
+
+ ExpresionUnaria :
+
+    <MENOS> ExpresionUnaria 
+    |
+    <NOT> ExpresionUnaria   
+    |
+    ExpAccess 
+
+
+
+ ExpAccess:
+
+
+   Primitives(
+
+        <ABRA> accessArray1 <CBRA>
+
+   )* 
+
+
+
+ accessArray1:
+
+
+    <ABRA> Expresion <CBRA>
+    |
+    <COMA> Expresion
+    |
+    Expresion accessArray2
+   
+
+
+
+ accessArray2:
+
+    LOOKAHEAD(2)<COMA> Expresion
+    |
+    LOOKAHEAD(1)<COMA>
+    |
+   
+
+
+
+ Primitives :
+
+    <APAR>  Expresion <CPAR>   
+    |
+    <NUMERO>  
+    |
+    <DECIMAL> 
+    |
+    <TRUE> 
+    |
+    <FALSE> 
+    |
+    <STRING>  
+    |
+    <NOTHING> 
+    |
+    <DEFAULTT> 
+    |
+    LOOKAHEAD(2) invokeFunction 
+    |
+    <IDENTIFIER> 
+
+
+}
+
+ invokeFunction:
+
+     <IDENTIFIER> <APAR> exps <CPAR> 
+
+
+
+
+ exps:
+{
+    Expresion (  <COMA> Expresion )* 
+    |
+  
+}
+
+ ExpsLeft:
+
+    PrimitivesLeft  (  <ABRA> LeftAccessArray1 <CBRA> )* 
+
+
+
+ LeftAccessArray1:
+
+    <ABRA> Expresion <CBRA>
+    |
+    <COMA> Expresion
+    |
+    Expresion LeftAccessArray2
+
+
+
+
+ LeftAccessArray2:
+
+    LOOKAHEAD(2)<COMA> Expresion 
+    |
+    LOOKAHEAD(1)<COMA>
+    |
+    
+
+
+
+ PrimitivesLeft:
+
+    <IDENTIFIER> 
+
+
+  parametros:
+
+    parametro {l.add(e); }(<COMA> parametro)* 
+    |
+
+
+
+ parametro:
+
+    LOOKAHEAD(3) <IDENTIFIER> <IGUAL> Expresion
+    |
+    LOOKAHEAD(1)  <IDENTIFIER>
+ 
+

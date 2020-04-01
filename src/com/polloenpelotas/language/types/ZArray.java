@@ -30,6 +30,13 @@ public class ZArray extends ZProtoObject {
 
     }
 
+    public ZArray(int pela, List<ZVar> lisData, List<Integer> sizeList){
+
+        this.sizeList = sizeList;
+        EstractorCitrico estractor = new EstractorCitrico(lisData);
+        this.superMatrix=ChickenUtils.crearDimension(this.sizeList,this.sizeList.size()-1, estractor::get);
+    }
+
     public ZArray(List<Object> superMatrix, List<Integer> sizeList){
         this.superMatrix = superMatrix;
         this.sizeList = sizeList;
