@@ -29,6 +29,23 @@ public class ZBoolean extends ZProtoObject {
         return new ZString(value + "null");
     }
 
+    public ZInteger add(ZBoolean e){
+
+        return new ZInteger(getInt() + e.getInt());
+    }
+
+    public ZNumeric add(ZNumeric e){
+
+        return new ZNumeric(getInt() + e.getValue());
+    }
+
+    public ZNumeric add(ZInteger e){
+
+        return new ZNumeric(getInt() + e.getValue());
+    }
+
+
+
     public ZVector add(ZVector vector) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,vector,"add","+");

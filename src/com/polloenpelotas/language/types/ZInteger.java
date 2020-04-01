@@ -51,6 +51,10 @@ public class ZInteger extends ZProtoObject {
         return MatrixUtils.rightMatrixOperation(this,e,"add","+");
     }
 
+    public ZInteger add(ZBoolean e){
+
+        return new ZInteger(value + e.getInt());
+    }
 
 
     /**resta*/

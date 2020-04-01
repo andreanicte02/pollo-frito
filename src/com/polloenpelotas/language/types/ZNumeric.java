@@ -30,6 +30,12 @@ public class ZNumeric extends ZProtoObject {
     public ZString add(ZString e) {
         return new ZString(value+  e.getValue());
     }
+
+    public ZNumeric add(ZBoolean e){
+
+        return new ZNumeric(value + e.getInt());
+    }
+
     //el null se trata como un string
     public ZString add(ZNothing e){
         return new ZString(value + "null");
