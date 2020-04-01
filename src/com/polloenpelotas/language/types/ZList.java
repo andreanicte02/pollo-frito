@@ -1,6 +1,7 @@
 package com.polloenpelotas.language.types;
 
 import com.polloenpelotas.language.ChickenUtils;
+import com.polloenpelotas.language.MatrixUtils;
 import com.polloenpelotas.language.SemanticException;
 import com.polloenpelotas.language.VectorUtils;
 
@@ -42,6 +43,15 @@ public class ZList extends ZProtoObject {
         return VectorUtils.rightVectorOperation(aux,e,"add","+");
 
     }
+
+    public ZBoolean equalTo(ZNothing e){
+        return new ZBoolean(false);
+    }
+
+    public ZBoolean notEqualTo(ZNothing e){
+        return new ZBoolean(true);
+    }
+
 
     /* * * * * * * * * * * * * * * *
      *  access from the right side  *

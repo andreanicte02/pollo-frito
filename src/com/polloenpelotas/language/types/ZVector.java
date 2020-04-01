@@ -511,11 +511,30 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    public ZVector equalTo (ZBoolean e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"equalTo","==");
+
+    }
+
     public ZVector equalTo (ZVector e) throws SemanticException {
 
         return VectorUtils.vectorVectorOperation(this, e,"equalTo","==");
 
     }
+
+    public ZBoolean equalTo (ZList e) throws SemanticException {
+
+        return new ZBoolean(false);
+
+    }
+
+    public ZBoolean equalTo (ZArray e) throws SemanticException {
+
+        return new ZBoolean(false);
+
+    }
+
 
     public ZMatriz equalTo(ZMatriz e) throws SemanticException {
         ZProtoObject other = ChickenUtils.ifOnlyOneDataInVector(list,"se intenta operar una matriz con un vector > 1");
@@ -541,6 +560,12 @@ public class ZVector extends ZProtoObject {
 
     }
 
+    public ZVector notEqualTo (ZBoolean e) throws SemanticException {
+
+        return VectorUtils.leftVectorOperation(this, e,"notEqualTo","!=");
+
+    }
+
     public ZVector notEqualTo (ZNothing e) throws SemanticException {
 
         return VectorUtils.leftVectorOperation(this, e,"notEqualTo","!=");
@@ -558,6 +583,19 @@ public class ZVector extends ZProtoObject {
         return MatrixUtils.rightMatrixOperation(other,e,"notEqualTo","!=");
 
     }
+
+    public ZBoolean notEqualTo (ZList e) throws SemanticException {
+
+        return new ZBoolean(true);
+
+    }
+
+    public ZBoolean notEqualTo (ZArray e) throws SemanticException {
+
+        return new ZBoolean(true);
+
+    }
+
 
     /**and*/
     public ZVector and (ZBoolean e) throws SemanticException {

@@ -127,7 +127,13 @@ public class ZArray extends ZProtoObject {
 
 
 
+    public ZBoolean equalTo(ZNothing e){
+        return new ZBoolean(false);
+    }
 
+    public ZBoolean notEqualTo(ZNothing e){
+        return new ZBoolean(true);
+    }
 
 
     @Override

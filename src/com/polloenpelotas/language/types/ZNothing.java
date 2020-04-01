@@ -150,6 +150,11 @@ public class ZNothing extends ZProtoObject {
         return new ZBoolean(false);
     }
 
+    public ZBoolean equalTo(ZArray e){
+        return new ZBoolean(false);
+    }
+
+
     public ZBoolean equalTo(ZNothing e){
         return new ZBoolean(true);
     }
@@ -185,6 +190,10 @@ public class ZNothing extends ZProtoObject {
     }
 
     public ZBoolean notEqualTo(ZList e){
+        return new ZBoolean(true);
+    }
+
+    public ZBoolean notEqualTo(ZArray e){
         return new ZBoolean(true);
     }
 

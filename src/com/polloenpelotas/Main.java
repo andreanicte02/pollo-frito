@@ -11,6 +11,10 @@ public class Main {
 
         ChickenUtils.grafiteando = 0;
         System.out.println("xD");
+        System.out.println((8%2 != 0 ) & (8 != 1));
+        System.out.println((4%2 != 0 ) & (4 != 1));
+        System.out.println((2%2 != 0 ) & (2 != 1));
+        System.out.println((1%2 != 0 ) & (1 != 1));
         GUI2 ls = new GUI2();
         ls.setVisible(true);
 
