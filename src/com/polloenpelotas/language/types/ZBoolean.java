@@ -133,6 +133,72 @@ public class ZBoolean extends ZProtoObject {
 
     }
 
+    /**relacionales*/
+
+    public ZBoolean mayor(ZInteger e){
+
+        return new ZBoolean(this.getInt() > e.getValue());
+    }
+
+    public ZBoolean mayor (ZNumeric e){
+
+        return new ZBoolean(this.getInt() > e.getValue());
+    }
+
+    public ZBoolean mayor(ZBoolean e){
+
+        return new ZBoolean(this.getInt() > e.getInt());
+    }
+
+
+
+    public ZBoolean menor(ZBoolean e){
+
+        return new ZBoolean(getInt()< e.getInt());
+    }
+
+    public ZBoolean menor(ZInteger e){
+
+        return new ZBoolean(getInt()< e.getValue());
+    }
+
+    public ZBoolean menor(ZNumeric e){
+
+        return new ZBoolean(getInt()< e.getValue());
+    }
+
+
+    public ZBoolean mayorIgual(ZInteger e){
+
+        return new ZBoolean(getInt() >= e.getValue());
+    }
+
+    public ZBoolean mayorIgual (ZNumeric e){
+
+        return new ZBoolean(getInt() >= e.getValue());
+    }
+
+    public ZBoolean mayorIgual(ZBoolean e){
+
+        return new ZBoolean(getInt() >= e.getInt());
+    }
+
+
+    public ZBoolean menorIgual(ZInteger e){
+
+        return new ZBoolean(getInt() <= e.getValue());
+    }
+
+    public ZBoolean menorIgual (ZNumeric e){
+
+        return new ZBoolean(getInt() <= e.getValue());
+    }
+
+    public ZBoolean menorIgual(ZBoolean e){
+
+        return new ZBoolean(getInt() <= e.getInt());
+    }
+
     /**cast*/
 
     public ZString castS (ZNothing e) throws SemanticException {
@@ -178,6 +244,12 @@ public class ZBoolean extends ZProtoObject {
 
         return new ZString("boolean");
 
+    }
+
+
+    public int getInt(){
+
+        return value?1:0;
     }
 
 

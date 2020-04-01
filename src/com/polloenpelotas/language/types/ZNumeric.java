@@ -160,6 +160,12 @@ public class ZNumeric extends ZProtoObject {
         return new ZBoolean(this.value > e.getValue());
     }
 
+    public ZBoolean mayor(ZBoolean e){
+
+        return new ZBoolean(this.value > e.getInt());
+    }
+
+
     public ZVector mayor (ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"mayor",">");
@@ -183,6 +189,12 @@ public class ZNumeric extends ZProtoObject {
 
         return new ZBoolean(this.value < e.getValue());
     }
+
+    public ZBoolean menor(ZBoolean e){
+
+        return new ZBoolean(this.value < e.getInt());
+    }
+
 
     public ZVector menor (ZVector e) throws SemanticException {
 
@@ -209,6 +221,11 @@ public class ZNumeric extends ZProtoObject {
         return new ZBoolean(this.value >= e.getValue());
     }
 
+    public ZBoolean mayorIgual(ZBoolean e){
+
+        return new ZBoolean(this.value >= e.getInt());
+    }
+
     public ZVector mayorIgual (ZVector e) throws SemanticException {
 
         return VectorUtils.rightVectorOperation(this,e,"mayorIgual",">=");
@@ -232,6 +249,10 @@ public class ZNumeric extends ZProtoObject {
         return new ZBoolean(this.value <= e.getValue());
     }
 
+    public ZBoolean menorIgual(ZBoolean e){
+
+        return new ZBoolean(this.value <= e.getInt());
+    }
 
     public ZVector menorIgual (ZVector e) throws SemanticException {
 
