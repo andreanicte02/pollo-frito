@@ -684,4 +684,17 @@ public class ZMatriz extends ZProtoObject {
         return aux;
     }
 
+    public ZProtoObject valueCondition() throws SemanticException {
+
+        if(row ==0 && col == 0){
+            throw new SemanticException("la matriz esta vacia, para evualar la condicion");
+        }
+
+        ZProtoObject unwrapVal = ChickenUtils.unwrap(mat[0][0]);
+        return unwrapVal.executeOperation("valueCondition","if | switch | tern");
+
+
+    }
+
+
 }
