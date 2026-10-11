@@ -18,6 +18,11 @@ public class Main {
         GUI2 ls = new GUI2();
         ls.setVisible(true);
 
+        // Files passed as arguments open in their own tabs (the web demo preloads the examples).
+        for (String path : args) {
+            ls.openPath(path);
+        }
+
 
 
 

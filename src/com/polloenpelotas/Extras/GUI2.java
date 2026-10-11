@@ -45,6 +45,9 @@ public class GUI2 extends JFrame {
     public GUI2(){
 
         super("Interprete - Andrea Nicte Vicente Campos - 201404104");
+        if (panel1 == null) {
+            buildLayout(); // built without IntelliJ's form compiler (Maven, CheerpJ)
+        }
         this.setContentPane(panel1);
         this.setSize(1250,720);
         this.setResizable(false);
@@ -101,13 +104,10 @@ public class GUI2 extends JFrame {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 
-                if(multiTab.getTitleAt(multiTab.getSelectedIndex()).equals("new:")){
-                    saveAsFile();
-
+                String path = currentTextAsFile();
+                if (path != null) {
+                    execute.executeCup(path);
                 }
-
-                String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
-                execute.executeCup(path);
 
             }
         });
@@ -129,7 +129,10 @@ public class GUI2 extends JFrame {
         ASTCupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
+                String path = currentTextAsFile();
+                if (path == null) {
+                    return;
+                }
                 execute.astCup(path);
                 console.setText(console.getText()+"\n"+"Grafica cup");
             }
@@ -150,7 +153,10 @@ public class GUI2 extends JFrame {
         TSCupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String path = multiTab.getTitleAt(multiTab.getSelectedIndex());
+                String path = currentTextAsFile();
+                if (path == null) {
+                    return;
+                }
                 execute.tsCup(path);
                 console.setText(console.getText()+"\n"+"Tabla simbolos cup");
             }
@@ -173,6 +179,117 @@ public class GUI2 extends JFrame {
                 execute.reporteErrores();
             }
         });
+    }
+
+    /** Text of the editor in the selected tab, or null if there is no tab. */
+    private String currentText() {
+        if (multiTab.getSelectedIndex() < 0) {
+            return null;
+        }
+        JPanel ho = (JPanel) multiTab.getSelectedComponent();
+        JScrollPane sccodigo = (JScrollPane) ho.getComponent(0);
+        JTextArea textArea = (JTextArea) sccodigo.getViewport().getComponent(0);
+        return textArea.getText();
+    }
+
+    /**
+     * The CUP parser reads from a file, so the current editor text is written to a
+     * temporary one. This runs exactly what is on screen, even if it was never saved.
+     */
+    private String currentTextAsFile() {
+        String text = currentText();
+        if (text == null) {
+            return null;
+        }
+        try {
+            File tmp = File.createTempFile("pollo-frito", ".txt");
+            tmp.deleteOnExit();
+            try (Writer w = new OutputStreamWriter(new FileOutputStream(tmp), "UTF-8")) {
+                w.write(text);
+            }
+            return tmp.getAbsolutePath();
+        } catch (IOException e) {
+            console.setText("No se pudo preparar el archivo: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /** Opens a file in its own tab (used to preload the examples). */
+    public void openPath(String path) {
+        StringBuilder contenido = new StringBuilder();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF-8"))) {
+            String linea;
+            while ((linea = reader.readLine()) != null) {
+                contenido.append(linea).append("\n");
+            }
+        } catch (IOException e) {
+            console.setText(console.getText() + "\nNo se pudo abrir " + path);
+            return;
+        }
+        String actual = currentText();
+        boolean reuse = multiTab.getTabCount() == 1 && "new:".equals(multiTab.getTitleAt(0))
+                && actual != null && actual.isEmpty();
+        if (!reuse) {
+            addWindow();
+        }
+        int index = multiTab.getTabCount() - 1;
+        multiTab.setSelectedIndex(index);
+        JPanel ho = (JPanel) multiTab.getComponentAt(index);
+        JScrollPane sccodigo = (JScrollPane) ho.getComponent(0);
+        JTextArea textArea = (JTextArea) sccodigo.getViewport().getComponent(0);
+        textArea.setText(contenido.toString());
+        textArea.setCaretPosition(0);
+        multiTab.setTitleAt(index, new File(path).getName());
+    }
+
+    /** Same layout as GUI2.form, for builds that don't run IntelliJ's form compiler. */
+    private void buildLayout() {
+        panel1 = new JPanel(new GridBagLayout());
+        multiTab = new JTabbedPane();
+        panel2 = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5));
+
+        abrirButton = new JButton("Abrir");
+        guardarButton = new JButton("Guardar");
+        guardarComoButton = new JButton("Guardar Como");
+        TSCupButton = new JButton("TS Cup");
+        TSJCCButton = new JButton("TS JCC");
+        ASTCupButton = new JButton("AST cup");
+        astJCCButton = new JButton("Ast JCC");
+        erroresButton = new JButton("Errores");
+        addPestaña = new JButton("Add Pestaña");
+        closePestañaButton = new JButton("Close Pestaña");
+        ejecutarCupButton = new JButton("Ejecutar Cup");
+        ejecutarJCCButton = new JButton("Ejecutar JCC");
+
+        JButton[] fila0 = {abrirButton, guardarButton, guardarComoButton, TSCupButton,
+                TSJCCButton, ASTCupButton, astJCCButton, erroresButton};
+        JButton[] fila1 = {addPestaña, closePestañaButton, ejecutarCupButton, ejecutarJCCButton};
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+        for (int i = 0; i < fila0.length; i++) {
+            c.gridx = i;
+            c.gridy = 0;
+            panel1.add(fila0[i], c);
+        }
+        for (int i = 0; i < fila1.length; i++) {
+            c.gridx = i;
+            c.gridy = 1;
+            panel1.add(fila1[i], c);
+        }
+
+        c.fill = GridBagConstraints.BOTH;
+        c.weighty = 1;
+        c.gridy = 2;
+        c.gridx = 0;
+        c.gridwidth = 4;
+        panel1.add(multiTab, c);
+
+        JPanel consola = new JPanel(new BorderLayout());
+        consola.add(panel2, BorderLayout.CENTER);
+        c.gridx = 4;
+        panel1.add(consola, c);
     }
 
     public void addWindow(){
