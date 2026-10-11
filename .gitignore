@@ -113,3 +113,6 @@ hs_err_pid*
 
 .idea/vcs.xml
 Graficas/
+# Maven build output and the assembled Pages site
+target/
+site/

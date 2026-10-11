@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pollo Frito Interpreter</title>
+  <meta name="description" content="An interpreter for an R-like language written in Java, running in the browser with CheerpJ.">
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+      --border: rgba(11, 11, 11, .10); --accent: #256abf; --code-bg: #f0efec;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        color-scheme: dark;
+        --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7;
+        --border: rgba(255, 255, 255, .10); --accent: #5598e7; --code-bg: #232322;
+      }
+    }
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7;
+      --border: rgba(255, 255, 255, .10); --accent: #5598e7; --code-bg: #232322;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--page); color: var(--ink); font: 16px/1.6 var(--sans); }
+    a { color: var(--accent); }
+    code { font-family: var(--mono); font-size: .9em; }
+    .wrap { max-width: 1290px; margin: 0 auto; padding: 0 16px; }
+    header { padding: 40px 16px 20px; }
+    .eyebrow { margin: 0; font: 600 13px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+    h1 { margin: 10px 0 8px; font-size: clamp(30px, 5vw, 44px); line-height: 1.1; letter-spacing: -.02em; }
+    .lede { margin: 0; max-width: 78ch; color: var(--ink-2); font-size: 17px; }
+    .steps { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 16px 0 0; padding: 0; list-style: none; font-size: 14px; color: var(--ink-2); }
+    .steps b { color: var(--ink); }
+    .stage { overflow: auto; border: 1px solid var(--border); border-radius: 12px; background: #2b2b2b; }
+    #display { position: relative; width: 1256px; height: 726px; margin: 0 auto; }
+    #status {
+      position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 12px;
+      color: #e6e6e6; font: 15px var(--sans); text-align: center; padding: 16px; pointer-events: none;
+    }
+    .spinner { width: 28px; height: 28px; border: 3px solid #666; border-top-color: #e6e6e6; border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 24px 0 40px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+    .card h2 { margin: 0 0 8px; font-size: 17px; }
+    .card p, .card li { color: var(--ink-2); font-size: 14px; }
+    .card ul { padding-left: 18px; margin: 0; }
+    .examples { margin-top: 24px; }
+    .examples ol { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 10px 24px; margin: 12px 0 0; padding-left: 22px; }
+    .examples li { font-size: 14px; color: var(--ink-2); }
+    .examples li b { color: var(--ink); }
+    .examples li a { font: 12px var(--mono); }
+    pre { margin: 8px 0 0; padding: 12px 14px; border-radius: 8px; background: var(--code-bg); overflow-x: auto; font: 13px/1.5 var(--mono); }
+    footer { padding-bottom: 40px; font-size: 14px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header class="wrap">
+    <p class="eyebrow">Java · JFlex/CUP · JavaCC · CheerpJ</p>
+    <h1>Pollo Frito</h1>
+    <p class="lede">
+      An interpreter for an R-like language — vectors, lists, matrices, functions and control flow — with two
+      interchangeable parsers. This is the original Java Swing app, running unchanged in your browser through
+      <a href="https://cheerpj.com">CheerpJ</a>, a JVM for WebAssembly.
+    </p>
+    <ul class="steps">
+      <li><b>1.</b> Wait for the window to load (first visit downloads the Java runtime).</li>
+      <li><b>2.</b> Pick an example tab, or write code in <b>new:</b> / <b>Add Pestaña</b>.</li>
+      <li><b>3.</b> Press <b>Ejecutar JCC</b> or <b>Ejecutar Cup</b> — output appears in the console on the right.</li>
+    </ul>
+  </header>
+
+  <main class="wrap">
+    <div class="stage">
+      <div id="display">
+        <div id="status"><div class="spinner"></div><span id="statusText">Starting the Java runtime…</span></div>
+      </div>
+    </div>
+
+    <section class="card examples">
+      <h2>Example programs</h2>
+      <p>Each one is open in its own tab, in this order. Switch tabs, run them, edit them — or start from scratch with <b>Add Pestaña</b>.</p>
+      <ol id="examples"></ol>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>The language</h2>
+<pre><code>a = c(1, 2, 3);                 # vectors
+a[1][1][1] = 5;
+print(1 + a);                   # [6, 3, 4]
+l = list(25, "hola", c(1, 2));  # nested lists
+m = matrix(c(1, 2, 3, 4), 2, 2);
+
+factorial = function(num) {
+  if (num == 0) {
+    return 1
+  } else {
+    return num * factorial(num - 1)
+  }
+}
+print(factorial(5))             # [120]</code></pre>
+      </section>
+      <section class="card">
+        <h2>Two parsers, one interpreter</h2>
+        <p><b>Ejecutar Cup</b> parses with a JFlex lexer and a CUP LALR grammar; <b>Ejecutar JCC</b> uses a
+        hand-written JavaCC LL grammar. Both build the same AST, which a single tree-walking interpreter runs.
+        <b>TS</b> shows the symbol table and <b>Errores</b> the lexical, syntax and semantic errors.</p>
+      </section>
+      <section class="card">
+        <h2>In the browser</h2>
+        <ul>
+          <li>Plots (<code>pie</code>, <code>barplot</code>, <code>hist</code>, <code>plot</code>) and the AST image
+          call Graphviz and open files on the desktop, so here they report an error instead.</li>
+          <li><b>Guardar</b> stores files in the browser's private storage only.</li>
+          <li>Build it from <a href="https://github.com/andreanicte02/pollo-frito">the repository</a> to use every
+          feature: <code>mvn package</code>, then <code>java -jar target/pollo-frito.jar</code>.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="wrap">
+    By <a href="https://github.com/andreanicte02">Andrea Nicte Vicente Campos</a> · Compilers 2 (OLC2), USAC, 2020.
+  </footer>
+
+  <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
+  <script>
+    (async () => {
+      const statusText = document.getElementById("statusText");
+      try {
+        // CheerpJ mounts the web server under /app, so build paths relative to this page.
+        const base = "/app" + location.pathname.replace(/[^/]*$/, "");
+        const list = await (await fetch("ejemplos.json")).json();
+        document.getElementById("examples").innerHTML = list.map((ex) =>
+          `<li><b>${ex.title}</b> — ${ex.desc} <a href="ejemplos/${ex.file}">${ex.file}</a></li>`).join("");
+        const examples = list.map((ex) => base + "ejemplos/" + ex.file);
+
+        await cheerpjInit({ version: 11 });
+        statusText.textContent = "Loading the interpreter…";
+        cheerpjCreateDisplay(1256, 726, document.getElementById("display"));
+        document.getElementById("status").remove();
+        await cheerpjRunJar(base + "pollo-frito.jar", ...examples);
+      } catch (err) {
+        statusText.textContent = "Could not start Java in this browser: " + err;
+      }
+    })();
+  </script>
+</body>
+</html>

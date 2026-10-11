@@ -1,0 +1,14 @@
+[
+  {"file": "01-factorial-recursivo.txt", "source": "A7.txt", "title": "Factorial recursivo",
+   "desc": "A function that calls itself. Prints the argument on every call, then 120."},
+  {"file": "02-vectores-y-listas.txt", "source": "A2.txt", "title": "Vectores y listas",
+   "desc": "The basics: c() vectors, list(), indexed assignment and arithmetic between a number and a vector."},
+  {"file": "03-combinar-tipos.txt", "source": "A3.txt", "title": "Combinar tipos",
+   "desc": "c() mixing numbers, strings, booleans and lists; nested lists; identifiers are case-insensitive."},
+  {"file": "04-funciones-flecha-y-defaults.txt", "source": "A6.txt", "title": "Funciones flecha y valores por defecto",
+   "desc": "Arrow functions, default parameters called with default, and natives like trunk, round and toLowerCase."},
+  {"file": "05-control-y-matrices.txt", "source": "A5.txt", "title": "Control de flujo y matrices",
+   "desc": "switch, while and do-while, matrix() with row and column access, deeply nested list updates."},
+  {"file": "06-prueba-completa.txt", "source": "A1.txt", "title": "Prueba completa",
+   "desc": "Everything together: for loops over vectors, lists and matrices, functions, and the plotting calls (commented out)."}
+]
